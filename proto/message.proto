@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package message;
+
+service MessageService {
+  rpc GetChannelHistory (HistoryRequest) returns (HistoryResponse);
+  rpc StreamLiveMessages (StreamRequest) returns (stream MessageItem);
+}
+
+message HistoryRequest {
+  string channel_id = 1;
+  int32 limit = 2;
+}
+
+message MessageItem {
+  string message_id = 1;
+  string user_id = 2;
+  string content = 3;
+  int64 timestamp = 4;
+}
+
+message HistoryResponse {
+  repeated MessageItem messages = 1;
+}
+
+message StreamRequest {
+  string channel_id = 1;
+}
