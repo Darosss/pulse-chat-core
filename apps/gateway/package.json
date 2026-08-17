@@ -16,6 +16,7 @@
     "license": "ISC",
     "type": "module",
     "dependencies": {
+        "@fastify/websocket": "^11.3.0",
         "@grpc/grpc-js": "^1.14.4",
         "dotenv": "^17.4.2",
         "fastify": "^5.12.0"
