@@ -1,7 +1,7 @@
 version: v2
 plugins:
   - remote: buf.build/community/stephenh-ts-proto:v2.12.0
-    out: apps/gateway/src/pb
+    out: apps/presence/src/pb
     opt:
       - env=node
       - outputServices=grpc-js
@@ -9,8 +9,10 @@ plugins:
   - remote: buf.build/protocolbuffers/csharp:v35.1
     out: apps/message/Generated
 
-  - remote: buf.build/community/neoeinstein-prost:v0.2.3
-    out: apps/presence/src/pb
+  - remote: buf.build/community/neoeinstein-prost:v0.5.0
+    out: apps/gateway/src/pb
+  - remote: buf.build/community/neoeinstein-tonic:v0.5.0
+    out: apps/gateway/src/pb
 
 #TODO: TOBE defined later if thats gonna be really python.
 # - remote: buf.build/protocolbuffers/python
