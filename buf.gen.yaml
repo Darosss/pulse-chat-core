@@ -6,8 +6,14 @@ plugins:
       - env=node
       - outputServices=grpc-js
 
+  - remote: buf.build/grpc/csharp:v1.83.0
+    out: apps/message/Generated
+    opt:
+      - base_namespace=Message
   - remote: buf.build/protocolbuffers/csharp:v35.1
     out: apps/message/Generated
+    opt:
+      - base_namespace=Message
 
   - remote: buf.build/community/neoeinstein-prost:v0.5.0
     out: apps/gateway/src/pb
