@@ -3,8 +3,12 @@ using Message;
 
 namespace message.Services;
 
-public class MessageServiceInternal(ILogger<MessageServiceInternal> logger) : MessageService.MessageServiceBase
+public class MessageServiceInternal(ChannelBroadcaster broadcaster, ILogger<MessageServiceInternal> logger) : MessageService.MessageServiceBase
+
 {
+    private readonly ChannelBroadcaster _broadcaster = broadcaster;
+    private readonly ILogger<MessageServiceInternal> _logger = logger;
+  
     public override Task<HistoryResponse> GetChannelHistory(HistoryRequest request, ServerCallContext context)
     {
         var historyResponse = new HistoryResponse(){};
@@ -27,8 +31,41 @@ public class MessageServiceInternal(ILogger<MessageServiceInternal> logger) : Me
         return Task.FromResult(historyResponse);
 
     }
-    public override Task StreamLiveMessages(StreamRequest request, IServerStreamWriter<MessageItem> responseStream, ServerCallContext context)
+
+    public override async Task<MessageItem> CreateMessage(CreateMessageRequest request, ServerCallContext context)
     {
-        return Task.FromResult("TODO: add StreamLiveMessages");
+        
+        var newMessage = new MessageItem
+        {
+            MessageId = Guid.NewGuid().ToString(),
+            UserId = request.UserId,
+            Content = request.Content,
+            Timestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds(),
+        };
+
+        await _broadcaster.BroadcastAsync(request.ChannelId, newMessage);
+        return newMessage;
+    }
+    public override async Task StreamLiveMessages(StreamRequest request, IServerStreamWriter<MessageItem> responseStream, ServerCallContext context)
+    {
+        logger.LogInformation("Client connected to stream for channel: {ChannelId}", request.ChannelId);
+
+        var reader = _broadcaster.Subscribe(request.ChannelId);
+
+        try
+        {
+            while (!context.CancellationToken.IsCancellationRequested)
+            {
+                MessageItem newMessage = await reader.ReadAsync(context.CancellationToken);
+
+                await responseStream.WriteAsync(newMessage);
+                
+                logger.LogInformation("Pushed message {MessageId} to stream", newMessage.MessageId);
+            }
+        }
+        catch (OperationCanceledException)
+        {
+            logger.LogInformation("Client disconnected from stream: {ChannelId}", request.ChannelId);
+        }
     }
 }
