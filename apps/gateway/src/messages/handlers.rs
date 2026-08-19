@@ -1,6 +1,7 @@
 use axum::{
     Json,
-    extract::{Path, Query, State},
+    extract::{Path, Query, State, WebSocketUpgrade},
+    response::Response,
 };
 use serde::{Deserialize, Serialize};
 
@@ -34,6 +35,22 @@ impl From<MessageItem> for MessageItemResponse {
     }
 }
 
+#[derive(Deserialize)]
+pub struct CreateMessageBody {
+    pub user_id: String,
+    pub content: String,
+}
+
+pub async fn create_message(
+    State(state): State<AppState>,
+    Path(channel_id): Path<String>,
+    Json(payload): Json<CreateMessageBody>,
+) -> Result<Json<bool>, AppError> {
+    state.messages.create_message(channel_id, payload).await?;
+
+    Ok(Json(true))
+}
+
 pub async fn get_messages(
     State(state): State<AppState>,
     Path(channel_id): Path<String>,
@@ -54,4 +71,12 @@ pub async fn get_messages(
         .collect();
 
     Ok(Json(messages))
+}
+
+pub async fn chat_socket(
+    State(state): State<AppState>,
+    Path(channel_id): Path<String>,
+    ws: WebSocketUpgrade,
+) -> Response {
+    ws.on_upgrade(move |socket| state.messages.clone().handle_socket(socket, channel_id))
 }
