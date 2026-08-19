@@ -3,27 +3,29 @@ mod app_error;
 mod app_state;
 mod pb;
 
-use axum::{Router, routing::get};
-extern crate dotenv;
 use app_state::AppState;
+use axum::{Router, routing::get};
 
-use crate::{messages::MessageService, pb::message::message_service_client::MessageServiceClient};
+use crate::{
+    app_env_management::load_config, messages::MessageService,
+    pb::message::message_service_client::MessageServiceClient,
+};
 mod messages;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let message_service_env_key = "MESSAGE_SERVICE_URL";
-    dotenv::from_filename("../../.env").ok();
-    let message_service_url = match dotenv::var(message_service_env_key) {
-        Ok(value) => value,
-        //NOTE: TODO: keep it panic right now, change into error when separate fn
-        Err(_) => panic!(
-            "Make sure you set the {} environment variable",
-            message_service_env_key
-        ),
-    };
+    let config = load_config();
 
-    let message_service_client = MessageServiceClient::connect(message_service_url).await?;
+    // let message_service_url = match dotenv::var(message_service_env_key) {
+    //     Ok(value) => value,
+    //     //NOTE: TODO: keep it panic right now, change into error when separate fn
+    //     Err(_) => panic!(
+    //         "Make sure you set the {} environment variable",
+    //         message_service_env_key
+    //     ),
+    // };
+
+    let message_service_client = MessageServiceClient::connect(config.message_service_url).await?;
     let messages_service = MessageService::new(message_service_client);
     let state = AppState {
         messages: messages_service,
