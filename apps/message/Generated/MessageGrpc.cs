@@ -53,6 +53,8 @@ namespace Message {
     static readonly grpc::Marshaller<global::Message.StreamRequest> __Marshaller_message_StreamRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Message.StreamRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Message.MessageItem> __Marshaller_message_MessageItem = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Message.MessageItem.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Message.CreateMessageRequest> __Marshaller_message_CreateMessageRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Message.CreateMessageRequest.Parser));
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::Message.HistoryRequest, global::Message.HistoryResponse> __Method_GetChannelHistory = new grpc::Method<global::Message.HistoryRequest, global::Message.HistoryResponse>(
@@ -68,6 +70,14 @@ namespace Message {
         __ServiceName,
         "StreamLiveMessages",
         __Marshaller_message_StreamRequest,
+        __Marshaller_message_MessageItem);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::Message.CreateMessageRequest, global::Message.MessageItem> __Method_CreateMessage = new grpc::Method<global::Message.CreateMessageRequest, global::Message.MessageItem>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "CreateMessage",
+        __Marshaller_message_CreateMessageRequest,
         __Marshaller_message_MessageItem);
 
     /// <summary>Service descriptor</summary>
@@ -88,6 +98,12 @@ namespace Message {
 
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::System.Threading.Tasks.Task StreamLiveMessages(global::Message.StreamRequest request, grpc::IServerStreamWriter<global::Message.MessageItem> responseStream, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task<global::Message.MessageItem> CreateMessage(global::Message.CreateMessageRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -151,6 +167,26 @@ namespace Message {
       {
         return CallInvoker.AsyncServerStreamingCall(__Method_StreamLiveMessages, null, options, request);
       }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Message.MessageItem CreateMessage(global::Message.CreateMessageRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return CreateMessage(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Message.MessageItem CreateMessage(global::Message.CreateMessageRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_CreateMessage, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Message.MessageItem> CreateMessageAsync(global::Message.CreateMessageRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return CreateMessageAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Message.MessageItem> CreateMessageAsync(global::Message.CreateMessageRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_CreateMessage, null, options, request);
+      }
       /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       protected override MessageServiceClient NewInstance(ClientBaseConfiguration configuration)
@@ -166,7 +202,8 @@ namespace Message {
     {
       return grpc::ServerServiceDefinition.CreateBuilder()
           .AddMethod(__Method_GetChannelHistory, serviceImpl.GetChannelHistory)
-          .AddMethod(__Method_StreamLiveMessages, serviceImpl.StreamLiveMessages).Build();
+          .AddMethod(__Method_StreamLiveMessages, serviceImpl.StreamLiveMessages)
+          .AddMethod(__Method_CreateMessage, serviceImpl.CreateMessage).Build();
     }
 
     /// <summary>Register service method with a service binder with or without implementation. Useful when customizing the service binding logic.
@@ -178,6 +215,7 @@ namespace Message {
     {
       serviceBinder.AddMethod(__Method_GetChannelHistory, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Message.HistoryRequest, global::Message.HistoryResponse>(serviceImpl.GetChannelHistory));
       serviceBinder.AddMethod(__Method_StreamLiveMessages, serviceImpl == null ? null : new grpc::ServerStreamingServerMethod<global::Message.StreamRequest, global::Message.MessageItem>(serviceImpl.StreamLiveMessages));
+      serviceBinder.AddMethod(__Method_CreateMessage, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Message.CreateMessageRequest, global::Message.MessageItem>(serviceImpl.CreateMessage));
     }
 
   }

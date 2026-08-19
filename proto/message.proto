@@ -5,6 +5,13 @@ package message;
 service MessageService {
   rpc GetChannelHistory (HistoryRequest) returns (HistoryResponse);
   rpc StreamLiveMessages (StreamRequest) returns (stream MessageItem);
+  rpc CreateMessage(CreateMessageRequest) returns (MessageItem);
+}
+
+message CreateMessageRequest {
+  string channel_id = 1;
+  string user_id = 2;
+  string content = 3;
 }
 
 message HistoryRequest {
