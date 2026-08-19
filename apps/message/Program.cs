@@ -16,6 +16,7 @@ if (string.IsNullOrWhiteSpace(appUrl))
 }
 
 builder.Services.AddGrpc();
+builder.Services.AddSingleton<ChannelBroadcaster>();
 var app = builder.Build();
 
 app.MapGrpcService<MessageServiceInternal>();
