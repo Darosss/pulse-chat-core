@@ -16,15 +16,6 @@ mod messages;
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let config = load_config();
 
-    // let message_service_url = match dotenv::var(message_service_env_key) {
-    //     Ok(value) => value,
-    //     //NOTE: TODO: keep it panic right now, change into error when separate fn
-    //     Err(_) => panic!(
-    //         "Make sure you set the {} environment variable",
-    //         message_service_env_key
-    //     ),
-    // };
-
     let message_service_client = MessageServiceClient::connect(config.message_service_url).await?;
     let messages_service = MessageService::new(message_service_client);
     let state = AppState {
