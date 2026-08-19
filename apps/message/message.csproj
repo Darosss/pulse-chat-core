@@ -9,6 +9,7 @@
     <Protobuf Include="..\..\..\proto\message.proto" GrpcServices="Server" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="dotenv.net" Version="4.0.2" />
     <PackageReference Include="Google.Protobuf" Version="3.35.1" />
     <PackageReference Include="Grpc.AspNetCore.Server" Version="2.83.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="10.0.11" />
