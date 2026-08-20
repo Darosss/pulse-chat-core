@@ -10,7 +10,7 @@ DotEnv.Load(new(envFilePaths:["../../.env"]));
 const string appUrlEnvKey = "MESSAGE_SERVICE_URL";
 string? appUrl = Environment.GetEnvironmentVariable(appUrlEnvKey);
 
-const string dbConnectionKey = "SQL_CONNECTION_STRING";
+const string dbConnectionKey = "MESSAGE_SQL_CONNECTION_STRING";
 string? dbConnectionString = Environment.GetEnvironmentVariable(dbConnectionKey);
   if (string.IsNullOrWhiteSpace(dbConnectionString))
     {
@@ -31,7 +31,7 @@ else
 {
   
     builder.Services.AddDbContext<MessageDbContext>(options =>
-        options.UseSqlServer(dbConnectionString));
+        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultProductionConnection")));
 }
 
 builder.Services.AddGrpc();
