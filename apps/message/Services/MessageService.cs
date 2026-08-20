@@ -1,6 +1,9 @@
+using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using message.Data;
 using Message;
+using Microsoft.CodeAnalysis.Elfie.Extensions;
+using Microsoft.EntityFrameworkCore;
 namespace message.Services;
 
 public class MessageServiceInternal(ChannelBroadcaster broadcaster, MessageDbContext dbContext, ILogger<MessageServiceInternal> logger) : MessageService.MessageServiceBase
@@ -10,27 +13,25 @@ public class MessageServiceInternal(ChannelBroadcaster broadcaster, MessageDbCon
     private readonly MessageDbContext messageDb = dbContext;
     private readonly ILogger<MessageServiceInternal> _logger = logger;
   
-    public override Task<HistoryResponse> GetChannelHistory(HistoryRequest request, ServerCallContext context)
+    public override async Task<HistoryResponse> GetChannelHistory(HistoryRequest request, ServerCallContext context)
     {
         var historyResponse = new HistoryResponse(){};
-        historyResponse.Messages.Add([
-            new()
-        {
-            Id=1,
-            UserId=321,
-            Content="Some test message",
-            Timestamp=43141341343
-        },
-        new()
-        {
-            Id=12,
-            UserId=3212,
-            Content="2nd some test message",
-            Timestamp=43141341345
-        }
-        ]);
+
+        var dbMessages = await this.messageDb.Messages.Where(m=>m.ChannelId==request.ChannelId).OrderByDescending(m=>m.Timestamp).Take((int)request.Limit).ToListAsync();
+
         
-        return Task.FromResult(historyResponse);
+        var messageItems = dbMessages.Select((m)=>new MessageItem()
+        {
+            ChannelId=m.ChannelId,
+            UserId=m.UserId,
+            Content=m.Content,
+            Timestamp=m.Timestamp.Ticks,
+            Id=m.Id,
+            
+        });
+        historyResponse.Messages.Add(messageItems);
+        
+        return historyResponse;
 
     }
 
