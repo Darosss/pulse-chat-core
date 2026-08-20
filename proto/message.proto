@@ -9,21 +9,22 @@ service MessageService {
 }
 
 message CreateMessageRequest {
-  string channel_id = 1;
-  string user_id = 2;
+  int32 channel_id = 1;
+  int32 user_id = 2;
   string content = 3;
 }
 
 message HistoryRequest {
-  string channel_id = 1;
+  int32 channel_id = 1;
   uint32 limit = 2;
 }
 
 message MessageItem {
-  string message_id = 1;
-  string user_id = 2;
-  string content = 3;
-  int64 timestamp = 4;
+  int32 id = 1;
+  int32 user_id = 2;
+  int32 channel_id = 3;
+  string content = 4;
+  int64 timestamp = 5;
 }
 
 message HistoryResponse {
@@ -31,5 +32,5 @@ message HistoryResponse {
 }
 
 message StreamRequest {
-  string channel_id = 1;
+  int32 channel_id = 1;
 }

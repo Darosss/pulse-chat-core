@@ -25,27 +25,27 @@ namespace Message {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
             "Cg1tZXNzYWdlLnByb3RvEgdtZXNzYWdlImgKFENyZWF0ZU1lc3NhZ2VSZXF1",
-            "ZXN0Eh0KCmNoYW5uZWxfaWQYASABKAlSCWNoYW5uZWxJZBIXCgd1c2VyX2lk",
-            "GAIgASgJUgZ1c2VySWQSGAoHY29udGVudBgDIAEoCVIHY29udGVudCJFCg5I",
-            "aXN0b3J5UmVxdWVzdBIdCgpjaGFubmVsX2lkGAEgASgJUgljaGFubmVsSWQS",
-            "FAoFbGltaXQYAiABKA1SBWxpbWl0In0KC01lc3NhZ2VJdGVtEh0KCm1lc3Nh",
-            "Z2VfaWQYASABKAlSCW1lc3NhZ2VJZBIXCgd1c2VyX2lkGAIgASgJUgZ1c2Vy",
-            "SWQSGAoHY29udGVudBgDIAEoCVIHY29udGVudBIcCgl0aW1lc3RhbXAYBCAB",
-            "KANSCXRpbWVzdGFtcCJDCg9IaXN0b3J5UmVzcG9uc2USMAoIbWVzc2FnZXMY",
-            "ASADKAsyFC5tZXNzYWdlLk1lc3NhZ2VJdGVtUghtZXNzYWdlcyIuCg1TdHJl",
-            "YW1SZXF1ZXN0Eh0KCmNoYW5uZWxfaWQYASABKAlSCWNoYW5uZWxJZDLkAQoO",
-            "TWVzc2FnZVNlcnZpY2USRgoRR2V0Q2hhbm5lbEhpc3RvcnkSFy5tZXNzYWdl",
-            "Lkhpc3RvcnlSZXF1ZXN0GhgubWVzc2FnZS5IaXN0b3J5UmVzcG9uc2USRAoS",
-            "U3RyZWFtTGl2ZU1lc3NhZ2VzEhYubWVzc2FnZS5TdHJlYW1SZXF1ZXN0GhQu",
-            "bWVzc2FnZS5NZXNzYWdlSXRlbTABEkQKDUNyZWF0ZU1lc3NhZ2USHS5tZXNz",
-            "YWdlLkNyZWF0ZU1lc3NhZ2VSZXF1ZXN0GhQubWVzc2FnZS5NZXNzYWdlSXRl",
-            "bWIGcHJvdG8z"));
+            "ZXN0Eh0KCmNoYW5uZWxfaWQYASABKAVSCWNoYW5uZWxJZBIXCgd1c2VyX2lk",
+            "GAIgASgFUgZ1c2VySWQSGAoHY29udGVudBgDIAEoCVIHY29udGVudCJFCg5I",
+            "aXN0b3J5UmVxdWVzdBIdCgpjaGFubmVsX2lkGAEgASgFUgljaGFubmVsSWQS",
+            "FAoFbGltaXQYAiABKA1SBWxpbWl0Io0BCgtNZXNzYWdlSXRlbRIOCgJpZBgB",
+            "IAEoBVICaWQSFwoHdXNlcl9pZBgCIAEoBVIGdXNlcklkEh0KCmNoYW5uZWxf",
+            "aWQYAyABKAVSCWNoYW5uZWxJZBIYCgdjb250ZW50GAQgASgJUgdjb250ZW50",
+            "EhwKCXRpbWVzdGFtcBgFIAEoA1IJdGltZXN0YW1wIkMKD0hpc3RvcnlSZXNw",
+            "b25zZRIwCghtZXNzYWdlcxgBIAMoCzIULm1lc3NhZ2UuTWVzc2FnZUl0ZW1S",
+            "CG1lc3NhZ2VzIi4KDVN0cmVhbVJlcXVlc3QSHQoKY2hhbm5lbF9pZBgBIAEo",
+            "BVIJY2hhbm5lbElkMuQBCg5NZXNzYWdlU2VydmljZRJGChFHZXRDaGFubmVs",
+            "SGlzdG9yeRIXLm1lc3NhZ2UuSGlzdG9yeVJlcXVlc3QaGC5tZXNzYWdlLkhp",
+            "c3RvcnlSZXNwb25zZRJEChJTdHJlYW1MaXZlTWVzc2FnZXMSFi5tZXNzYWdl",
+            "LlN0cmVhbVJlcXVlc3QaFC5tZXNzYWdlLk1lc3NhZ2VJdGVtMAESRAoNQ3Jl",
+            "YXRlTWVzc2FnZRIdLm1lc3NhZ2UuQ3JlYXRlTWVzc2FnZVJlcXVlc3QaFC5t",
+            "ZXNzYWdlLk1lc3NhZ2VJdGVtYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Message.CreateMessageRequest), global::Message.CreateMessageRequest.Parser, new[]{ "ChannelId", "UserId", "Content" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Message.HistoryRequest), global::Message.HistoryRequest.Parser, new[]{ "ChannelId", "Limit" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Message.MessageItem), global::Message.MessageItem.Parser, new[]{ "MessageId", "UserId", "Content", "Timestamp" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Message.MessageItem), global::Message.MessageItem.Parser, new[]{ "Id", "UserId", "ChannelId", "Content", "Timestamp" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Message.HistoryResponse), global::Message.HistoryResponse.Parser, new[]{ "Messages" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Message.StreamRequest), global::Message.StreamRequest.Parser, new[]{ "ChannelId" }, null, null, null, null)
           }));
@@ -103,25 +103,25 @@ namespace Message {
 
     /// <summary>Field number for the "channel_id" field.</summary>
     public const int ChannelIdFieldNumber = 1;
-    private string channelId_ = "";
+    private int channelId_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public string ChannelId {
+    public int ChannelId {
       get { return channelId_; }
       set {
-        channelId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        channelId_ = value;
       }
     }
 
     /// <summary>Field number for the "user_id" field.</summary>
     public const int UserIdFieldNumber = 2;
-    private string userId_ = "";
+    private int userId_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public string UserId {
+    public int UserId {
       get { return userId_; }
       set {
-        userId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        userId_ = value;
       }
     }
 
@@ -162,8 +162,8 @@ namespace Message {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
-      if (ChannelId.Length != 0) hash ^= ChannelId.GetHashCode();
-      if (UserId.Length != 0) hash ^= UserId.GetHashCode();
+      if (ChannelId != 0) hash ^= ChannelId.GetHashCode();
+      if (UserId != 0) hash ^= UserId.GetHashCode();
       if (Content.Length != 0) hash ^= Content.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -183,13 +183,13 @@ namespace Message {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (ChannelId.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(ChannelId);
+      if (ChannelId != 0) {
+        output.WriteRawTag(8);
+        output.WriteInt32(ChannelId);
       }
-      if (UserId.Length != 0) {
-        output.WriteRawTag(18);
-        output.WriteString(UserId);
+      if (UserId != 0) {
+        output.WriteRawTag(16);
+        output.WriteInt32(UserId);
       }
       if (Content.Length != 0) {
         output.WriteRawTag(26);
@@ -205,13 +205,13 @@ namespace Message {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (ChannelId.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(ChannelId);
+      if (ChannelId != 0) {
+        output.WriteRawTag(8);
+        output.WriteInt32(ChannelId);
       }
-      if (UserId.Length != 0) {
-        output.WriteRawTag(18);
-        output.WriteString(UserId);
+      if (UserId != 0) {
+        output.WriteRawTag(16);
+        output.WriteInt32(UserId);
       }
       if (Content.Length != 0) {
         output.WriteRawTag(26);
@@ -227,11 +227,11 @@ namespace Message {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
-      if (ChannelId.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(ChannelId);
+      if (ChannelId != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(ChannelId);
       }
-      if (UserId.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(UserId);
+      if (UserId != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(UserId);
       }
       if (Content.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(Content);
@@ -248,10 +248,10 @@ namespace Message {
       if (other == null) {
         return;
       }
-      if (other.ChannelId.Length != 0) {
+      if (other.ChannelId != 0) {
         ChannelId = other.ChannelId;
       }
-      if (other.UserId.Length != 0) {
+      if (other.UserId != 0) {
         UserId = other.UserId;
       }
       if (other.Content.Length != 0) {
@@ -276,12 +276,12 @@ namespace Message {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
-          case 10: {
-            ChannelId = input.ReadString();
+          case 8: {
+            ChannelId = input.ReadInt32();
             break;
           }
-          case 18: {
-            UserId = input.ReadString();
+          case 16: {
+            UserId = input.ReadInt32();
             break;
           }
           case 26: {
@@ -307,12 +307,12 @@ namespace Message {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
-          case 10: {
-            ChannelId = input.ReadString();
+          case 8: {
+            ChannelId = input.ReadInt32();
             break;
           }
-          case 18: {
-            UserId = input.ReadString();
+          case 16: {
+            UserId = input.ReadInt32();
             break;
           }
           case 26: {
@@ -374,13 +374,13 @@ namespace Message {
 
     /// <summary>Field number for the "channel_id" field.</summary>
     public const int ChannelIdFieldNumber = 1;
-    private string channelId_ = "";
+    private int channelId_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public string ChannelId {
+    public int ChannelId {
       get { return channelId_; }
       set {
-        channelId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        channelId_ = value;
       }
     }
 
@@ -420,7 +420,7 @@ namespace Message {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
-      if (ChannelId.Length != 0) hash ^= ChannelId.GetHashCode();
+      if (ChannelId != 0) hash ^= ChannelId.GetHashCode();
       if (Limit != 0) hash ^= Limit.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -440,9 +440,9 @@ namespace Message {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (ChannelId.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(ChannelId);
+      if (ChannelId != 0) {
+        output.WriteRawTag(8);
+        output.WriteInt32(ChannelId);
       }
       if (Limit != 0) {
         output.WriteRawTag(16);
@@ -458,9 +458,9 @@ namespace Message {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (ChannelId.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(ChannelId);
+      if (ChannelId != 0) {
+        output.WriteRawTag(8);
+        output.WriteInt32(ChannelId);
       }
       if (Limit != 0) {
         output.WriteRawTag(16);
@@ -476,8 +476,8 @@ namespace Message {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
-      if (ChannelId.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(ChannelId);
+      if (ChannelId != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(ChannelId);
       }
       if (Limit != 0) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Limit);
@@ -494,7 +494,7 @@ namespace Message {
       if (other == null) {
         return;
       }
-      if (other.ChannelId.Length != 0) {
+      if (other.ChannelId != 0) {
         ChannelId = other.ChannelId;
       }
       if (other.Limit != 0) {
@@ -519,8 +519,8 @@ namespace Message {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
-          case 10: {
-            ChannelId = input.ReadString();
+          case 8: {
+            ChannelId = input.ReadInt32();
             break;
           }
           case 16: {
@@ -546,8 +546,8 @@ namespace Message {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
-          case 10: {
-            ChannelId = input.ReadString();
+          case 8: {
+            ChannelId = input.ReadInt32();
             break;
           }
           case 16: {
@@ -596,8 +596,9 @@ namespace Message {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public MessageItem(MessageItem other) : this() {
-      messageId_ = other.messageId_;
+      id_ = other.id_;
       userId_ = other.userId_;
+      channelId_ = other.channelId_;
       content_ = other.content_;
       timestamp_ = other.timestamp_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
@@ -609,32 +610,44 @@ namespace Message {
       return new MessageItem(this);
     }
 
-    /// <summary>Field number for the "message_id" field.</summary>
-    public const int MessageIdFieldNumber = 1;
-    private string messageId_ = "";
+    /// <summary>Field number for the "id" field.</summary>
+    public const int IdFieldNumber = 1;
+    private int id_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public string MessageId {
-      get { return messageId_; }
+    public int Id {
+      get { return id_; }
       set {
-        messageId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        id_ = value;
       }
     }
 
     /// <summary>Field number for the "user_id" field.</summary>
     public const int UserIdFieldNumber = 2;
-    private string userId_ = "";
+    private int userId_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public string UserId {
+    public int UserId {
       get { return userId_; }
       set {
-        userId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        userId_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "channel_id" field.</summary>
+    public const int ChannelIdFieldNumber = 3;
+    private int channelId_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int ChannelId {
+      get { return channelId_; }
+      set {
+        channelId_ = value;
       }
     }
 
     /// <summary>Field number for the "content" field.</summary>
-    public const int ContentFieldNumber = 3;
+    public const int ContentFieldNumber = 4;
     private string content_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -646,7 +659,7 @@ namespace Message {
     }
 
     /// <summary>Field number for the "timestamp" field.</summary>
-    public const int TimestampFieldNumber = 4;
+    public const int TimestampFieldNumber = 5;
     private long timestamp_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -672,8 +685,9 @@ namespace Message {
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (MessageId != other.MessageId) return false;
+      if (Id != other.Id) return false;
       if (UserId != other.UserId) return false;
+      if (ChannelId != other.ChannelId) return false;
       if (Content != other.Content) return false;
       if (Timestamp != other.Timestamp) return false;
       return Equals(_unknownFields, other._unknownFields);
@@ -683,8 +697,9 @@ namespace Message {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
-      if (MessageId.Length != 0) hash ^= MessageId.GetHashCode();
-      if (UserId.Length != 0) hash ^= UserId.GetHashCode();
+      if (Id != 0) hash ^= Id.GetHashCode();
+      if (UserId != 0) hash ^= UserId.GetHashCode();
+      if (ChannelId != 0) hash ^= ChannelId.GetHashCode();
       if (Content.Length != 0) hash ^= Content.GetHashCode();
       if (Timestamp != 0L) hash ^= Timestamp.GetHashCode();
       if (_unknownFields != null) {
@@ -705,20 +720,24 @@ namespace Message {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (MessageId.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(MessageId);
+      if (Id != 0) {
+        output.WriteRawTag(8);
+        output.WriteInt32(Id);
       }
-      if (UserId.Length != 0) {
-        output.WriteRawTag(18);
-        output.WriteString(UserId);
+      if (UserId != 0) {
+        output.WriteRawTag(16);
+        output.WriteInt32(UserId);
+      }
+      if (ChannelId != 0) {
+        output.WriteRawTag(24);
+        output.WriteInt32(ChannelId);
       }
       if (Content.Length != 0) {
-        output.WriteRawTag(26);
+        output.WriteRawTag(34);
         output.WriteString(Content);
       }
       if (Timestamp != 0L) {
-        output.WriteRawTag(32);
+        output.WriteRawTag(40);
         output.WriteInt64(Timestamp);
       }
       if (_unknownFields != null) {
@@ -731,20 +750,24 @@ namespace Message {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (MessageId.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(MessageId);
+      if (Id != 0) {
+        output.WriteRawTag(8);
+        output.WriteInt32(Id);
       }
-      if (UserId.Length != 0) {
-        output.WriteRawTag(18);
-        output.WriteString(UserId);
+      if (UserId != 0) {
+        output.WriteRawTag(16);
+        output.WriteInt32(UserId);
+      }
+      if (ChannelId != 0) {
+        output.WriteRawTag(24);
+        output.WriteInt32(ChannelId);
       }
       if (Content.Length != 0) {
-        output.WriteRawTag(26);
+        output.WriteRawTag(34);
         output.WriteString(Content);
       }
       if (Timestamp != 0L) {
-        output.WriteRawTag(32);
+        output.WriteRawTag(40);
         output.WriteInt64(Timestamp);
       }
       if (_unknownFields != null) {
@@ -757,11 +780,14 @@ namespace Message {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
-      if (MessageId.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(MessageId);
+      if (Id != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Id);
       }
-      if (UserId.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(UserId);
+      if (UserId != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(UserId);
+      }
+      if (ChannelId != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(ChannelId);
       }
       if (Content.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(Content);
@@ -781,11 +807,14 @@ namespace Message {
       if (other == null) {
         return;
       }
-      if (other.MessageId.Length != 0) {
-        MessageId = other.MessageId;
+      if (other.Id != 0) {
+        Id = other.Id;
       }
-      if (other.UserId.Length != 0) {
+      if (other.UserId != 0) {
         UserId = other.UserId;
+      }
+      if (other.ChannelId != 0) {
+        ChannelId = other.ChannelId;
       }
       if (other.Content.Length != 0) {
         Content = other.Content;
@@ -812,19 +841,23 @@ namespace Message {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
-          case 10: {
-            MessageId = input.ReadString();
+          case 8: {
+            Id = input.ReadInt32();
             break;
           }
-          case 18: {
-            UserId = input.ReadString();
+          case 16: {
+            UserId = input.ReadInt32();
             break;
           }
-          case 26: {
+          case 24: {
+            ChannelId = input.ReadInt32();
+            break;
+          }
+          case 34: {
             Content = input.ReadString();
             break;
           }
-          case 32: {
+          case 40: {
             Timestamp = input.ReadInt64();
             break;
           }
@@ -847,19 +880,23 @@ namespace Message {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
-          case 10: {
-            MessageId = input.ReadString();
+          case 8: {
+            Id = input.ReadInt32();
             break;
           }
-          case 18: {
-            UserId = input.ReadString();
+          case 16: {
+            UserId = input.ReadInt32();
             break;
           }
-          case 26: {
+          case 24: {
+            ChannelId = input.ReadInt32();
+            break;
+          }
+          case 34: {
             Content = input.ReadString();
             break;
           }
-          case 32: {
+          case 40: {
             Timestamp = input.ReadInt64();
             break;
           }
@@ -1104,13 +1141,13 @@ namespace Message {
 
     /// <summary>Field number for the "channel_id" field.</summary>
     public const int ChannelIdFieldNumber = 1;
-    private string channelId_ = "";
+    private int channelId_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public string ChannelId {
+    public int ChannelId {
       get { return channelId_; }
       set {
-        channelId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        channelId_ = value;
       }
     }
 
@@ -1137,7 +1174,7 @@ namespace Message {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
-      if (ChannelId.Length != 0) hash ^= ChannelId.GetHashCode();
+      if (ChannelId != 0) hash ^= ChannelId.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -1156,9 +1193,9 @@ namespace Message {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (ChannelId.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(ChannelId);
+      if (ChannelId != 0) {
+        output.WriteRawTag(8);
+        output.WriteInt32(ChannelId);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -1170,9 +1207,9 @@ namespace Message {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (ChannelId.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(ChannelId);
+      if (ChannelId != 0) {
+        output.WriteRawTag(8);
+        output.WriteInt32(ChannelId);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
@@ -1184,8 +1221,8 @@ namespace Message {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
-      if (ChannelId.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(ChannelId);
+      if (ChannelId != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(ChannelId);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -1199,7 +1236,7 @@ namespace Message {
       if (other == null) {
         return;
       }
-      if (other.ChannelId.Length != 0) {
+      if (other.ChannelId != 0) {
         ChannelId = other.ChannelId;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
@@ -1221,8 +1258,8 @@ namespace Message {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
-          case 10: {
-            ChannelId = input.ReadString();
+          case 8: {
+            ChannelId = input.ReadInt32();
             break;
           }
         }
@@ -1244,8 +1281,8 @@ namespace Message {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
-          case 10: {
-            ChannelId = input.ReadString();
+          case 8: {
+            ChannelId = input.ReadInt32();
             break;
           }
         }

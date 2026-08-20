@@ -18,8 +18,8 @@ pub struct GetMessagesQuery {
 
 #[derive(Serialize, Deserialize)]
 pub struct MessageItemResponse {
-    pub message_id: String,
-    pub user_id: String,
+    pub id: i32,
+    pub user_id: i32,
     pub content: String,
     pub timestamp: i64,
 }
@@ -27,7 +27,7 @@ pub struct MessageItemResponse {
 impl From<MessageItem> for MessageItemResponse {
     fn from(value: MessageItem) -> Self {
         Self {
-            message_id: value.message_id,
+            id: value.id,
             user_id: value.user_id,
             content: value.content,
             timestamp: value.timestamp,
@@ -37,13 +37,13 @@ impl From<MessageItem> for MessageItemResponse {
 
 #[derive(Deserialize)]
 pub struct CreateMessageBody {
-    pub user_id: String,
+    pub user_id: i32,
     pub content: String,
 }
 
 pub async fn create_message(
     State(state): State<AppState>,
-    Path(channel_id): Path<String>,
+    Path(channel_id): Path<i32>,
     Json(payload): Json<CreateMessageBody>,
 ) -> Result<Json<bool>, AppError> {
     state.messages.create_message(channel_id, payload).await?;
@@ -53,7 +53,7 @@ pub async fn create_message(
 
 pub async fn get_messages(
     State(state): State<AppState>,
-    Path(channel_id): Path<String>,
+    Path(channel_id): Path<i32>,
     Query(query): Query<GetMessagesQuery>,
 ) -> Result<Json<Vec<MessageItemResponse>>, AppError> {
     let result = state
@@ -75,7 +75,7 @@ pub async fn get_messages(
 
 pub async fn chat_socket(
     State(state): State<AppState>,
-    Path(channel_id): Path<String>,
+    Path(channel_id): Path<i32>,
     ws: WebSocketUpgrade,
 ) -> Response {
     ws.on_upgrade(move |socket| state.messages.clone().handle_socket(socket, channel_id))

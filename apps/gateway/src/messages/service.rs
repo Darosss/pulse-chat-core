@@ -24,7 +24,7 @@ impl MessageService {
 
     pub async fn create_message(
         self,
-        channel_id: String,
+        channel_id: i32,
         payload: CreateMessageBody,
     ) -> Result<bool, AppError> {
         let mut client = self.client.clone();
@@ -41,7 +41,7 @@ impl MessageService {
         Ok(history.into_inner())
     }
 
-    pub async fn handle_socket(self, socket: WebSocket, channel_id: String) {
+    pub async fn handle_socket(self, socket: WebSocket, channel_id: i32) {
         let (mut sender, _receiver) = socket.split();
 
         let mut client = self.client.clone();

@@ -1,9 +1,6 @@
 using Grpc.Core;
 using message.Data;
 using Message;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-
 namespace message.Services;
 
 public class MessageServiceInternal(ChannelBroadcaster broadcaster, MessageDbContext dbContext, ILogger<MessageServiceInternal> logger) : MessageService.MessageServiceBase
@@ -19,15 +16,15 @@ public class MessageServiceInternal(ChannelBroadcaster broadcaster, MessageDbCon
         historyResponse.Messages.Add([
             new()
         {
-            MessageId="1",
-            UserId="321",
+            Id=1,
+            UserId=321,
             Content="Some test message",
             Timestamp=43141341343
         },
         new()
         {
-            MessageId="12",
-            UserId="3212",
+            Id=12,
+            UserId=3212,
             Content="2nd some test message",
             Timestamp=43141341345
         }
@@ -37,33 +34,36 @@ public class MessageServiceInternal(ChannelBroadcaster broadcaster, MessageDbCon
 
     }
 
-    public override async Task<MessageItem> CreateMessage(CreateMessageRequest request, ServerCallContext context)
+    private async Task<Models.Message> SaveMessageToDatabase(CreateMessageRequest message) 
     {
-        
-        var newMessage = new MessageItem
+        Models.Message dbMessage = new() {
+            ChannelId=message.ChannelId,
+            UserId=message.UserId,
+            Content=message.Content, 
+            Timestamp=DateTimeOffset.UtcNow.Date,
+        };
+        await this.messageDb.AddAsync(dbMessage);
+        await this.messageDb.SaveChangesAsync();
+        return dbMessage;
+    }
+    public override async Task<MessageItem> CreateMessage(CreateMessageRequest request, ServerCallContext context)
+{
+        var newMessage = await this.SaveMessageToDatabase(request);
+
+        var messageItem = new MessageItem
         {
-            MessageId = Guid.NewGuid().ToString(),
+            Id = newMessage.Id,
+            ChannelId=request.ChannelId,
             UserId = request.UserId,
             Content = request.Content,
             Timestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds(),
         };
 
-        await _broadcaster.BroadcastAsync(request.ChannelId, newMessage);
-        await this.SaveMessageToDatabase(newMessage);
-        return newMessage;
+        await _broadcaster.BroadcastAsync(request.ChannelId, messageItem);
+        return messageItem;
     }
 
-    private async Task<bool> SaveMessageToDatabase(MessageItem message) 
-    {
-        Models.Message dbMessage = new() {
-            UserId=message.UserId,
-            Content=message.Content,
-            Timestamp=DateTimeOffset.FromUnixTimeSeconds(message.Timestamp).UtcDateTime,
-        };
-        await this.messageDb.AddAsync(dbMessage);
-        await this.messageDb.SaveChangesAsync();
-        return true;
-    }
+
     public override async Task StreamLiveMessages(StreamRequest request, IServerStreamWriter<MessageItem> responseStream, ServerCallContext context)
     {
         logger.LogInformation("Client connected to stream for channel: {ChannelId}", request.ChannelId);
@@ -78,7 +78,7 @@ public class MessageServiceInternal(ChannelBroadcaster broadcaster, MessageDbCon
 
                 await responseStream.WriteAsync(newMessage);
                 
-                logger.LogInformation("Pushed message {MessageId} to stream", newMessage.MessageId);
+                logger.LogInformation("Pushed message {MessageId} to stream", newMessage.Id);
             }
         }
         catch (OperationCanceledException)
