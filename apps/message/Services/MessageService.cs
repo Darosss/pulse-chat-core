@@ -1,12 +1,16 @@
 using Grpc.Core;
+using message.Data;
 using Message;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace message.Services;
 
-public class MessageServiceInternal(ChannelBroadcaster broadcaster, ILogger<MessageServiceInternal> logger) : MessageService.MessageServiceBase
+public class MessageServiceInternal(ChannelBroadcaster broadcaster, MessageDbContext dbContext, ILogger<MessageServiceInternal> logger) : MessageService.MessageServiceBase
 
 {
     private readonly ChannelBroadcaster _broadcaster = broadcaster;
+    private readonly MessageDbContext messageDb = dbContext;
     private readonly ILogger<MessageServiceInternal> _logger = logger;
   
     public override Task<HistoryResponse> GetChannelHistory(HistoryRequest request, ServerCallContext context)
@@ -28,6 +32,7 @@ public class MessageServiceInternal(ChannelBroadcaster broadcaster, ILogger<Mess
             Timestamp=43141341345
         }
         ]);
+        
         return Task.FromResult(historyResponse);
 
     }
@@ -44,7 +49,20 @@ public class MessageServiceInternal(ChannelBroadcaster broadcaster, ILogger<Mess
         };
 
         await _broadcaster.BroadcastAsync(request.ChannelId, newMessage);
+        await this.SaveMessageToDatabase(newMessage);
         return newMessage;
+    }
+
+    private async Task<bool> SaveMessageToDatabase(MessageItem message) 
+    {
+        Models.Message dbMessage = new() {
+            UserId=message.UserId,
+            Content=message.Content,
+            Timestamp=DateTimeOffset.FromUnixTimeSeconds(message.Timestamp).UtcDateTime,
+        };
+        await this.messageDb.AddAsync(dbMessage);
+        await this.messageDb.SaveChangesAsync();
+        return true;
     }
     public override async Task StreamLiveMessages(StreamRequest request, IServerStreamWriter<MessageItem> responseStream, ServerCallContext context)
     {
