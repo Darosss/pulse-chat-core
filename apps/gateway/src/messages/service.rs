@@ -7,7 +7,7 @@ use crate::{
     app_error::AppError,
     messages::handlers::{CreateMessageBody, MessageItemResponse},
     pb::message::{
-        HistoryRequest, HistoryResponse, StreamRequest, message::CreateMessageRequest,
+        HistoryRequest, HistoryResponse, MessageItem, StreamRequest, message::CreateMessageRequest,
         message_service_client::MessageServiceClient,
     },
 };
@@ -26,14 +26,16 @@ impl MessageService {
         self,
         channel_id: i32,
         payload: CreateMessageBody,
-    ) -> Result<bool, AppError> {
+    ) -> Result<MessageItem, AppError> {
         let mut client = self.client.clone();
-        client.create_message(CreateMessageRequest {
-            channel_id,
-            user_id: payload.user_id,
-            content: payload.content,
-        });
-        Ok(true)
+        let result = client
+            .create_message(CreateMessageRequest {
+                channel_id,
+                user_id: payload.user_id,
+                content: payload.content,
+            })
+            .await?;
+        Ok(result.into_inner())
     }
     pub async fn get_history(self, request: HistoryRequest) -> Result<HistoryResponse, Status> {
         let mut client = self.client.clone();
