@@ -5,6 +5,7 @@ edition = "2024"
 
 [dependencies]
 axum = { version = "0.8.9", features = ["ws"] }
+axum-auth = "0.8.1"
 dotenvy = "0.15.7"
 envy = "0.4.2"
 futures-util = "0.3.34"

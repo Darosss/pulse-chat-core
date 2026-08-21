@@ -1,7 +1,7 @@
 use axum::extract::ws::{Message, WebSocket};
 use futures_util::{SinkExt, StreamExt};
 use serde_json::json;
-use tonic::{Status, transport::Channel};
+use tonic::{Request, metadata::MetadataValue, transport::Channel};
 
 use crate::{
     app_error::AppError,
@@ -39,10 +39,19 @@ impl MessageService {
             .await?;
         Ok(result.into_inner())
     }
-    pub async fn get_history(self, request: HistoryRequest) -> Result<HistoryResponse, AppError> {
+    pub async fn get_history(
+        self,
+        request: HistoryRequest,
+        user_id: i32,
+    ) -> Result<HistoryResponse, AppError> {
         let mut client = self.client.clone();
-        let history = client.get_channel_history(request).await?;
-        Ok(history.into_inner())
+        let mut request = Request::new(request);
+        let user_id_val = MetadataValue::from(user_id);
+
+        request.metadata_mut().insert("x-user-id", user_id_val);
+
+        let response = client.get_channel_history(request).await?;
+        Ok(response.into_inner())
     }
 
     pub async fn handle_socket(self, socket: WebSocket, channel_id: i32) {
