@@ -8,26 +8,29 @@ plugins:
 
   - remote: buf.build/grpc/csharp:v1.83.0
     out: apps/message/Generated
-    opt:
-      - base_namespace=Message
   - remote: buf.build/protocolbuffers/csharp:v35.1
     out: apps/message/Generated
-    opt:
-      - base_namespace=Message
 
   - remote: buf.build/community/neoeinstein-prost:v0.5.0
     out: apps/gateway/src/pb
   - remote: buf.build/community/neoeinstein-tonic:v0.5.0
     out: apps/gateway/src/pb
 
-#TODO: TOBE defined later if thats gonna be really python.
-# - remote: buf.build/protocolbuffers/python
-# out: apps/streaming/src/pb
-# - remote: buf.build/grpc/python:v1.83.0
-# out: apps/streaming/src/pb
+  #TODO: TOBE defined later if thats gonna be really python.
+  # - remote: buf.build/protocolbuffers/python
+  # out: apps/streaming/src/pb
+  # - remote: buf.build/grpc/python:v1.83.0
+  # out: apps/streaming/src/pb
 
-#TODO: TOBE defined later if thats gonna be really php.
-# - remote: buf.build/protocolbuffers/php:v35.1
-# out: apps/auth/src/pb
-# - remote: buf.build/grpc/php:v1.83.0
-# out: apps/auth/src/pb
+  # - remote: buf.build/bufbuild/grpc-py:v0.3.0
+  #   out: apps/accounts/src/pb
+  # - remote: buf.build/bufbuild/py:v0.3.0
+  #   out: apps/accounts/src/pb
+  - remote: buf.build/grpc/python:v1.83.0
+    out: apps/accounts/src/pb
+  # grpc/python depends on protocolbuffers/python
+  - remote: buf.build/protocolbuffers/python:v35.1
+    out: apps/accounts/src/pb
+  # protocolbuffers/python depends on protocolbuffers/pyi
+  - remote: buf.build/protocolbuffers/pyi:v35.1
+    out: apps/accounts/src/pb
