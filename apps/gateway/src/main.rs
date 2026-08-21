@@ -3,25 +3,27 @@ mod app_error;
 mod app_state;
 mod pb;
 
+use std::str::FromStr;
+
 use app_state::AppState;
 use axum::{Router, routing::get};
+use tonic::transport::Endpoint;
 
-use crate::{
-    accounts::AuthService, app_env_management::load_config, messages::MessageService,
-    pb::auth::auth_service_client::AuthServiceClient,
-    pb::message::message_service_client::MessageServiceClient,
-};
+use crate::{accounts::AuthService, app_env_management::load_config, messages::MessageService};
 mod accounts;
 mod messages;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let config = load_config();
-
-    let message_service_client = MessageServiceClient::connect(config.message_service_url).await?;
-    let messages_service = MessageService::new(message_service_client);
-    let accounts_service_client = AuthServiceClient::connect(config.accounts_service_url).await?;
-    let accounts_service = AuthService::new(accounts_service_client);
+    let config: app_env_management::Config = load_config();
+    let message_service_channel = Endpoint::from_str(&config.message_service_url)
+        .expect("Make sure accounts_service_url is provided")
+        .connect_lazy();
+    let messages_service = MessageService::new(message_service_channel);
+    let accounts_service_channel = Endpoint::from_str(&config.accounts_service_url)
+        .expect("Make sure accounts_service_url is provided")
+        .connect_lazy();
+    let accounts_service = AuthService::new(accounts_service_channel);
     let state = AppState {
         messages: messages_service,
         accounts: accounts_service,

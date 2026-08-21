@@ -18,8 +18,10 @@ pub struct MessageService {
 }
 
 impl MessageService {
-    pub fn new(client: MessageServiceClient<Channel>) -> Self {
-        Self { client }
+    pub fn new(channel: Channel) -> Self {
+        Self {
+            client: MessageServiceClient::new(channel),
+        }
     }
 
     pub async fn create_message(
@@ -37,7 +39,7 @@ impl MessageService {
             .await?;
         Ok(result.into_inner())
     }
-    pub async fn get_history(self, request: HistoryRequest) -> Result<HistoryResponse, Status> {
+    pub async fn get_history(self, request: HistoryRequest) -> Result<HistoryResponse, AppError> {
         let mut client = self.client.clone();
         let history = client.get_channel_history(request).await?;
         Ok(history.into_inner())

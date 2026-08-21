@@ -15,8 +15,10 @@ pub struct AuthService {
 }
 
 impl AuthService {
-    pub fn new(client: AuthServiceClient<Channel>) -> Self {
-        Self { client }
+    pub fn new(channel: Channel) -> Self {
+        Self {
+            client: AuthServiceClient::new(channel),
+        }
     }
 
     pub async fn login(self, payload: LoginBody) -> Result<AuthResponse, AppError> {
