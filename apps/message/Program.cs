@@ -1,6 +1,7 @@
 
 using dotenv.net;
 using message.Data;
+using message.Errors;
 using message.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -33,11 +34,12 @@ else
     builder.Services.AddDbContext<MessageDbContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultProductionConnection")));
 }
+builder.Services.AddGrpc(options =>{
+        options.Interceptors.Add<ErrorHandlingInterceptor>();    
+    });
 
-builder.Services.AddGrpc();
 builder.Services.AddSingleton<ChannelBroadcaster>();
 var app = builder.Build();
 
 app.MapGrpcService<MessageServiceInternal>();
-
 app.Run(appUrl.Trim());
