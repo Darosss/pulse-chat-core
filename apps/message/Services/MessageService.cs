@@ -1,8 +1,6 @@
-using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using message.Data;
 using Message;
-using Microsoft.CodeAnalysis.Elfie.Extensions;
 using Microsoft.EntityFrameworkCore;
 namespace message.Services;
 
@@ -15,7 +13,26 @@ public class MessageServiceInternal(ChannelBroadcaster broadcaster, MessageDbCon
   
     public override async Task<HistoryResponse> GetChannelHistory(HistoryRequest request, ServerCallContext context)
     {
+        var userId = context.RequestHeaders.GetValue("x-user-id");
+
+        if (string.IsNullOrEmpty(userId) || !int.TryParse(userId, out int userIdAsNumber))
+        {
+            throw new RpcException(new Status(
+                StatusCode.Unauthenticated, 
+                "Missing proper x-user-id header in Gateway request"
+            ));
+        }
+
+        var isMember = await this.messageDb.RoomMembers.AnyAsync(m=>m.RoomId == request.ChannelId && m.UserId == userIdAsNumber);
+        if(!isMember)
+        {
+            throw new RpcException(new Status(
+            StatusCode.PermissionDenied, 
+            "You do not have access to this room"
+        ));
+        }
         var historyResponse = new HistoryResponse(){};
+
 
         var dbMessages = await this.messageDb.Messages.Where(m=>m.ChannelId==request.ChannelId).OrderByDescending(m=>m.Timestamp).Take((int)request.Limit).ToListAsync();
 
