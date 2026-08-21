@@ -100,6 +100,14 @@ public class MessageServiceInternal(ChannelBroadcaster broadcaster, MessageDbCon
 
     public override async Task StreamLiveMessages(StreamRequest request, IServerStreamWriter<MessageItem> responseStream, ServerCallContext context)
     {
+        var userId = RetrieveUserIdFromHeaders(context.RequestHeaders);
+        if(!await this.IsUserIdAMemberOfRoom(userId, request.ChannelId))
+        {
+            throw new RpcException(new Status(
+            StatusCode.PermissionDenied, 
+            "You do not have access to this room"
+        ));
+        }
         logger.LogInformation("Client connected to stream for channel: {ChannelId}", request.ChannelId);
 
         var reader = _broadcaster.Subscribe(request.ChannelId);
