@@ -1,8 +1,8 @@
-use crate::messages::service::MessageService;
+use crate::{accounts::AuthService, messages::MessageService};
 
 #[derive(Clone)]
 pub struct AppState {
     pub messages: MessageService,
-    // pub auth_client: AuthServiceClient<Channel>,
+    pub accounts: AuthService,
     // pub presence_client: PresenceServiceClient<Channel>,
 }
