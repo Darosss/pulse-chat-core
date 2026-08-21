@@ -9,7 +9,7 @@ A real time chat backend built as a polyglot microservice system using gRPC and 
   - gateway(**rust**): `cargo run`
   - message(**c**#): `dotnet watch / f5 in IDE`
   - pressence(**go**): `soon`
-  - accounts/auth(**python**): check [apps/accounts/README](apps\accounts\README.md)
+  - accounts/auth(**python**): check [apps/accounts/README](apps/accounts/README.md)
 
 - proto folder contains all .proto files
 - root package contains `npm run proto:generate` script to generate needed types/files for each language based on buf.gen.yaml file
