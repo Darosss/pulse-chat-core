@@ -56,14 +56,11 @@ impl MessageService {
         Ok(response.into_inner())
     }
 
-    pub async fn handle_socket(self, socket: WebSocket, channel_id: i32) {
+    pub async fn handle_socket(self, socket: WebSocket, user_id: i32, channel_id: i32) {
         let (mut sender, _receiver) = socket.split();
-
+        let request = add_user_id_to_request(Request::new(StreamRequest { channel_id }), user_id);
         let mut client = self.client.clone();
-        let response = client
-            .stream_live_messages(StreamRequest { channel_id })
-            .await
-            .unwrap();
+        let response = client.stream_live_messages(request).await.unwrap();
         let mut grpc_stream = response.into_inner();
 
         while let Ok(Some(grpc_msg)) = grpc_stream.message().await {

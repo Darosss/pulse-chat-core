@@ -42,6 +42,11 @@ pub struct CreateMessageBody {
     pub content: String,
 }
 
+#[derive(Deserialize)]
+pub struct WsAuthQuery {
+    pub token: String,
+}
+
 pub async fn create_message(
     State(state): State<AppState>,
     Path(channel_id): Path<i32>,
@@ -89,7 +94,16 @@ pub async fn get_messages(
 pub async fn chat_socket(
     State(state): State<AppState>,
     Path(channel_id): Path<i32>,
+    Query(query): Query<WsAuthQuery>,
     ws: WebSocketUpgrade,
-) -> Response {
-    ws.on_upgrade(move |socket| state.messages.clone().handle_socket(socket, channel_id))
+) -> Result<Response, AppError> {
+    let user_data: crate::pb::auth::ValidateTokenResponse =
+        get_token_data(state.accounts, query.token).await?;
+
+    Ok(ws.on_upgrade(move |socket| {
+        state
+            .messages
+            .clone()
+            .handle_socket(socket, user_data.user_id, channel_id)
+    }))
 }
