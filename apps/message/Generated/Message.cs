@@ -24,26 +24,26 @@ namespace Message {
     static MessageReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "Cg1tZXNzYWdlLnByb3RvEgdtZXNzYWdlImgKFENyZWF0ZU1lc3NhZ2VSZXF1",
-            "ZXN0Eh0KCmNoYW5uZWxfaWQYASABKAVSCWNoYW5uZWxJZBIXCgd1c2VyX2lk",
-            "GAIgASgFUgZ1c2VySWQSGAoHY29udGVudBgDIAEoCVIHY29udGVudCJFCg5I",
-            "aXN0b3J5UmVxdWVzdBIdCgpjaGFubmVsX2lkGAEgASgFUgljaGFubmVsSWQS",
-            "FAoFbGltaXQYAiABKA1SBWxpbWl0Io0BCgtNZXNzYWdlSXRlbRIOCgJpZBgB",
-            "IAEoBVICaWQSFwoHdXNlcl9pZBgCIAEoBVIGdXNlcklkEh0KCmNoYW5uZWxf",
-            "aWQYAyABKAVSCWNoYW5uZWxJZBIYCgdjb250ZW50GAQgASgJUgdjb250ZW50",
-            "EhwKCXRpbWVzdGFtcBgFIAEoA1IJdGltZXN0YW1wIkMKD0hpc3RvcnlSZXNw",
-            "b25zZRIwCghtZXNzYWdlcxgBIAMoCzIULm1lc3NhZ2UuTWVzc2FnZUl0ZW1S",
-            "CG1lc3NhZ2VzIi4KDVN0cmVhbVJlcXVlc3QSHQoKY2hhbm5lbF9pZBgBIAEo",
-            "BVIJY2hhbm5lbElkMuQBCg5NZXNzYWdlU2VydmljZRJGChFHZXRDaGFubmVs",
-            "SGlzdG9yeRIXLm1lc3NhZ2UuSGlzdG9yeVJlcXVlc3QaGC5tZXNzYWdlLkhp",
-            "c3RvcnlSZXNwb25zZRJEChJTdHJlYW1MaXZlTWVzc2FnZXMSFi5tZXNzYWdl",
-            "LlN0cmVhbVJlcXVlc3QaFC5tZXNzYWdlLk1lc3NhZ2VJdGVtMAESRAoNQ3Jl",
-            "YXRlTWVzc2FnZRIdLm1lc3NhZ2UuQ3JlYXRlTWVzc2FnZVJlcXVlc3QaFC5t",
-            "ZXNzYWdlLk1lc3NhZ2VJdGVtYgZwcm90bzM="));
+            "Cg1tZXNzYWdlLnByb3RvEgdtZXNzYWdlIk8KFENyZWF0ZU1lc3NhZ2VSZXF1",
+            "ZXN0Eh0KCmNoYW5uZWxfaWQYASABKAVSCWNoYW5uZWxJZBIYCgdjb250ZW50",
+            "GAIgASgJUgdjb250ZW50IkUKDkhpc3RvcnlSZXF1ZXN0Eh0KCmNoYW5uZWxf",
+            "aWQYASABKAVSCWNoYW5uZWxJZBIUCgVsaW1pdBgCIAEoDVIFbGltaXQijQEK",
+            "C01lc3NhZ2VJdGVtEg4KAmlkGAEgASgFUgJpZBIXCgd1c2VyX2lkGAIgASgF",
+            "UgZ1c2VySWQSHQoKY2hhbm5lbF9pZBgDIAEoBVIJY2hhbm5lbElkEhgKB2Nv",
+            "bnRlbnQYBCABKAlSB2NvbnRlbnQSHAoJdGltZXN0YW1wGAUgASgDUgl0aW1l",
+            "c3RhbXAiQwoPSGlzdG9yeVJlc3BvbnNlEjAKCG1lc3NhZ2VzGAEgAygLMhQu",
+            "bWVzc2FnZS5NZXNzYWdlSXRlbVIIbWVzc2FnZXMiLgoNU3RyZWFtUmVxdWVz",
+            "dBIdCgpjaGFubmVsX2lkGAEgASgFUgljaGFubmVsSWQy5AEKDk1lc3NhZ2VT",
+            "ZXJ2aWNlEkYKEUdldENoYW5uZWxIaXN0b3J5EhcubWVzc2FnZS5IaXN0b3J5",
+            "UmVxdWVzdBoYLm1lc3NhZ2UuSGlzdG9yeVJlc3BvbnNlEkQKElN0cmVhbUxp",
+            "dmVNZXNzYWdlcxIWLm1lc3NhZ2UuU3RyZWFtUmVxdWVzdBoULm1lc3NhZ2Uu",
+            "TWVzc2FnZUl0ZW0wARJECg1DcmVhdGVNZXNzYWdlEh0ubWVzc2FnZS5DcmVh",
+            "dGVNZXNzYWdlUmVxdWVzdBoULm1lc3NhZ2UuTWVzc2FnZUl0ZW1iBnByb3Rv",
+            "Mw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Message.CreateMessageRequest), global::Message.CreateMessageRequest.Parser, new[]{ "ChannelId", "UserId", "Content" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Message.CreateMessageRequest), global::Message.CreateMessageRequest.Parser, new[]{ "ChannelId", "Content" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Message.HistoryRequest), global::Message.HistoryRequest.Parser, new[]{ "ChannelId", "Limit" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Message.MessageItem), global::Message.MessageItem.Parser, new[]{ "Id", "UserId", "ChannelId", "Content", "Timestamp" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Message.HistoryResponse), global::Message.HistoryResponse.Parser, new[]{ "Messages" }, null, null, null, null),
@@ -90,7 +90,6 @@ namespace Message {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public CreateMessageRequest(CreateMessageRequest other) : this() {
       channelId_ = other.channelId_;
-      userId_ = other.userId_;
       content_ = other.content_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
@@ -113,20 +112,8 @@ namespace Message {
       }
     }
 
-    /// <summary>Field number for the "user_id" field.</summary>
-    public const int UserIdFieldNumber = 2;
-    private int userId_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public int UserId {
-      get { return userId_; }
-      set {
-        userId_ = value;
-      }
-    }
-
     /// <summary>Field number for the "content" field.</summary>
-    public const int ContentFieldNumber = 3;
+    public const int ContentFieldNumber = 2;
     private string content_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -153,7 +140,6 @@ namespace Message {
         return true;
       }
       if (ChannelId != other.ChannelId) return false;
-      if (UserId != other.UserId) return false;
       if (Content != other.Content) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -163,7 +149,6 @@ namespace Message {
     public override int GetHashCode() {
       int hash = 1;
       if (ChannelId != 0) hash ^= ChannelId.GetHashCode();
-      if (UserId != 0) hash ^= UserId.GetHashCode();
       if (Content.Length != 0) hash ^= Content.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -187,12 +172,8 @@ namespace Message {
         output.WriteRawTag(8);
         output.WriteInt32(ChannelId);
       }
-      if (UserId != 0) {
-        output.WriteRawTag(16);
-        output.WriteInt32(UserId);
-      }
       if (Content.Length != 0) {
-        output.WriteRawTag(26);
+        output.WriteRawTag(18);
         output.WriteString(Content);
       }
       if (_unknownFields != null) {
@@ -209,12 +190,8 @@ namespace Message {
         output.WriteRawTag(8);
         output.WriteInt32(ChannelId);
       }
-      if (UserId != 0) {
-        output.WriteRawTag(16);
-        output.WriteInt32(UserId);
-      }
       if (Content.Length != 0) {
-        output.WriteRawTag(26);
+        output.WriteRawTag(18);
         output.WriteString(Content);
       }
       if (_unknownFields != null) {
@@ -229,9 +206,6 @@ namespace Message {
       int size = 0;
       if (ChannelId != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(ChannelId);
-      }
-      if (UserId != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(UserId);
       }
       if (Content.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(Content);
@@ -250,9 +224,6 @@ namespace Message {
       }
       if (other.ChannelId != 0) {
         ChannelId = other.ChannelId;
-      }
-      if (other.UserId != 0) {
-        UserId = other.UserId;
       }
       if (other.Content.Length != 0) {
         Content = other.Content;
@@ -280,11 +251,7 @@ namespace Message {
             ChannelId = input.ReadInt32();
             break;
           }
-          case 16: {
-            UserId = input.ReadInt32();
-            break;
-          }
-          case 26: {
+          case 18: {
             Content = input.ReadString();
             break;
           }
@@ -311,11 +278,7 @@ namespace Message {
             ChannelId = input.ReadInt32();
             break;
           }
-          case 16: {
-            UserId = input.ReadInt32();
-            break;
-          }
-          case 26: {
+          case 18: {
             Content = input.ReadString();
             break;
           }

@@ -61,11 +61,11 @@ public class MessageServiceInternal(ChannelBroadcaster broadcaster, MessageDbCon
 
     }
 
-    private async Task<Models.Message> SaveMessageToDatabase(CreateMessageRequest message) 
+    private async Task<Models.Message> SaveMessageToDatabase(CreateMessageRequest message, int userId) 
     {
         Models.Message dbMessage = new() {
             ChannelId=message.ChannelId,
-            UserId=message.UserId,
+            UserId=userId,
             Content=message.Content, 
             Timestamp=DateTimeOffset.UtcNow.Date,
         };
@@ -74,14 +74,21 @@ public class MessageServiceInternal(ChannelBroadcaster broadcaster, MessageDbCon
         return dbMessage;
     }
     public override async Task<MessageItem> CreateMessage(CreateMessageRequest request, ServerCallContext context)
-{
-        var newMessage = await this.SaveMessageToDatabase(request);
+{    var userId = RetrieveUserIdFromHeaders(context.RequestHeaders);
+        if(!await this.IsUserIdAMemberOfRoom(userId, request.ChannelId))
+        {
+            throw new RpcException(new Status(
+            StatusCode.PermissionDenied, 
+            "You do not have access to this room"
+        ));
+        }
+        var newMessage = await this.SaveMessageToDatabase(request, userId);
 
         var messageItem = new MessageItem
         {
             Id = newMessage.Id,
             ChannelId=request.ChannelId,
-            UserId = request.UserId,
+            UserId = userId,
             Content = request.Content,
             Timestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds(),
         };
