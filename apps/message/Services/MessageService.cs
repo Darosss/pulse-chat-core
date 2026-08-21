@@ -11,9 +11,9 @@ public class MessageServiceInternal(ChannelBroadcaster broadcaster, MessageDbCon
     private readonly MessageDbContext messageDb = dbContext;
     private readonly ILogger<MessageServiceInternal> _logger = logger;
   
-    public override async Task<HistoryResponse> GetChannelHistory(HistoryRequest request, ServerCallContext context)
+  private static int RetrieveUserIdFromHeaders(Metadata requestHeaders)
     {
-        var userId = context.RequestHeaders.GetValue("x-user-id");
+        var userId = requestHeaders.GetValue("x-user-id");
 
         if (string.IsNullOrEmpty(userId) || !int.TryParse(userId, out int userIdAsNumber))
         {
@@ -23,8 +23,17 @@ public class MessageServiceInternal(ChannelBroadcaster broadcaster, MessageDbCon
             ));
         }
 
-        var isMember = await this.messageDb.RoomMembers.AnyAsync(m=>m.RoomId == request.ChannelId && m.UserId == userIdAsNumber);
-        if(!isMember)
+        return userIdAsNumber;
+    }
+    private async Task<bool> IsUserIdAMemberOfRoom(int userId, int channelId)
+    {
+        return await this.messageDb.RoomMembers.AnyAsync(m=>m.RoomId == channelId && m.UserId == userId);
+        
+    }
+    public override async Task<HistoryResponse> GetChannelHistory(HistoryRequest request, ServerCallContext context)
+    {
+        var userId = RetrieveUserIdFromHeaders(context.RequestHeaders);
+        if(!await this.IsUserIdAMemberOfRoom(userId, request.ChannelId))
         {
             throw new RpcException(new Status(
             StatusCode.PermissionDenied, 
