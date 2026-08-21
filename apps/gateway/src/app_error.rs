@@ -1,7 +1,9 @@
 use axum::{
+    Json,
     http::StatusCode,
     response::{IntoResponse, Response},
 };
+use serde::Serialize;
 use tonic::{
     Code::{AlreadyExists, NotFound, PermissionDenied, Unauthenticated, Unavailable},
     Status,
@@ -10,6 +12,12 @@ use tonic::{
 pub enum AppError {
     MessageService(Status),
     AccountsService(Status),
+}
+
+#[derive(Serialize)]
+pub struct ErrorResponse {
+    pub error: String,
+    pub code: String,
 }
 
 impl IntoResponse for AppError {
@@ -25,7 +33,17 @@ impl IntoResponse for AppError {
                     _ => StatusCode::INTERNAL_SERVER_ERROR,
                 };
 
-                status_code.into_response()
+                let error_message = if status.message().is_empty() {
+                    "An unexpected error occured".to_string()
+                } else {
+                    status.message().to_string()
+                };
+                let body = Json(ErrorResponse {
+                    error: error_message,
+                    code: format!("{:?}", status.code()),
+                });
+
+                (status_code, body).into_response()
             }
         }
     }
