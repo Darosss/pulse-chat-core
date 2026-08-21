@@ -5,13 +5,12 @@ use axum::{
 };
 use axum_auth::AuthBearer;
 use serde::{Deserialize, Serialize};
-use tonic::Status;
 
 use crate::{
-    accounts::ValidateTokenBody,
     app_error::AppError,
     app_state::AppState,
     pb::message::{HistoryRequest, MessageItem},
+    utils::get_token_data,
 };
 #[derive(Deserialize)]
 pub struct GetMessagesQuery {
@@ -38,18 +37,23 @@ impl From<MessageItem> for MessageItemResponse {
     }
 }
 
-#[derive(Deserialize)]
+#[derive(Serialize, Deserialize)]
 pub struct CreateMessageBody {
-    pub user_id: i32,
     pub content: String,
 }
 
 pub async fn create_message(
     State(state): State<AppState>,
     Path(channel_id): Path<i32>,
+    AuthBearer(token): AuthBearer,
     Json(payload): Json<CreateMessageBody>,
 ) -> Result<Json<bool>, AppError> {
-    state.messages.create_message(channel_id, payload).await?;
+    let user_data = get_token_data(state.accounts, token).await?;
+
+    state
+        .messages
+        .create_message(channel_id, user_data.user_id, payload)
+        .await?;
 
     Ok(Json(true))
 }
@@ -60,20 +64,8 @@ pub async fn get_messages(
     Query(query): Query<GetMessagesQuery>,
     AuthBearer(token): AuthBearer,
 ) -> Result<Json<Vec<MessageItemResponse>>, AppError> {
-    if token.trim() == "" {
-        return Err(AppError::MessageService(Status::unauthenticated(
-            "You are not allowed to view messages of that channel",
-        )));
-    }
-    let user_data = state
-        .accounts
-        .validate_token(ValidateTokenBody { token })
-        .await?;
-    if !user_data.is_valid {
-        return Err(AppError::MessageService(Status::unauthenticated(
-            "Your token expired. Please log-in again",
-        )));
-    }
+    let user_data = get_token_data(state.accounts, token).await?;
+
     let result = state
         .messages
         .clone()

@@ -2,6 +2,7 @@ mod app_env_management;
 mod app_error;
 mod app_state;
 mod pb;
+mod utils;
 
 use std::str::FromStr;
 

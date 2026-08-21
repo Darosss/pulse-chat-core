@@ -4,9 +4,7 @@
 pub struct CreateMessageRequest {
     #[prost(int32, tag="1")]
     pub channel_id: i32,
-    #[prost(int32, tag="2")]
-    pub user_id: i32,
-    #[prost(string, tag="3")]
+    #[prost(string, tag="2")]
     pub content: ::prost::alloc::string::String,
 }
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]

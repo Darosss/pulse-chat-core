@@ -10,6 +10,7 @@ use crate::{
         HistoryRequest, HistoryResponse, MessageItem, StreamRequest, message::CreateMessageRequest,
         message_service_client::MessageServiceClient,
     },
+    utils::add_user_id_to_request,
 };
 
 #[derive(Clone)]
@@ -27,16 +28,20 @@ impl MessageService {
     pub async fn create_message(
         self,
         channel_id: i32,
+        user_id: i32,
         payload: CreateMessageBody,
     ) -> Result<MessageItem, AppError> {
         let mut client = self.client.clone();
-        let result = client
-            .create_message(CreateMessageRequest {
+
+        let request = add_user_id_to_request(
+            Request::new(CreateMessageRequest {
                 channel_id,
-                user_id: payload.user_id,
                 content: payload.content,
-            })
-            .await?;
+            }),
+            user_id,
+        );
+
+        let result = client.create_message(request).await?;
         Ok(result.into_inner())
     }
     pub async fn get_history(
@@ -45,10 +50,7 @@ impl MessageService {
         user_id: i32,
     ) -> Result<HistoryResponse, AppError> {
         let mut client = self.client.clone();
-        let mut request = Request::new(request);
-        let user_id_val = MetadataValue::from(user_id);
-
-        request.metadata_mut().insert("x-user-id", user_id_val);
+        let request = add_user_id_to_request(Request::new(request), user_id);
 
         let response = client.get_channel_history(request).await?;
         Ok(response.into_inner())
