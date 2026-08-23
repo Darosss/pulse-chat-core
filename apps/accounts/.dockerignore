@@ -1,0 +1,30 @@
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# Python bytecode & caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+
+# SQLite databases (prevents overriding container DB with local .db)
+*.db
+*.sqlite
+*.sqlite3
+
+# IDEs & Environment files
+.vscode/
+.idea/
+.env
+.env.local
+
+# Docker / Git artifacts
+Dockerfile*
+docker-compose*
+.dockerignore
+.git
+.gitignore

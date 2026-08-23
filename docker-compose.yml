@@ -1,0 +1,74 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: postgres-db
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-identity_db}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  redis:
+    image: redis:7-alpine
+    container_name: cache_redis
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  accounts-service:
+    build:
+      context: ./apps/accounts
+      dockerfile: Dockerfile
+    container_name: accounts_python
+    environment:
+      - ACCOUNTS_SQL_CONNECTION_STRING=postgresql+asyncpg://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/${POSTGRES_DB:-identity_db}
+      - ACCOUNTS_JWT_SECRET=super_secret_dev_key_123!
+      - ACCOUNTS_SERVICE_URL=0.0.0.0:50051
+    ports:
+      - "50051:50051"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  message-service:
+    build:
+      context: ./apps/message
+      dockerfile: Dockerfile
+    container_name: messages_csharp
+    environment:
+      - MESSAGE_SQL_CONNECTION_STRING=Host=postgres;Port=5432;Username=${POSTGRES_USER:-postgres};Password=${POSTGRES_PASSWORD:-postgres};Database=messages_db
+      - MESSAGE_SERVICE_URL=http://0.0.0.0:50052
+    ports:
+      - "50052:50052"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  gateway:
+    build:
+      context: ./apps/gateway
+      dockerfile: Dockerfile
+    container_name: api_gateway
+    environment:
+      - ACCOUNTS_SERVICE_URL=http://accounts-service:50051
+      - MESSAGE_SERVICE_URL=http://message-service:50052
+      - PORT=3000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - accounts-service
+      - message-service
+
+volumes:
+  pgdata:

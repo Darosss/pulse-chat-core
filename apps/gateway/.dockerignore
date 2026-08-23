@@ -1,0 +1,14 @@
+# Compiled binaries and dependency cache (VERY heavy!)
+target/
+
+# IDE and toolchain files
+.vscode/
+.idea/
+*.rs.bk
+
+# Docker / Git artifacts
+Dockerfile*
+docker-compose*
+.dockerignore
+.git
+.gitignore

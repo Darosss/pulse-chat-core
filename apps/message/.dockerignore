@@ -1,0 +1,21 @@
+# Build output & caches
+bin/
+obj/
+out/
+.vs/
+.vscode/
+.idea/
+
+# User-specific & local files
+*.user
+*.userosscache
+*.suo
+appsettings.Development.json
+*.local.json
+
+# Docker / Git artifacts
+Dockerfile*
+docker-compose*
+.dockerignore
+.git
+.gitignore
