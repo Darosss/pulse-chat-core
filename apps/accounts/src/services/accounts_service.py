@@ -4,7 +4,7 @@ from pb.auth_pb2 import AuthResponse, RegisterRequest, LoginRequest, ValidateTok
 from pb.auth_pb2_grpc import AuthServiceServicer
 from sqlalchemy import select
 from db import AsyncSessionLocal, UserModel
-import grpc
+from grpc import StatusCode, aio
 from utils import hash_password, create_jwt_token, verify_password, decode_jwt_token
 
 class AccountsService(AuthServiceServicer):
@@ -14,7 +14,7 @@ class AccountsService(AuthServiceServicer):
             result = await session.execute(stmt)
             existing_user = result.scalar_one_or_none()
             if(existing_user):
-                await context.abort(grpc.StatusCode.ALREADY_EXISTS, "A user with this email already exists")
+                await context.abort(StatusCode.ALREADY_EXISTS, "A user with this email already exists")
 
             hashed_pw = hash_password(request.password)
             new_user = UserModel(
@@ -35,7 +35,7 @@ class AccountsService(AuthServiceServicer):
             user = result.scalar_one_or_none()
 
             if not user or not verify_password(request.password, user.password_hash) :
-                await context.abort(grpc.StatusCode.UNAUTHENTICATED, "Invalid email or password")
+                await context.abort(StatusCode.UNAUTHENTICATED, "Invalid email or password")
             token: str = create_jwt_token(str(user.id), user.username)
             return AuthResponse(
                 token=token,
@@ -52,7 +52,7 @@ class AccountsService(AuthServiceServicer):
                 username=""
             )
 
-        user_id = str(payload.get("user_id", ""))
+        user_id = int(payload.get("user_id", ""))
         async with AsyncSessionLocal() as session:
             stmt = select(UserModel).where(UserModel.id == user_id)
             result = await session.execute(stmt)
