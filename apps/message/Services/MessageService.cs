@@ -67,7 +67,7 @@ public class MessageServiceInternal(ChannelBroadcaster broadcaster, MessageDbCon
             ChannelId=message.ChannelId,
             UserId=userId,
             Content=message.Content, 
-            Timestamp=DateTimeOffset.UtcNow.Date,
+            Timestamp=DateTime.UtcNow,
         };
         await this.messageDb.AddAsync(dbMessage);
         await this.messageDb.SaveChangesAsync();

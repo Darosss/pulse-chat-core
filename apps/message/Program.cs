@@ -22,24 +22,20 @@ if (string.IsNullOrWhiteSpace(appUrl))
     throw new Exception($"{appUrlEnvKey} is not set in environment variables");
 }
 
-var isDevelopment = builder.Environment.IsDevelopment();
-if (isDevelopment)
-{
-    builder.Services.AddDbContext<MessageDbContext>(options =>
-        options.UseSqlite(dbConnectionString));
-}
-else
-{
-  
-    builder.Services.AddDbContext<MessageDbContext>(options =>
-        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultProductionConnection")));
-}
+builder.Services.AddDbContext<MessageDbContext>(options =>{
+    options.UseNpgsql(dbConnectionString);
+});
 builder.Services.AddGrpc(options =>{
         options.Interceptors.Add<ErrorHandlingInterceptor>();    
     });
 
 builder.Services.AddSingleton<ChannelBroadcaster>();
 var app = builder.Build();
-
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<MessageDbContext>();
+    
+    dbContext.Database.Migrate(); 
+}
 app.MapGrpcService<MessageServiceInternal>();
 app.Run(appUrl.Trim());
