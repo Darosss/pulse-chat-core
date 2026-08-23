@@ -60,3 +60,33 @@ Redis: localhost:6379
                      │    Transcoder│                             │ Stripe, Webhooks) │
                      └──────────────┘                             └───────────────────┘
 ```
+
+### Estimated Roadmap
+
+#### Core
+
+- [x] **Initial core:** gateway(rust), (accounts)Python, message(C#)
+- [x] **Docker Setup:** docker-compose configs and logic
+- [x] **Auth Pipeline:** JWT generation, token validation, and path/query extraction
+- [ ] **Presence (Go):** Online/offline status tracking
+- [ ] **Gateway/auth Caching:** Redis JWT validation caching at gateway layer
+
+#### Messaging
+
+- [x] **Chat Pipeline:** base chatroom hhstory, message creation, and stream handlers
+- [x] **Room Security:** access check verification before socket upgrade
+- [ ] **Private Chats:** 1-on-1 direct messages
+- [ ] **Chat Extras:** typing indicators, message edits
+- [ ] **Multi-Server Sync:** redis ws scaling
+
+### Servers & Guilds
+
+- [ ] **Guilds:** server creation
+- [ ] **Text Channels:** multiple rooms per server
+- [ ] **Notifications:** fastify webhook alerts
+
+### Voice & Media
+
+- [ ] **Music streaming:** audio playback and queue management
+- [ ] **File Sharing:** image and file uploads
+- [ ] **Voice Chat:** WebRTC real-time audio
