@@ -4,6 +4,7 @@ use serde::Deserialize;
 pub struct Config {
     pub message_service_url: String,
     pub accounts_service_url: String,
+    pub redis_url: String,
 }
 
 pub fn load_config() -> Config {

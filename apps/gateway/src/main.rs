@@ -25,10 +25,15 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .expect("Make sure accounts_service_url is provided")
         .connect_lazy();
     let accounts_service = AuthService::new(accounts_service_channel);
+
+    let client = redis::Client::open(config.redis_url)?;
+
+    let redis_connection = client.get_multiplexed_async_connection().await?;
+
     let state = AppState {
         messages: messages_service,
         accounts: accounts_service,
-        // presence_client: todo!(),
+        redis: redis_connection, // presence_client: todo!(),
     };
 
     let app = Router::new()
