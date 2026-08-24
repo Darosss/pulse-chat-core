@@ -90,14 +90,21 @@ impl MessageService {
                     match maybe_ws_msg {
                         Some(Ok(Message::Text(text))) => {
                             if let Ok(val) = serde_json::from_str::<serde_json::Value>(&text) {
-                                if val["event"] == "PING" {
-                                    let _: Result<(), _> = redis.expire(&presence_key, self.presence_expiration as i64).await;
-
-                                    let pong = json!({ "event": "PONG" }).to_string();
-                                    if ws_sender.send(Message::Text(pong.into())).await.is_err() {
-                                        break;
+                                let event = match &val["event"] {
+                                    serde_json::Value::String(e) => e as &str,
+                                    _=>  return,
+                                };
+                                match event {
+                                    "PING" => {
+                                        let _: Result<(), _> = redis.expire(&presence_key, self.presence_expiration as i64).await;
+                                        let pong = json!({ "event": "PONG" }).to_string();
+                                        if ws_sender.send(Message::Text(pong.into())).await.is_err() {
+                                            break;
+                                        }
                                     }
+                                    _ => {}
                                 }
+
                             }
                         }
                         Some(Ok(Message::Ping(_))) => {
