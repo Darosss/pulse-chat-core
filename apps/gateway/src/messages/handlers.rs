@@ -99,11 +99,10 @@ pub async fn chat_socket(
 ) -> Result<Response, AppError> {
     let user_data: crate::pb::auth::ValidateTokenResponse =
         get_token_data(state.accounts, query.token).await?;
-
     Ok(ws.on_upgrade(move |socket| {
         state
             .messages
             .clone()
-            .handle_socket(socket, user_data.user_id, channel_id)
+            .handle_socket(socket, state.redis, user_data.user_id, channel_id)
     }))
 }
