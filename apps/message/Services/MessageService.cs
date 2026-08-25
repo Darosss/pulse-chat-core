@@ -111,7 +111,8 @@ public class MessageServiceInternal(ChannelBroadcaster broadcaster, MessageDbCon
         logger.LogInformation("Client connected to stream for channel: {ChannelId}", request.ChannelId);
 
         var reader = _broadcaster.Subscribe(request.ChannelId);
-
+        var headers = new Metadata { { "status", "connected" } };
+        await context.WriteResponseHeadersAsync(headers);
         try
         {
             while (!context.CancellationToken.IsCancellationRequested)
