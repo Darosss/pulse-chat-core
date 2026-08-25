@@ -97,12 +97,22 @@ pub async fn chat_socket(
     Query(query): Query<WsAuthQuery>,
     ws: WebSocketUpgrade,
 ) -> Result<Response, AppError> {
+    let accounts = state.accounts.clone();
     let user_data: crate::pb::auth::ValidateTokenResponse =
-        get_token_data(state.accounts, query.token).await?;
+        get_token_data(accounts, query.token).await?;
     Ok(ws.on_upgrade(move |socket| {
-        state
-            .messages
-            .clone()
-            .handle_socket(socket, state.redis, user_data.user_id, channel_id)
+        let state = state.clone();
+        let messages = state.messages.clone();
+        let redis = state.redis.clone();
+        let redis_client = state.redis_client.clone();
+        let rooms = state.rooms.clone();
+        messages.handle_socket(
+            socket,
+            redis,
+            redis_client,
+            rooms,
+            user_data.user_id,
+            channel_id,
+        )
     }))
 }

@@ -1,15 +1,24 @@
+use std::str::FromStr;
+
 use axum::extract::ws::{Message, WebSocket};
 use futures_util::{SinkExt, StreamExt};
 use redis::{AsyncCommands, aio::MultiplexedConnection};
 use serde_json::json;
+use tokio::sync::broadcast;
 use tonic::{Request, Streaming, transport::Channel};
 
 use crate::{
     app_error::AppError,
+    app_state::RoomChannels,
     messages::handlers::{CreateMessageBody, MessageItemResponse},
     pb::message::{
         HistoryRequest, HistoryResponse, MessageItem, StreamRequest, message::CreateMessageRequest,
         message_service_client::MessageServiceClient,
+    },
+    redis_utils::{
+        self,
+        presence::{PresenceStatus, get_presence_key, set_user_status},
+        pubsub::get_or_join_room_channel,
     },
     utils::add_user_id_to_request,
 };
@@ -62,12 +71,22 @@ impl MessageService {
     async fn handle_chat_socket_loop(
         &self,
         socket: WebSocket,
-        mut redis: MultiplexedConnection,
+        redis: &mut MultiplexedConnection,
+        mut room_rx: broadcast::Receiver<String>,
+        channel_id: &i32,
+        user_id: &i32,
         mut grpc_stream: Streaming<MessageItem>,
-        presence_key: &str,
     ) {
+        let presence_key = get_presence_key(user_id);
         let (mut ws_sender, mut ws_receiver) = socket.split();
 
+        let _ = redis_utils::presence::set_user_status(
+            redis,
+            &user_id,
+            &channel_id,
+            PresenceStatus::Online,
+        )
+        .await;
         loop {
             tokio::select! {
                 maybe_grpc_msg = grpc_stream.message() => {
@@ -101,6 +120,12 @@ impl MessageService {
                                         if ws_sender.send(Message::Text(pong.into())).await.is_err() {
                                             break;
                                         }
+                                    },
+                                    "USER_PRESENCE_CHANGED" => {
+                                        let payload_status = val["payload"]["status"].as_str().unwrap_or("online");
+                                        let presence_status = PresenceStatus::from_str(payload_status).unwrap_or(PresenceStatus::Online);
+                                        let _ = redis_utils::presence::set_user_status(redis, &user_id, &channel_id, presence_status).await;
+
                                     }
                                     _ => {}
                                 }
@@ -113,7 +138,14 @@ impl MessageService {
                         Some(Ok(Message::Close(_))) | None => break,
                         _ => {}
                     }
+                },
+                maybe_room_event = room_rx.recv() => {
+                if let Ok(event_json) = maybe_room_event {
+                    if ws_sender.send(Message::Text(event_json.into())).await.is_err() {
+                        break;
+                    }
                 }
+            }
             }
         }
     }
@@ -121,6 +153,8 @@ impl MessageService {
         self,
         socket: WebSocket,
         mut redis: MultiplexedConnection,
+        redis_client: redis::Client,
+        rooms: RoomChannels,
         user_id: i32,
         channel_id: i32,
     ) {
@@ -129,19 +163,18 @@ impl MessageService {
         let Ok(grpc_stream) = client.stream_live_messages(request).await else {
             return;
         };
-
-        let presence_key = format!("presence:user:{user_id}");
-        let _: Result<(), _> = redis
-            .set_ex(&presence_key, "online", self.presence_expiration)
-            .await;
+        let room_rx = get_or_join_room_channel(redis_client, rooms, &channel_id).await;
 
         Self::handle_chat_socket_loop(
             &self,
             socket,
-            redis,
+            &mut redis,
+            room_rx,
+            &channel_id,
+            &user_id,
             grpc_stream.into_inner(),
-            &presence_key,
         )
         .await;
+        let _ = set_user_status(&mut redis, &user_id, &channel_id, PresenceStatus::Offline).await;
     }
 }

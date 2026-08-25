@@ -2,12 +2,14 @@ mod app_env_management;
 mod app_error;
 mod app_state;
 mod pb;
+mod redis_utils;
 mod utils;
 
-use std::str::FromStr;
+use std::{collections::HashMap, str::FromStr, sync::Arc};
 
 use app_state::AppState;
 use axum::{Router, routing::get};
+use tokio::sync::Mutex;
 use tonic::transport::Endpoint;
 
 use crate::{accounts::AuthService, app_env_management::load_config, messages::MessageService};
@@ -33,7 +35,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let state = AppState {
         messages: messages_service,
         accounts: accounts_service,
-        redis: redis_connection, // presence_client: todo!(),
+        redis: redis_connection,
+        rooms: Arc::new(Mutex::new(HashMap::new())),
+        redis_client: client,
     };
 
     let app = Router::new()
