@@ -37,8 +37,8 @@ impl FromStr for PresenceStatus {
 pub async fn set_user_status(
     redis: &mut MultiplexedConnection,
     user_id: &i32,
-    channel_id: &i32,
     status: PresenceStatus,
+    channel_id: Option<&i32>,
 ) -> Result<(), redis::RedisError> {
     let key = format!("presence:user:{user_id}");
     let status_str: &str = PresenceStatus::as_str(&status);
@@ -57,9 +57,13 @@ pub async fn set_user_status(
     })
     .to_string();
 
-    redis
-        .publish(format!("channel:{channel_id}:events"), event_payload)
-        .await
+    if channel_id.is_some() {
+        let ch_str = channel_id.unwrap();
+        let _ = redis
+            .publish::<String, String, ()>(format!("channel:{ch_str}:events"), event_payload)
+            .await;
+    }
+    Ok(())
 }
 
 pub fn get_presence_key(user_id: &i32) -> String {

@@ -26,8 +26,8 @@ pub async fn get_token_data(
     return Ok(user_data);
 }
 
-pub fn add_user_id_to_request<T>(mut request: Request<T>, user_id: i32) -> Request<T> {
-    let user_id_val = MetadataValue::from(user_id);
+pub fn add_user_id_to_request<T>(mut request: Request<T>, user_id: &i32) -> Request<T> {
+    let user_id_val = MetadataValue::from(*user_id);
 
     request.metadata_mut().insert("x-user-id", user_id_val);
     return request;

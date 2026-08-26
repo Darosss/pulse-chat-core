@@ -1,24 +1,11 @@
-use std::str::FromStr;
-
-use axum::extract::ws::{Message, WebSocket};
-use futures_util::{SinkExt, StreamExt};
-use redis::{AsyncCommands, aio::MultiplexedConnection};
-use serde_json::json;
-use tokio::sync::broadcast;
-use tonic::{Request, Streaming, transport::Channel};
+use tonic::{Request, transport::Channel};
 
 use crate::{
     app_error::AppError,
-    app_state::RoomChannels,
-    messages::handlers::{CreateMessageBody, MessageItemResponse},
+    messages::handlers::CreateMessageBody,
     pb::message::{
-        HistoryRequest, HistoryResponse, MessageItem, StreamRequest, message::CreateMessageRequest,
+        HistoryRequest, HistoryResponse, MessageItem, message::CreateMessageRequest,
         message_service_client::MessageServiceClient,
-    },
-    redis_utils::{
-        self,
-        presence::{PresenceStatus, get_presence_key, set_user_status},
-        pubsub::get_or_join_room_channel,
     },
     utils::add_user_id_to_request,
 };
@@ -26,14 +13,12 @@ use crate::{
 #[derive(Clone)]
 pub struct MessageService {
     pub client: MessageServiceClient<Channel>,
-    presence_expiration: u64,
 }
 
 impl MessageService {
     pub fn new(channel: Channel) -> Self {
         Self {
             client: MessageServiceClient::new(channel),
-            presence_expiration: 45,
         }
     }
 
@@ -50,7 +35,7 @@ impl MessageService {
                 channel_id,
                 content: payload.content,
             }),
-            user_id,
+            &user_id,
         );
 
         let result = client.create_message(request).await?;
@@ -62,119 +47,9 @@ impl MessageService {
         user_id: i32,
     ) -> Result<HistoryResponse, AppError> {
         let mut client = self.client.clone();
-        let request = add_user_id_to_request(Request::new(request), user_id);
+        let request = add_user_id_to_request(Request::new(request), &user_id);
 
         let response = client.get_channel_history(request).await?;
         Ok(response.into_inner())
-    }
-
-    async fn handle_chat_socket_loop(
-        &self,
-        socket: WebSocket,
-        redis: &mut MultiplexedConnection,
-        mut room_rx: broadcast::Receiver<String>,
-        channel_id: &i32,
-        user_id: &i32,
-        mut grpc_stream: Streaming<MessageItem>,
-    ) {
-        let presence_key = get_presence_key(user_id);
-        let (mut ws_sender, mut ws_receiver) = socket.split();
-
-        let _ = redis_utils::presence::set_user_status(
-            redis,
-            &user_id,
-            &channel_id,
-            PresenceStatus::Online,
-        )
-        .await;
-        loop {
-            tokio::select! {
-                maybe_grpc_msg = grpc_stream.message() => {
-                    match maybe_grpc_msg {
-                        Ok(Some(grpc_msg)) => {
-                            let msg = MessageItemResponse::from(grpc_msg);
-                            let payload = json!({
-                                "event": "NEW_MESSAGE",
-                                "payload": msg
-                            }).to_string();
-
-                            if ws_sender.send(Message::Text(payload.into())).await.is_err() {
-                                break;
-                            }
-                        }
-                        _ => break,
-                    }
-                }
-                maybe_ws_msg = ws_receiver.next() => {
-                    match maybe_ws_msg {
-                        Some(Ok(Message::Text(text))) => {
-                            if let Ok(val) = serde_json::from_str::<serde_json::Value>(&text) {
-                                let event = match &val["event"] {
-                                    serde_json::Value::String(e) => e as &str,
-                                    _=>  return,
-                                };
-                                match event {
-                                    "PING" => {
-                                        let _: Result<(), _> = redis.expire(&presence_key, self.presence_expiration as i64).await;
-                                        let pong = json!({ "event": "PONG" }).to_string();
-                                        if ws_sender.send(Message::Text(pong.into())).await.is_err() {
-                                            break;
-                                        }
-                                    },
-                                    "USER_PRESENCE_CHANGED" => {
-                                        let payload_status = val["payload"]["status"].as_str().unwrap_or("online");
-                                        let presence_status = PresenceStatus::from_str(payload_status).unwrap_or(PresenceStatus::Online);
-                                        let _ = redis_utils::presence::set_user_status(redis, &user_id, &channel_id, presence_status).await;
-
-                                    }
-                                    _ => {}
-                                }
-
-                            }
-                        }
-                        Some(Ok(Message::Ping(_))) => {
-                            let _: Result<(), _> = redis.expire(&presence_key, self.presence_expiration as i64).await;
-                        }
-                        Some(Ok(Message::Close(_))) | None => break,
-                        _ => {}
-                    }
-                },
-                maybe_room_event = room_rx.recv() => {
-                if let Ok(event_json) = maybe_room_event {
-                    if ws_sender.send(Message::Text(event_json.into())).await.is_err() {
-                        break;
-                    }
-                }
-            }
-            }
-        }
-    }
-    pub async fn handle_socket(
-        self,
-        socket: WebSocket,
-        mut redis: MultiplexedConnection,
-        redis_client: redis::Client,
-        rooms: RoomChannels,
-        user_id: i32,
-        channel_id: i32,
-    ) {
-        let request = add_user_id_to_request(Request::new(StreamRequest { channel_id }), user_id);
-        let mut client = self.client.clone();
-        let Ok(grpc_stream) = client.stream_live_messages(request).await else {
-            return;
-        };
-        let room_rx = get_or_join_room_channel(redis_client, rooms, &channel_id).await;
-
-        Self::handle_chat_socket_loop(
-            &self,
-            socket,
-            &mut redis,
-            room_rx,
-            &channel_id,
-            &user_id,
-            grpc_stream.into_inner(),
-        )
-        .await;
-        let _ = set_user_status(&mut redis, &user_id, &channel_id, PresenceStatus::Offline).await;
     }
 }

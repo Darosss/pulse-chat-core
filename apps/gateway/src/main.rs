@@ -4,6 +4,7 @@ mod app_state;
 mod pb;
 mod redis_utils;
 mod utils;
+mod ws_gateway;
 
 use std::{collections::HashMap, str::FromStr, sync::Arc};
 
@@ -12,7 +13,10 @@ use axum::{Router, routing::get};
 use tokio::sync::Mutex;
 use tonic::transport::Endpoint;
 
-use crate::{accounts::AuthService, app_env_management::load_config, messages::MessageService};
+use crate::{
+    accounts::AuthService, app_env_management::load_config, messages::MessageService,
+    ws_gateway::service::WsService,
+};
 mod accounts;
 mod messages;
 
@@ -36,12 +40,14 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         messages: messages_service,
         accounts: accounts_service,
         redis: redis_connection,
+        ws_state: WsService::new(),
         rooms: Arc::new(Mutex::new(HashMap::new())),
         redis_client: client,
     };
 
     let app = Router::new()
         .route("/", get(get_home))
+        .merge(ws_gateway::router())
         .merge(accounts::router())
         .merge(messages::router())
         .with_state(state);
