@@ -26,7 +26,7 @@ Redis: localhost:6379
 - each service can be started individually during development:
   - gateway(**rust**): `cd apps/gateway && cargo run`
   - message(**c**#): `cd apps/message & dotnet watch` _or f5 in some IDE's_
-  - pressence(**go**): `soon`
+  - pressence(**go**): `soon` - for now it depends on gateway
   - accounts/auth(**python**): check [apps/accounts/README](apps/accounts/README.md)
 - proto folder contains all .proto files
 - root package contains `npm run proto:generate` script to generate needed types/files for each language based on buf.gen.yaml file
@@ -68,7 +68,8 @@ Redis: localhost:6379
 - [x] **Initial core:** gateway(rust), (accounts)Python, message(C#)
 - [x] **Docker Setup:** docker-compose configs and logic
 - [x] **Auth Pipeline:** JWT generation, token validation, and path/query extraction
-- [ ] **Presence (Go):** Online/offline status tracking
+- [ ] **Presence (Go):** Online/offline status tracking:
+  - _**for now it's all in gateway**_
 - [ ] **Gateway/auth Caching:** Redis JWT validation caching at gateway layer
 
 #### Messaging
