@@ -39,5 +39,25 @@ pub struct ValidateTokenResponse {
     #[prost(string, tag="3")]
     pub username: ::prost::alloc::string::String,
 }
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct RefreshTokenRequest {
+    #[prost(string, tag="1")]
+    pub refresh_token: ::prost::alloc::string::String,
+}
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct RefreshTokenResponse {
+    #[prost(string, tag="1")]
+    pub access_token: ::prost::alloc::string::String,
+    #[prost(string, tag="2")]
+    pub refresh_token: ::prost::alloc::string::String,
+}
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct GetPublicJwtKeyRequest {
+}
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct GetPublicJwtKeyResponse {
+    #[prost(string, tag="1")]
+    pub key: ::prost::alloc::string::String,
+}
 include!("auth.tonic.rs");
 // @@protoc_insertion_point(module)

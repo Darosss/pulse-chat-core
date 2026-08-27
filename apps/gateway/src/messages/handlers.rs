@@ -47,7 +47,7 @@ pub async fn create_message(
     AuthBearer(token): AuthBearer,
     Json(payload): Json<CreateMessageBody>,
 ) -> Result<Json<bool>, AppError> {
-    let user_data = get_token_data(state.accounts, token).await?;
+    let user_data = get_token_data(&state, &token).await?;
 
     state
         .messages
@@ -63,7 +63,7 @@ pub async fn get_messages(
     Query(query): Query<GetMessagesQuery>,
     AuthBearer(token): AuthBearer,
 ) -> Result<Json<Vec<MessageItemResponse>>, AppError> {
-    let user_data = get_token_data(state.accounts, token).await?;
+    let user_data = get_token_data(&state, &token).await?;
 
     let result = state
         .messages

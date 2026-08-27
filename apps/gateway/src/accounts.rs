@@ -2,6 +2,6 @@ mod handlers;
 mod routes;
 
 pub mod service;
-pub use handlers::ValidateTokenBody;
+pub mod token_utils;
 pub use routes::router;
 pub use service::AuthService;

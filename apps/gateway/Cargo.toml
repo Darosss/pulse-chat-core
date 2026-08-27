@@ -9,6 +9,7 @@ axum-auth = "0.8.1"
 dotenvy = "0.15.7"
 envy = "0.4.2"
 futures-util = "0.3.34"
+jsonwebtoken = { version = "11.0.0", features = ["rust_crypto"] }
 prost = "0.14.4"
 redis = { version = "1.6.0", features = ["aio", "tokio-comp"] }
 serde = { version = "1.0.229", features = ["derive"] }

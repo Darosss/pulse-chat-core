@@ -152,6 +152,54 @@ pub mod auth_service_client {
                 .insert(GrpcMethod::new("auth.AuthService", "ValidateToken"));
             self.inner.unary(req, path, codec).await
         }
+        pub async fn refresh_token(
+            &mut self,
+            request: impl tonic::IntoRequest<super::ValidateTokenRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::ValidateTokenResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::unknown(
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic_prost::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/auth.AuthService/RefreshToken",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("auth.AuthService", "RefreshToken"));
+            self.inner.unary(req, path, codec).await
+        }
+        pub async fn get_public_jwt_key(
+            &mut self,
+            request: impl tonic::IntoRequest<super::GetPublicJwtKeyRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::GetPublicJwtKeyResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::unknown(
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic_prost::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/auth.AuthService/GetPublicJWTKey",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("auth.AuthService", "GetPublicJWTKey"));
+            self.inner.unary(req, path, codec).await
+        }
     }
 }
 /// Generated server implementations.
@@ -180,6 +228,20 @@ pub mod auth_service_server {
             request: tonic::Request<super::ValidateTokenRequest>,
         ) -> std::result::Result<
             tonic::Response<super::ValidateTokenResponse>,
+            tonic::Status,
+        >;
+        async fn refresh_token(
+            &self,
+            request: tonic::Request<super::ValidateTokenRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::ValidateTokenResponse>,
+            tonic::Status,
+        >;
+        async fn get_public_jwt_key(
+            &self,
+            request: tonic::Request<super::GetPublicJwtKeyRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::GetPublicJwtKeyResponse>,
             tonic::Status,
         >;
     }
@@ -377,6 +439,97 @@ pub mod auth_service_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let method = ValidateTokenSvc(inner);
+                        let codec = tonic_prost::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/auth.AuthService/RefreshToken" => {
+                    #[allow(non_camel_case_types)]
+                    struct RefreshTokenSvc<T: AuthService>(pub Arc<T>);
+                    impl<
+                        T: AuthService,
+                    > tonic::server::UnaryService<super::ValidateTokenRequest>
+                    for RefreshTokenSvc<T> {
+                        type Response = super::ValidateTokenResponse;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::ValidateTokenRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as AuthService>::refresh_token(&inner, request).await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = RefreshTokenSvc(inner);
+                        let codec = tonic_prost::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/auth.AuthService/GetPublicJWTKey" => {
+                    #[allow(non_camel_case_types)]
+                    struct GetPublicJWTKeySvc<T: AuthService>(pub Arc<T>);
+                    impl<
+                        T: AuthService,
+                    > tonic::server::UnaryService<super::GetPublicJwtKeyRequest>
+                    for GetPublicJWTKeySvc<T> {
+                        type Response = super::GetPublicJwtKeyResponse;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::GetPublicJwtKeyRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as AuthService>::get_public_jwt_key(&inner, request)
+                                    .await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = GetPublicJWTKeySvc(inner);
                         let codec = tonic_prost::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(

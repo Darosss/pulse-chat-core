@@ -9,6 +9,7 @@ use tonic::{
     Status,
 };
 
+#[derive(Debug)]
 pub enum AppError {
     MessageService(Status),
     AccountsService(Status),

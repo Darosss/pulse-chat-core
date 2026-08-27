@@ -6,6 +6,8 @@ service AuthService {
   rpc Register (RegisterRequest) returns (AuthResponse);
   rpc Login (LoginRequest) returns (AuthResponse);
   rpc ValidateToken(ValidateTokenRequest) returns (ValidateTokenResponse);
+  rpc RefreshToken(ValidateTokenRequest) returns (ValidateTokenResponse);
+  rpc GetPublicJWTKey(GetPublicJWTKeyRequest) returns (GetPublicJWTKeyResponse);
 }
 
 message RegisterRequest {
@@ -33,4 +35,19 @@ message ValidateTokenResponse {
   bool is_valid = 1;
   int32 user_id = 2;
   string username = 3;
+}
+
+message RefreshTokenRequest {
+  string refresh_token = 1;
+}
+
+message RefreshTokenResponse {
+  string access_token = 1;
+  string refresh_token = 2;
+}
+
+message GetPublicJWTKeyRequest {}
+
+message GetPublicJWTKeyResponse {
+  string key = 1;
 }

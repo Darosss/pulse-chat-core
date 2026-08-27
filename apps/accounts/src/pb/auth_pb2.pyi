@@ -47,3 +47,27 @@ class ValidateTokenResponse(_message.Message):
     user_id: int
     username: str
     def __init__(self, is_valid: _Optional[bool] = ..., user_id: _Optional[int] = ..., username: _Optional[str] = ...) -> None: ...
+
+class RefreshTokenRequest(_message.Message):
+    __slots__ = ("refresh_token",)
+    REFRESH_TOKEN_FIELD_NUMBER: _ClassVar[int]
+    refresh_token: str
+    def __init__(self, refresh_token: _Optional[str] = ...) -> None: ...
+
+class RefreshTokenResponse(_message.Message):
+    __slots__ = ("access_token", "refresh_token")
+    ACCESS_TOKEN_FIELD_NUMBER: _ClassVar[int]
+    REFRESH_TOKEN_FIELD_NUMBER: _ClassVar[int]
+    access_token: str
+    refresh_token: str
+    def __init__(self, access_token: _Optional[str] = ..., refresh_token: _Optional[str] = ...) -> None: ...
+
+class GetPublicJWTKeyRequest(_message.Message):
+    __slots__ = ()
+    def __init__(self) -> None: ...
+
+class GetPublicJWTKeyResponse(_message.Message):
+    __slots__ = ("key",)
+    KEY_FIELD_NUMBER: _ClassVar[int]
+    key: str
+    def __init__(self, key: _Optional[str] = ...) -> None: ...

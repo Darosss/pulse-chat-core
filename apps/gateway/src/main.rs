@@ -10,7 +10,7 @@ use std::{collections::HashMap, str::FromStr, sync::Arc};
 
 use app_state::AppState;
 use axum::{Router, routing::get};
-use tokio::sync::Mutex;
+use tokio::sync::{Mutex, RwLock};
 use tonic::transport::Endpoint;
 
 use crate::{
@@ -37,6 +37,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let redis_connection = client.get_multiplexed_async_connection().await?;
 
     let state = AppState {
+        public_decode_key: Arc::new(RwLock::new(Option::None)),
         messages: messages_service,
         accounts: accounts_service,
         redis: redis_connection,
@@ -44,6 +45,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         rooms: Arc::new(Mutex::new(HashMap::new())),
         redis_client: client,
     };
+    let _ = state.get_or_fetch_public_key().await;
 
     let app = Router::new()
         .route("/", get(get_home))

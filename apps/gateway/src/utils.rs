@@ -1,29 +1,21 @@
 use tonic::{Request, Status, metadata::MetadataValue};
 
 use crate::{
-    accounts::{AuthService, ValidateTokenBody},
+    accounts::token_utils::{TokenClaims, validate_request_jwt},
     app_error::AppError,
-    pb::auth::ValidateTokenResponse,
+    app_state::AppState,
 };
 
-pub async fn get_token_data(
-    auth_service: AuthService,
-    token: String,
-) -> Result<ValidateTokenResponse, AppError> {
+pub async fn get_token_data(state: &AppState, token: &str) -> Result<TokenClaims, AppError> {
     if token.trim() == "" {
         return Err(AppError::MessageService(Status::unauthenticated(
             "You are not allowed to view messages of that channel",
         )));
     }
-    let user_data = auth_service
-        .validate_token(ValidateTokenBody { token })
-        .await?;
-    if !user_data.is_valid {
-        return Err(AppError::MessageService(Status::unauthenticated(
-            "Your token expired. Please log-in again",
-        )));
-    }
-    return Ok(user_data);
+
+    let token_claims = validate_request_jwt(state, &token).await?;
+
+    return Ok(token_claims);
 }
 
 pub fn add_user_id_to_request<T>(mut request: Request<T>, user_id: &i32) -> Request<T> {

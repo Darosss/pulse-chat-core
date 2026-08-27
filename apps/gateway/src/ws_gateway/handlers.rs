@@ -16,9 +16,7 @@ pub async fn handle_socket(
     Query(query): Query<WsAuthQuery>,
     ws: WebSocketUpgrade,
 ) -> Result<Response, AppError> {
-    let accounts = state.accounts.clone();
-    let user_data: crate::pb::auth::ValidateTokenResponse =
-        get_token_data(accounts, query.token).await?;
+    let user_data = get_token_data(&state, &query.token).await?;
 
     Ok(ws.on_upgrade(move |socket| {
         let messages = state.messages.clone();

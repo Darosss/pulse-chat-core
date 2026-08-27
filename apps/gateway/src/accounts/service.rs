@@ -5,6 +5,7 @@ use crate::{
     app_error::AppError,
     pb::auth::{
         AuthResponse, LoginRequest, RegisterRequest, ValidateTokenRequest, ValidateTokenResponse,
+        auth::{GetPublicJwtKeyRequest, GetPublicJwtKeyResponse},
         auth_service_client::AuthServiceClient,
     },
 };
@@ -47,11 +48,16 @@ impl AuthService {
         payload: ValidateTokenBody,
     ) -> Result<ValidateTokenResponse, AppError> {
         let mut client = self.client.clone();
-        let login_response = client
+        let response = client
             .validate_token(ValidateTokenRequest {
                 token: payload.token,
             })
             .await?;
-        Ok(login_response.into_inner())
+        Ok(response.into_inner())
+    }
+    pub async fn get_public_jwt_key(self) -> Result<GetPublicJwtKeyResponse, AppError> {
+        let mut client = self.client.clone();
+        let response = client.get_public_jwt_key(GetPublicJwtKeyRequest {}).await?;
+        Ok(response.into_inner())
     }
 }
