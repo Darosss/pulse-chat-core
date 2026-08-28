@@ -33,12 +33,21 @@ services:
     container_name: accounts_python
     environment:
       - ACCOUNTS_SQL_CONNECTION_STRING=postgresql+asyncpg://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/${POSTGRES_DB:-identity_db}
-      - ACCOUNTS_JWT_SECRET=super_secret_dev_key_123!
       - ACCOUNTS_SERVICE_URL=0.0.0.0:50051
+      - ACCOUNTS_ENVIRONMENT=production
+      - ACCOUNTS_REDIS_URL=redis://redis:6379/0
+      - ACCOUNTS_JWT_TOKEN_EXPIRATION_MINUTES=15
+      - ACCOUNTS_JWT_REFRESH_TOKEN_EXPIRATION_MINUTES=10080
+      - JWT_PRIVATE_KEY_PATH=/app/keys/jwt_private.pem
+      - JWT_PUBLIC_KEY_PATH=/app/keys/jwt_public.pem
     ports:
       - "50051:50051"
+    volumes:
+      - ./keys:/app/keys
     depends_on:
       postgres:
+        condition: service_healthy
+      redis:
         condition: service_healthy
 
   message-service:
@@ -61,14 +70,14 @@ services:
       dockerfile: Dockerfile
     container_name: api_gateway
     environment:
+      - REDIS_URL=redis://redis:6379/0
       - ACCOUNTS_SERVICE_URL=http://accounts-service:50051
       - MESSAGE_SERVICE_URL=http://message-service:50052
       - PORT=3000
     ports:
       - "3000:3000"
     depends_on:
-      - accounts-service
-      - message-service
-
+      redis:
+        condition: service_healthy
 volumes:
   pgdata:
