@@ -67,7 +67,7 @@ class AccountsService(AuthServiceServicer):
     async def RefreshToken(self, request: RefreshTokenRequest, context: aio.ServicerContext) -> RefreshTokenResponse:
         payload = decode_jwt_token(request.refresh_token) 
         if not payload or payload.get("type") != "refresh":
-            context.set_code(grpc.StatusCode.UNAUTHENTICATED)
+            context.set_code(StatusCode.UNAUTHENTICATED)
             return RefreshTokenResponse()
 
         user_id = payload.get("user_id")
@@ -77,7 +77,7 @@ class AccountsService(AuthServiceServicer):
         stored_token = await r.get(get_refresh_token_key(user_id, jti))
         
         if not stored_token or stored_token != request.refresh_token: 
-            context.set_code(grpc.StatusCode.UNAUTHENTICATED)
+            context.set_code(StatusCode.UNAUTHENTICATED)
             return RefreshTokenResponse()
 
         await r.delete(get_refresh_token_key(user_id, jti))
@@ -92,7 +92,7 @@ class AccountsService(AuthServiceServicer):
             refresh_token=new_refresh_token
         )
 
-    async def GetPublicJWTKey(self, request: GetPublicJWTKeyRequest, context: grpc.aio.ServicerContext) -> GetPublicJWTKeyResponse:
+    async def GetPublicJWTKey(self, request: GetPublicJWTKeyRequest, context: aio.ServicerContext) -> GetPublicJWTKeyResponse:
         
         public_key_str = get_public_key().decode("utf-8")
 

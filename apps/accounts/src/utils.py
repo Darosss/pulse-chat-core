@@ -4,6 +4,7 @@ import jwt
 import bcrypt 
 from jwt_keys import get_private_key, get_public_key
 import uuid
+import redis
 
 TOKEN_EXPIRATION_MINUTES: int = int(os.getenv("ACCOUNTS_JWT_TOKEN_EXPIRATION_MINUTES", 15))
 REFRESH_TOKEN_EXPIRE_MINUTES: int =  int(os.getenv("ACCOUNTS_JWT_REFRESH_TOKEN_EXPIRATION_MINUTES", 60*7))
