@@ -26,25 +26,25 @@ namespace Message {
           string.Concat(
             "Cg1tZXNzYWdlLnByb3RvEgdtZXNzYWdlIk8KFENyZWF0ZU1lc3NhZ2VSZXF1",
             "ZXN0Eh0KCmNoYW5uZWxfaWQYASABKAVSCWNoYW5uZWxJZBIYCgdjb250ZW50",
-            "GAIgASgJUgdjb250ZW50IkUKDkhpc3RvcnlSZXF1ZXN0Eh0KCmNoYW5uZWxf",
-            "aWQYASABKAVSCWNoYW5uZWxJZBIUCgVsaW1pdBgCIAEoDVIFbGltaXQijQEK",
-            "C01lc3NhZ2VJdGVtEg4KAmlkGAEgASgFUgJpZBIXCgd1c2VyX2lkGAIgASgF",
-            "UgZ1c2VySWQSHQoKY2hhbm5lbF9pZBgDIAEoBVIJY2hhbm5lbElkEhgKB2Nv",
-            "bnRlbnQYBCABKAlSB2NvbnRlbnQSHAoJdGltZXN0YW1wGAUgASgDUgl0aW1l",
-            "c3RhbXAiQwoPSGlzdG9yeVJlc3BvbnNlEjAKCG1lc3NhZ2VzGAEgAygLMhQu",
-            "bWVzc2FnZS5NZXNzYWdlSXRlbVIIbWVzc2FnZXMiLgoNU3RyZWFtUmVxdWVz",
-            "dBIdCgpjaGFubmVsX2lkGAEgASgFUgljaGFubmVsSWQy5AEKDk1lc3NhZ2VT",
-            "ZXJ2aWNlEkYKEUdldENoYW5uZWxIaXN0b3J5EhcubWVzc2FnZS5IaXN0b3J5",
-            "UmVxdWVzdBoYLm1lc3NhZ2UuSGlzdG9yeVJlc3BvbnNlEkQKElN0cmVhbUxp",
-            "dmVNZXNzYWdlcxIWLm1lc3NhZ2UuU3RyZWFtUmVxdWVzdBoULm1lc3NhZ2Uu",
-            "TWVzc2FnZUl0ZW0wARJECg1DcmVhdGVNZXNzYWdlEh0ubWVzc2FnZS5DcmVh",
-            "dGVNZXNzYWdlUmVxdWVzdBoULm1lc3NhZ2UuTWVzc2FnZUl0ZW1iBnByb3Rv",
-            "Mw=="));
+            "GAIgASgJUgdjb250ZW50IlkKDkhpc3RvcnlSZXF1ZXN0Eh0KCmNoYW5uZWxf",
+            "aWQYASABKAVSCWNoYW5uZWxJZBIUCgVsaW1pdBgCIAEoDVIFbGltaXQSEgoE",
+            "cGFnZRgDIAEoDVIEcGFnZSKNAQoLTWVzc2FnZUl0ZW0SDgoCaWQYASABKAVS",
+            "AmlkEhcKB3VzZXJfaWQYAiABKAVSBnVzZXJJZBIdCgpjaGFubmVsX2lkGAMg",
+            "ASgFUgljaGFubmVsSWQSGAoHY29udGVudBgEIAEoCVIHY29udGVudBIcCgl0",
+            "aW1lc3RhbXAYBSABKANSCXRpbWVzdGFtcCJDCg9IaXN0b3J5UmVzcG9uc2US",
+            "MAoIbWVzc2FnZXMYASADKAsyFC5tZXNzYWdlLk1lc3NhZ2VJdGVtUghtZXNz",
+            "YWdlcyIuCg1TdHJlYW1SZXF1ZXN0Eh0KCmNoYW5uZWxfaWQYASABKAVSCWNo",
+            "YW5uZWxJZDLkAQoOTWVzc2FnZVNlcnZpY2USRgoRR2V0Q2hhbm5lbEhpc3Rv",
+            "cnkSFy5tZXNzYWdlLkhpc3RvcnlSZXF1ZXN0GhgubWVzc2FnZS5IaXN0b3J5",
+            "UmVzcG9uc2USRAoSU3RyZWFtTGl2ZU1lc3NhZ2VzEhYubWVzc2FnZS5TdHJl",
+            "YW1SZXF1ZXN0GhQubWVzc2FnZS5NZXNzYWdlSXRlbTABEkQKDUNyZWF0ZU1l",
+            "c3NhZ2USHS5tZXNzYWdlLkNyZWF0ZU1lc3NhZ2VSZXF1ZXN0GhQubWVzc2Fn",
+            "ZS5NZXNzYWdlSXRlbWIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Message.CreateMessageRequest), global::Message.CreateMessageRequest.Parser, new[]{ "ChannelId", "Content" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Message.HistoryRequest), global::Message.HistoryRequest.Parser, new[]{ "ChannelId", "Limit" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Message.HistoryRequest), global::Message.HistoryRequest.Parser, new[]{ "ChannelId", "Limit", "Page" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Message.MessageItem), global::Message.MessageItem.Parser, new[]{ "Id", "UserId", "ChannelId", "Content", "Timestamp" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Message.HistoryResponse), global::Message.HistoryResponse.Parser, new[]{ "Messages" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Message.StreamRequest), global::Message.StreamRequest.Parser, new[]{ "ChannelId" }, null, null, null, null)
@@ -326,6 +326,7 @@ namespace Message {
     public HistoryRequest(HistoryRequest other) : this() {
       channelId_ = other.channelId_;
       limit_ = other.limit_;
+      page_ = other.page_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -359,6 +360,18 @@ namespace Message {
       }
     }
 
+    /// <summary>Field number for the "page" field.</summary>
+    public const int PageFieldNumber = 3;
+    private uint page_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public uint Page {
+      get { return page_; }
+      set {
+        page_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -376,6 +389,7 @@ namespace Message {
       }
       if (ChannelId != other.ChannelId) return false;
       if (Limit != other.Limit) return false;
+      if (Page != other.Page) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -385,6 +399,7 @@ namespace Message {
       int hash = 1;
       if (ChannelId != 0) hash ^= ChannelId.GetHashCode();
       if (Limit != 0) hash ^= Limit.GetHashCode();
+      if (Page != 0) hash ^= Page.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -411,6 +426,10 @@ namespace Message {
         output.WriteRawTag(16);
         output.WriteUInt32(Limit);
       }
+      if (Page != 0) {
+        output.WriteRawTag(24);
+        output.WriteUInt32(Page);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -429,6 +448,10 @@ namespace Message {
         output.WriteRawTag(16);
         output.WriteUInt32(Limit);
       }
+      if (Page != 0) {
+        output.WriteRawTag(24);
+        output.WriteUInt32(Page);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -444,6 +467,9 @@ namespace Message {
       }
       if (Limit != 0) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Limit);
+      }
+      if (Page != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Page);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -462,6 +488,9 @@ namespace Message {
       }
       if (other.Limit != 0) {
         Limit = other.Limit;
+      }
+      if (other.Page != 0) {
+        Page = other.Page;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -490,6 +519,10 @@ namespace Message {
             Limit = input.ReadUInt32();
             break;
           }
+          case 24: {
+            Page = input.ReadUInt32();
+            break;
+          }
         }
       }
     #endif
@@ -515,6 +548,10 @@ namespace Message {
           }
           case 16: {
             Limit = input.ReadUInt32();
+            break;
+          }
+          case 24: {
+            Page = input.ReadUInt32();
             break;
           }
         }

@@ -15,12 +15,14 @@ class CreateMessageRequest(_message.Message):
     def __init__(self, channel_id: _Optional[int] = ..., content: _Optional[str] = ...) -> None: ...
 
 class HistoryRequest(_message.Message):
-    __slots__ = ("channel_id", "limit")
+    __slots__ = ("channel_id", "limit", "page")
     CHANNEL_ID_FIELD_NUMBER: _ClassVar[int]
     LIMIT_FIELD_NUMBER: _ClassVar[int]
+    PAGE_FIELD_NUMBER: _ClassVar[int]
     channel_id: int
     limit: int
-    def __init__(self, channel_id: _Optional[int] = ..., limit: _Optional[int] = ...) -> None: ...
+    page: int
+    def __init__(self, channel_id: _Optional[int] = ..., limit: _Optional[int] = ..., page: _Optional[int] = ...) -> None: ...
 
 class MessageItem(_message.Message):
     __slots__ = ("id", "user_id", "channel_id", "content", "timestamp")

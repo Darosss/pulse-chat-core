@@ -24,7 +24,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\rmessage.proto\x12\x07message\"O\n\x14\x43reateMessageRequest\x12\x1d\n\nchannel_id\x18\x01 \x01(\x05R\tchannelId\x12\x18\n\x07\x63ontent\x18\x02 \x01(\tR\x07\x63ontent\"E\n\x0eHistoryRequest\x12\x1d\n\nchannel_id\x18\x01 \x01(\x05R\tchannelId\x12\x14\n\x05limit\x18\x02 \x01(\rR\x05limit\"\x8d\x01\n\x0bMessageItem\x12\x0e\n\x02id\x18\x01 \x01(\x05R\x02id\x12\x17\n\x07user_id\x18\x02 \x01(\x05R\x06userId\x12\x1d\n\nchannel_id\x18\x03 \x01(\x05R\tchannelId\x12\x18\n\x07\x63ontent\x18\x04 \x01(\tR\x07\x63ontent\x12\x1c\n\ttimestamp\x18\x05 \x01(\x03R\ttimestamp\"C\n\x0fHistoryResponse\x12\x30\n\x08messages\x18\x01 \x03(\x0b\x32\x14.message.MessageItemR\x08messages\".\n\rStreamRequest\x12\x1d\n\nchannel_id\x18\x01 \x01(\x05R\tchannelId2\xe4\x01\n\x0eMessageService\x12\x46\n\x11GetChannelHistory\x12\x17.message.HistoryRequest\x1a\x18.message.HistoryResponse\x12\x44\n\x12StreamLiveMessages\x12\x16.message.StreamRequest\x1a\x14.message.MessageItem0\x01\x12\x44\n\rCreateMessage\x12\x1d.message.CreateMessageRequest\x1a\x14.message.MessageItemb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\rmessage.proto\x12\x07message\"O\n\x14\x43reateMessageRequest\x12\x1d\n\nchannel_id\x18\x01 \x01(\x05R\tchannelId\x12\x18\n\x07\x63ontent\x18\x02 \x01(\tR\x07\x63ontent\"Y\n\x0eHistoryRequest\x12\x1d\n\nchannel_id\x18\x01 \x01(\x05R\tchannelId\x12\x14\n\x05limit\x18\x02 \x01(\rR\x05limit\x12\x12\n\x04page\x18\x03 \x01(\rR\x04page\"\x8d\x01\n\x0bMessageItem\x12\x0e\n\x02id\x18\x01 \x01(\x05R\x02id\x12\x17\n\x07user_id\x18\x02 \x01(\x05R\x06userId\x12\x1d\n\nchannel_id\x18\x03 \x01(\x05R\tchannelId\x12\x18\n\x07\x63ontent\x18\x04 \x01(\tR\x07\x63ontent\x12\x1c\n\ttimestamp\x18\x05 \x01(\x03R\ttimestamp\"C\n\x0fHistoryResponse\x12\x30\n\x08messages\x18\x01 \x03(\x0b\x32\x14.message.MessageItemR\x08messages\".\n\rStreamRequest\x12\x1d\n\nchannel_id\x18\x01 \x01(\x05R\tchannelId2\xe4\x01\n\x0eMessageService\x12\x46\n\x11GetChannelHistory\x12\x17.message.HistoryRequest\x1a\x18.message.HistoryResponse\x12\x44\n\x12StreamLiveMessages\x12\x16.message.StreamRequest\x1a\x14.message.MessageItem0\x01\x12\x44\n\rCreateMessage\x12\x1d.message.CreateMessageRequest\x1a\x14.message.MessageItemb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -34,13 +34,13 @@ if not _descriptor._USE_C_DESCRIPTORS:
   _globals['_CREATEMESSAGEREQUEST']._serialized_start=26
   _globals['_CREATEMESSAGEREQUEST']._serialized_end=105
   _globals['_HISTORYREQUEST']._serialized_start=107
-  _globals['_HISTORYREQUEST']._serialized_end=176
-  _globals['_MESSAGEITEM']._serialized_start=179
-  _globals['_MESSAGEITEM']._serialized_end=320
-  _globals['_HISTORYRESPONSE']._serialized_start=322
-  _globals['_HISTORYRESPONSE']._serialized_end=389
-  _globals['_STREAMREQUEST']._serialized_start=391
-  _globals['_STREAMREQUEST']._serialized_end=437
-  _globals['_MESSAGESERVICE']._serialized_start=440
-  _globals['_MESSAGESERVICE']._serialized_end=668
+  _globals['_HISTORYREQUEST']._serialized_end=196
+  _globals['_MESSAGEITEM']._serialized_start=199
+  _globals['_MESSAGEITEM']._serialized_end=340
+  _globals['_HISTORYRESPONSE']._serialized_start=342
+  _globals['_HISTORYRESPONSE']._serialized_end=409
+  _globals['_STREAMREQUEST']._serialized_start=411
+  _globals['_STREAMREQUEST']._serialized_end=457
+  _globals['_MESSAGESERVICE']._serialized_start=460
+  _globals['_MESSAGESERVICE']._serialized_end=688
 # @@protoc_insertion_point(module_scope)

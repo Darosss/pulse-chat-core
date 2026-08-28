@@ -13,6 +13,8 @@ pub struct HistoryRequest {
     pub channel_id: i32,
     #[prost(uint32, tag="2")]
     pub limit: u32,
+    #[prost(uint32, tag="3")]
+    pub page: u32,
 }
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct MessageItem {

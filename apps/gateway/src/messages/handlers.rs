@@ -72,6 +72,7 @@ pub async fn get_messages(
             HistoryRequest {
                 channel_id,
                 limit: query.limit.unwrap_or(50),
+                page: query.page.unwrap_or(1),
             },
             user_data.user_id,
         )

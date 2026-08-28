@@ -42,8 +42,11 @@ public class MessageServiceInternal(ChannelBroadcaster broadcaster, MessageDbCon
         }
         var historyResponse = new HistoryResponse(){};
 
-
-        var dbMessages = await this.messageDb.Messages.Where(m=>m.ChannelId==request.ChannelId).OrderByDescending(m=>m.Timestamp).Take((int)request.Limit).ToListAsync();
+        int pageSize = (int)request.Limit;
+        int skipCount = ((int)request.Page - 1) * pageSize;
+        var dbMessages = await this.messageDb.Messages.Where(m=>m.ChannelId==request.ChannelId).OrderByDescending(m=>m.Timestamp)
+        .Skip(skipCount)
+        .Take((int)request.Limit).ToListAsync();
 
         
         var messageItems = dbMessages.Select((m)=>new MessageItem()
