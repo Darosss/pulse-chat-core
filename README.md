@@ -24,7 +24,7 @@ Redis: localhost:6379
 
 - microservices & gateway located in `apps/` folder
 - each service can be started individually during development:
-  - gateway(**rust**): `cd apps/gateway && cargo run`
+  - gateway(**rust**): [apps/gateway/README](apps/gateway/README.md)
   - message(**c**#): `cd apps/message & dotnet watch` _or f5 in some IDE's_
   - pressence(**go**): `soon` - for now it depends on gateway
   - accounts/auth(**python**): check [apps/accounts/README](apps/accounts/README.md)
