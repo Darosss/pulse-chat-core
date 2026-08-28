@@ -69,8 +69,8 @@ Redis: localhost:6379
 - [x] **Docker Setup:** docker-compose configs and logic
 - [x] **Auth Pipeline:** JWT generation, token validation, and path/query extraction
 - [ ] **Presence (Go):** Online/offline status tracking:
-  - _**for now it's all in gateway**_
-- [ ] **Gateway/auth Caching:** Redis JWT validation caching at gateway layer
+  - [x] **for now it's all in gateway**
+- [x] **Gateway/auth Caching:** Redis JWT validation caching at gateway layer
 
 #### Messaging
 
