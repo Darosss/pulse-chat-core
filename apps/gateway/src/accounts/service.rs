@@ -1,10 +1,10 @@
 use tonic::transport::Channel;
 
 use crate::{
-    accounts::handlers::{LoginBody, RegisterBody, ValidateTokenBody},
+    accounts::handlers::{LoginBody, RegisterBody},
     app_error::AppError,
     pb::auth::{
-        AuthResponse, LoginRequest, RegisterRequest, ValidateTokenRequest, ValidateTokenResponse,
+        AuthResponse, LoginRequest, RegisterRequest,
         auth::{GetPublicJwtKeyRequest, GetPublicJwtKeyResponse},
         auth_service_client::AuthServiceClient,
     },
@@ -43,18 +43,7 @@ impl AuthService {
             .await?;
         Ok(login_response.into_inner())
     }
-    pub async fn validate_token(
-        self,
-        payload: ValidateTokenBody,
-    ) -> Result<ValidateTokenResponse, AppError> {
-        let mut client = self.client.clone();
-        let response = client
-            .validate_token(ValidateTokenRequest {
-                token: payload.token,
-            })
-            .await?;
-        Ok(response.into_inner())
-    }
+
     pub async fn get_public_jwt_key(self) -> Result<GetPublicJwtKeyResponse, AppError> {
         let mut client = self.client.clone();
         let response = client.get_public_jwt_key(GetPublicJwtKeyRequest {}).await?;

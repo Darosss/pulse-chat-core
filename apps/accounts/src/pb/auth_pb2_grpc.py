@@ -24,15 +24,10 @@ class AuthServiceStub:
                 request_serializer=auth__pb2.LoginRequest.SerializeToString,
                 response_deserializer=auth__pb2.AuthResponse.FromString,
                 _registered_method=True)
-        self.ValidateToken = channel.unary_unary(
-                '/auth.AuthService/ValidateToken',
-                request_serializer=auth__pb2.ValidateTokenRequest.SerializeToString,
-                response_deserializer=auth__pb2.ValidateTokenResponse.FromString,
-                _registered_method=True)
         self.RefreshToken = channel.unary_unary(
                 '/auth.AuthService/RefreshToken',
-                request_serializer=auth__pb2.ValidateTokenRequest.SerializeToString,
-                response_deserializer=auth__pb2.ValidateTokenResponse.FromString,
+                request_serializer=auth__pb2.RefreshTokenRequest.SerializeToString,
+                response_deserializer=auth__pb2.RefreshTokenResponse.FromString,
                 _registered_method=True)
         self.GetPublicJWTKey = channel.unary_unary(
                 '/auth.AuthService/GetPublicJWTKey',
@@ -51,12 +46,6 @@ class AuthServiceServicer:
         raise NotImplementedError('Method not implemented!')
 
     def Login(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def ValidateToken(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -87,15 +76,10 @@ def add_AuthServiceServicer_to_server(servicer, server):
                     request_deserializer=auth__pb2.LoginRequest.FromString,
                     response_serializer=auth__pb2.AuthResponse.SerializeToString,
             ),
-            'ValidateToken': grpc.unary_unary_rpc_method_handler(
-                    servicer.ValidateToken,
-                    request_deserializer=auth__pb2.ValidateTokenRequest.FromString,
-                    response_serializer=auth__pb2.ValidateTokenResponse.SerializeToString,
-            ),
             'RefreshToken': grpc.unary_unary_rpc_method_handler(
                     servicer.RefreshToken,
-                    request_deserializer=auth__pb2.ValidateTokenRequest.FromString,
-                    response_serializer=auth__pb2.ValidateTokenResponse.SerializeToString,
+                    request_deserializer=auth__pb2.RefreshTokenRequest.FromString,
+                    response_serializer=auth__pb2.RefreshTokenResponse.SerializeToString,
             ),
             'GetPublicJWTKey': grpc.unary_unary_rpc_method_handler(
                     servicer.GetPublicJWTKey,
@@ -168,33 +152,6 @@ class AuthService:
             _registered_method=True)
 
     @staticmethod
-    def ValidateToken(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/auth.AuthService/ValidateToken',
-            auth__pb2.ValidateTokenRequest.SerializeToString,
-            auth__pb2.ValidateTokenResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-    @staticmethod
     def RefreshToken(request,
             target,
             options=(),
@@ -209,8 +166,8 @@ class AuthService:
             request,
             target,
             '/auth.AuthService/RefreshToken',
-            auth__pb2.ValidateTokenRequest.SerializeToString,
-            auth__pb2.ValidateTokenResponse.FromString,
+            auth__pb2.RefreshTokenRequest.SerializeToString,
+            auth__pb2.RefreshTokenResponse.FromString,
             options,
             channel_credentials,
             insecure,

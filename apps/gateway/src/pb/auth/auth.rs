@@ -26,20 +26,6 @@ pub struct AuthResponse {
     pub username: ::prost::alloc::string::String,
 }
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
-pub struct ValidateTokenRequest {
-    #[prost(string, tag="1")]
-    pub token: ::prost::alloc::string::String,
-}
-#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
-pub struct ValidateTokenResponse {
-    #[prost(bool, tag="1")]
-    pub is_valid: bool,
-    #[prost(int32, tag="2")]
-    pub user_id: i32,
-    #[prost(string, tag="3")]
-    pub username: ::prost::alloc::string::String,
-}
-#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct RefreshTokenRequest {
     #[prost(string, tag="1")]
     pub refresh_token: ::prost::alloc::string::String,

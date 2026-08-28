@@ -1,6 +1,6 @@
 
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
-from pb.auth_pb2 import AuthResponse, RegisterRequest, LoginRequest, ValidateTokenRequest, ValidateTokenResponse, RefreshTokenRequest, RefreshTokenResponse, GetPublicJWTKeyRequest, GetPublicJWTKeyResponse
+from pb.auth_pb2 import AuthResponse, RegisterRequest, LoginRequest, RefreshTokenRequest, RefreshTokenResponse, GetPublicJWTKeyRequest, GetPublicJWTKeyResponse
 from pb.auth_pb2_grpc import AuthServiceServicer
 from sqlalchemy import select
 from db import AsyncSessionLocal, UserModel
@@ -46,24 +46,6 @@ class AccountsService(AuthServiceServicer):
                 username=user.username
             )
 
-    async def ValidateToken(self, request: ValidateTokenRequest, context: aio.ServicerContext) -> ValidateTokenResponse: 
-        payload = decode_jwt_token(request.token)
-        if not payload:
-            return ValidateTokenResponse(is_valid=False, user_id=0, username="")
-
-        jti = payload.get("jti")
-        user_id = payload.get("user_id")
-        username = payload.get("username", "")
-
-        r = get_redis()
-        if jti and await self.is_token_blacklisted(jti):
-            return ValidateTokenResponse(is_valid=False, user_id=0, username="")
-
-        return ValidateTokenResponse(
-            is_valid=True,
-            user_id=int(user_id),
-            username=username
-        )
     async def RefreshToken(self, request: RefreshTokenRequest, context: aio.ServicerContext) -> RefreshTokenResponse:
         payload = decode_jwt_token(request.refresh_token) 
         if not payload or payload.get("type") != "refresh":

@@ -52,9 +52,9 @@ namespace Auth {
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Auth.LoginRequest> __Marshaller_auth_LoginRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Auth.LoginRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::Auth.ValidateTokenRequest> __Marshaller_auth_ValidateTokenRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Auth.ValidateTokenRequest.Parser));
+    static readonly grpc::Marshaller<global::Auth.RefreshTokenRequest> __Marshaller_auth_RefreshTokenRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Auth.RefreshTokenRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::Auth.ValidateTokenResponse> __Marshaller_auth_ValidateTokenResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Auth.ValidateTokenResponse.Parser));
+    static readonly grpc::Marshaller<global::Auth.RefreshTokenResponse> __Marshaller_auth_RefreshTokenResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Auth.RefreshTokenResponse.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Auth.GetPublicJWTKeyRequest> __Marshaller_auth_GetPublicJWTKeyRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Auth.GetPublicJWTKeyRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
@@ -77,20 +77,12 @@ namespace Auth {
         __Marshaller_auth_AuthResponse);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Method<global::Auth.ValidateTokenRequest, global::Auth.ValidateTokenResponse> __Method_ValidateToken = new grpc::Method<global::Auth.ValidateTokenRequest, global::Auth.ValidateTokenResponse>(
-        grpc::MethodType.Unary,
-        __ServiceName,
-        "ValidateToken",
-        __Marshaller_auth_ValidateTokenRequest,
-        __Marshaller_auth_ValidateTokenResponse);
-
-    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Method<global::Auth.ValidateTokenRequest, global::Auth.ValidateTokenResponse> __Method_RefreshToken = new grpc::Method<global::Auth.ValidateTokenRequest, global::Auth.ValidateTokenResponse>(
+    static readonly grpc::Method<global::Auth.RefreshTokenRequest, global::Auth.RefreshTokenResponse> __Method_RefreshToken = new grpc::Method<global::Auth.RefreshTokenRequest, global::Auth.RefreshTokenResponse>(
         grpc::MethodType.Unary,
         __ServiceName,
         "RefreshToken",
-        __Marshaller_auth_ValidateTokenRequest,
-        __Marshaller_auth_ValidateTokenResponse);
+        __Marshaller_auth_RefreshTokenRequest,
+        __Marshaller_auth_RefreshTokenResponse);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::Auth.GetPublicJWTKeyRequest, global::Auth.GetPublicJWTKeyResponse> __Method_GetPublicJWTKey = new grpc::Method<global::Auth.GetPublicJWTKeyRequest, global::Auth.GetPublicJWTKeyResponse>(
@@ -123,13 +115,7 @@ namespace Auth {
       }
 
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::System.Threading.Tasks.Task<global::Auth.ValidateTokenResponse> ValidateToken(global::Auth.ValidateTokenRequest request, grpc::ServerCallContext context)
-      {
-        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
-      }
-
-      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::System.Threading.Tasks.Task<global::Auth.ValidateTokenResponse> RefreshToken(global::Auth.ValidateTokenRequest request, grpc::ServerCallContext context)
+      public virtual global::System.Threading.Tasks.Task<global::Auth.RefreshTokenResponse> RefreshToken(global::Auth.RefreshTokenRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -210,42 +196,22 @@ namespace Auth {
         return CallInvoker.AsyncUnaryCall(__Method_Login, null, options, request);
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::Auth.ValidateTokenResponse ValidateToken(global::Auth.ValidateTokenRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
-      {
-        return ValidateToken(request, new grpc::CallOptions(headers, deadline, cancellationToken));
-      }
-      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::Auth.ValidateTokenResponse ValidateToken(global::Auth.ValidateTokenRequest request, grpc::CallOptions options)
-      {
-        return CallInvoker.BlockingUnaryCall(__Method_ValidateToken, null, options, request);
-      }
-      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual grpc::AsyncUnaryCall<global::Auth.ValidateTokenResponse> ValidateTokenAsync(global::Auth.ValidateTokenRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
-      {
-        return ValidateTokenAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
-      }
-      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual grpc::AsyncUnaryCall<global::Auth.ValidateTokenResponse> ValidateTokenAsync(global::Auth.ValidateTokenRequest request, grpc::CallOptions options)
-      {
-        return CallInvoker.AsyncUnaryCall(__Method_ValidateToken, null, options, request);
-      }
-      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::Auth.ValidateTokenResponse RefreshToken(global::Auth.ValidateTokenRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual global::Auth.RefreshTokenResponse RefreshToken(global::Auth.RefreshTokenRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
         return RefreshToken(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::Auth.ValidateTokenResponse RefreshToken(global::Auth.ValidateTokenRequest request, grpc::CallOptions options)
+      public virtual global::Auth.RefreshTokenResponse RefreshToken(global::Auth.RefreshTokenRequest request, grpc::CallOptions options)
       {
         return CallInvoker.BlockingUnaryCall(__Method_RefreshToken, null, options, request);
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual grpc::AsyncUnaryCall<global::Auth.ValidateTokenResponse> RefreshTokenAsync(global::Auth.ValidateTokenRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual grpc::AsyncUnaryCall<global::Auth.RefreshTokenResponse> RefreshTokenAsync(global::Auth.RefreshTokenRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
         return RefreshTokenAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual grpc::AsyncUnaryCall<global::Auth.ValidateTokenResponse> RefreshTokenAsync(global::Auth.ValidateTokenRequest request, grpc::CallOptions options)
+      public virtual grpc::AsyncUnaryCall<global::Auth.RefreshTokenResponse> RefreshTokenAsync(global::Auth.RefreshTokenRequest request, grpc::CallOptions options)
       {
         return CallInvoker.AsyncUnaryCall(__Method_RefreshToken, null, options, request);
       }
@@ -285,7 +251,6 @@ namespace Auth {
       return grpc::ServerServiceDefinition.CreateBuilder()
           .AddMethod(__Method_Register, serviceImpl.Register)
           .AddMethod(__Method_Login, serviceImpl.Login)
-          .AddMethod(__Method_ValidateToken, serviceImpl.ValidateToken)
           .AddMethod(__Method_RefreshToken, serviceImpl.RefreshToken)
           .AddMethod(__Method_GetPublicJWTKey, serviceImpl.GetPublicJWTKey).Build();
     }
@@ -299,8 +264,7 @@ namespace Auth {
     {
       serviceBinder.AddMethod(__Method_Register, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Auth.RegisterRequest, global::Auth.AuthResponse>(serviceImpl.Register));
       serviceBinder.AddMethod(__Method_Login, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Auth.LoginRequest, global::Auth.AuthResponse>(serviceImpl.Login));
-      serviceBinder.AddMethod(__Method_ValidateToken, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Auth.ValidateTokenRequest, global::Auth.ValidateTokenResponse>(serviceImpl.ValidateToken));
-      serviceBinder.AddMethod(__Method_RefreshToken, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Auth.ValidateTokenRequest, global::Auth.ValidateTokenResponse>(serviceImpl.RefreshToken));
+      serviceBinder.AddMethod(__Method_RefreshToken, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Auth.RefreshTokenRequest, global::Auth.RefreshTokenResponse>(serviceImpl.RefreshToken));
       serviceBinder.AddMethod(__Method_GetPublicJWTKey, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Auth.GetPublicJWTKeyRequest, global::Auth.GetPublicJWTKeyResponse>(serviceImpl.GetPublicJWTKey));
     }
 

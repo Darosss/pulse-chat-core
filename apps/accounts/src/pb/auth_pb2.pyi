@@ -32,22 +32,6 @@ class AuthResponse(_message.Message):
     username: str
     def __init__(self, token: _Optional[str] = ..., user_id: _Optional[int] = ..., username: _Optional[str] = ...) -> None: ...
 
-class ValidateTokenRequest(_message.Message):
-    __slots__ = ("token",)
-    TOKEN_FIELD_NUMBER: _ClassVar[int]
-    token: str
-    def __init__(self, token: _Optional[str] = ...) -> None: ...
-
-class ValidateTokenResponse(_message.Message):
-    __slots__ = ("is_valid", "user_id", "username")
-    IS_VALID_FIELD_NUMBER: _ClassVar[int]
-    USER_ID_FIELD_NUMBER: _ClassVar[int]
-    USERNAME_FIELD_NUMBER: _ClassVar[int]
-    is_valid: bool
-    user_id: int
-    username: str
-    def __init__(self, is_valid: _Optional[bool] = ..., user_id: _Optional[int] = ..., username: _Optional[str] = ...) -> None: ...
-
 class RefreshTokenRequest(_message.Message):
     __slots__ = ("refresh_token",)
     REFRESH_TOKEN_FIELD_NUMBER: _ClassVar[int]

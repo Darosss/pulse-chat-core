@@ -5,8 +5,7 @@ package auth;
 service AuthService {
   rpc Register (RegisterRequest) returns (AuthResponse);
   rpc Login (LoginRequest) returns (AuthResponse);
-  rpc ValidateToken(ValidateTokenRequest) returns (ValidateTokenResponse);
-  rpc RefreshToken(ValidateTokenRequest) returns (ValidateTokenResponse);
+  rpc RefreshToken(RefreshTokenRequest) returns (RefreshTokenResponse);
   rpc GetPublicJWTKey(GetPublicJWTKeyRequest) returns (GetPublicJWTKeyResponse);
 }
 
@@ -23,16 +22,6 @@ message LoginRequest {
 
 message AuthResponse {
   string token = 1;
-  int32 user_id = 2;
-  string username = 3;
-}
-
-message ValidateTokenRequest {
-  string token = 1;
-}
-
-message ValidateTokenResponse {
-  bool is_valid = 1;
   int32 user_id = 2;
   string username = 3;
 }

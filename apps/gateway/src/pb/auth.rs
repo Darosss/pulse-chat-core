@@ -1,6 +1,3 @@
 pub mod auth;
 
-pub use auth::{
-    AuthResponse, LoginRequest, RegisterRequest, ValidateTokenRequest, ValidateTokenResponse,
-    auth_service_client,
-};
+pub use auth::{AuthResponse, LoginRequest, RegisterRequest, auth_service_client};

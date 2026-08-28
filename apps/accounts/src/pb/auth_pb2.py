@@ -24,7 +24,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\nauth.proto\x12\x04\x61uth\"_\n\x0fRegisterRequest\x12\x1a\n\x08username\x18\x01 \x01(\tR\x08username\x12\x14\n\x05\x65mail\x18\x02 \x01(\tR\x05\x65mail\x12\x1a\n\x08password\x18\x03 \x01(\tR\x08password\"@\n\x0cLoginRequest\x12\x14\n\x05\x65mail\x18\x01 \x01(\tR\x05\x65mail\x12\x1a\n\x08password\x18\x02 \x01(\tR\x08password\"Y\n\x0c\x41uthResponse\x12\x14\n\x05token\x18\x01 \x01(\tR\x05token\x12\x17\n\x07user_id\x18\x02 \x01(\x05R\x06userId\x12\x1a\n\x08username\x18\x03 \x01(\tR\x08username\",\n\x14ValidateTokenRequest\x12\x14\n\x05token\x18\x01 \x01(\tR\x05token\"g\n\x15ValidateTokenResponse\x12\x19\n\x08is_valid\x18\x01 \x01(\x08R\x07isValid\x12\x17\n\x07user_id\x18\x02 \x01(\x05R\x06userId\x12\x1a\n\x08username\x18\x03 \x01(\tR\x08username\":\n\x13RefreshTokenRequest\x12#\n\rrefresh_token\x18\x01 \x01(\tR\x0crefreshToken\"^\n\x14RefreshTokenResponse\x12!\n\x0c\x61\x63\x63\x65ss_token\x18\x01 \x01(\tR\x0b\x61\x63\x63\x65ssToken\x12#\n\rrefresh_token\x18\x02 \x01(\tR\x0crefreshToken\"\x18\n\x16GetPublicJWTKeyRequest\"+\n\x17GetPublicJWTKeyResponse\x12\x10\n\x03key\x18\x01 \x01(\tR\x03key2\xd8\x02\n\x0b\x41uthService\x12\x35\n\x08Register\x12\x15.auth.RegisterRequest\x1a\x12.auth.AuthResponse\x12/\n\x05Login\x12\x12.auth.LoginRequest\x1a\x12.auth.AuthResponse\x12H\n\rValidateToken\x12\x1a.auth.ValidateTokenRequest\x1a\x1b.auth.ValidateTokenResponse\x12G\n\x0cRefreshToken\x12\x1a.auth.ValidateTokenRequest\x1a\x1b.auth.ValidateTokenResponse\x12N\n\x0fGetPublicJWTKey\x12\x1c.auth.GetPublicJWTKeyRequest\x1a\x1d.auth.GetPublicJWTKeyResponseb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\nauth.proto\x12\x04\x61uth\"_\n\x0fRegisterRequest\x12\x1a\n\x08username\x18\x01 \x01(\tR\x08username\x12\x14\n\x05\x65mail\x18\x02 \x01(\tR\x05\x65mail\x12\x1a\n\x08password\x18\x03 \x01(\tR\x08password\"@\n\x0cLoginRequest\x12\x14\n\x05\x65mail\x18\x01 \x01(\tR\x05\x65mail\x12\x1a\n\x08password\x18\x02 \x01(\tR\x08password\"Y\n\x0c\x41uthResponse\x12\x14\n\x05token\x18\x01 \x01(\tR\x05token\x12\x17\n\x07user_id\x18\x02 \x01(\x05R\x06userId\x12\x1a\n\x08username\x18\x03 \x01(\tR\x08username\":\n\x13RefreshTokenRequest\x12#\n\rrefresh_token\x18\x01 \x01(\tR\x0crefreshToken\"^\n\x14RefreshTokenResponse\x12!\n\x0c\x61\x63\x63\x65ss_token\x18\x01 \x01(\tR\x0b\x61\x63\x63\x65ssToken\x12#\n\rrefresh_token\x18\x02 \x01(\tR\x0crefreshToken\"\x18\n\x16GetPublicJWTKeyRequest\"+\n\x17GetPublicJWTKeyResponse\x12\x10\n\x03key\x18\x01 \x01(\tR\x03key2\x8c\x02\n\x0b\x41uthService\x12\x35\n\x08Register\x12\x15.auth.RegisterRequest\x1a\x12.auth.AuthResponse\x12/\n\x05Login\x12\x12.auth.LoginRequest\x1a\x12.auth.AuthResponse\x12\x45\n\x0cRefreshToken\x12\x19.auth.RefreshTokenRequest\x1a\x1a.auth.RefreshTokenResponse\x12N\n\x0fGetPublicJWTKey\x12\x1c.auth.GetPublicJWTKeyRequest\x1a\x1d.auth.GetPublicJWTKeyResponseb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -37,18 +37,14 @@ if not _descriptor._USE_C_DESCRIPTORS:
   _globals['_LOGINREQUEST']._serialized_end=181
   _globals['_AUTHRESPONSE']._serialized_start=183
   _globals['_AUTHRESPONSE']._serialized_end=272
-  _globals['_VALIDATETOKENREQUEST']._serialized_start=274
-  _globals['_VALIDATETOKENREQUEST']._serialized_end=318
-  _globals['_VALIDATETOKENRESPONSE']._serialized_start=320
-  _globals['_VALIDATETOKENRESPONSE']._serialized_end=423
-  _globals['_REFRESHTOKENREQUEST']._serialized_start=425
-  _globals['_REFRESHTOKENREQUEST']._serialized_end=483
-  _globals['_REFRESHTOKENRESPONSE']._serialized_start=485
-  _globals['_REFRESHTOKENRESPONSE']._serialized_end=579
-  _globals['_GETPUBLICJWTKEYREQUEST']._serialized_start=581
-  _globals['_GETPUBLICJWTKEYREQUEST']._serialized_end=605
-  _globals['_GETPUBLICJWTKEYRESPONSE']._serialized_start=607
-  _globals['_GETPUBLICJWTKEYRESPONSE']._serialized_end=650
-  _globals['_AUTHSERVICE']._serialized_start=653
-  _globals['_AUTHSERVICE']._serialized_end=997
+  _globals['_REFRESHTOKENREQUEST']._serialized_start=274
+  _globals['_REFRESHTOKENREQUEST']._serialized_end=332
+  _globals['_REFRESHTOKENRESPONSE']._serialized_start=334
+  _globals['_REFRESHTOKENRESPONSE']._serialized_end=428
+  _globals['_GETPUBLICJWTKEYREQUEST']._serialized_start=430
+  _globals['_GETPUBLICJWTKEYREQUEST']._serialized_end=454
+  _globals['_GETPUBLICJWTKEYRESPONSE']._serialized_start=456
+  _globals['_GETPUBLICJWTKEYRESPONSE']._serialized_end=499
+  _globals['_AUTHSERVICE']._serialized_start=502
+  _globals['_AUTHSERVICE']._serialized_end=770
 # @@protoc_insertion_point(module_scope)

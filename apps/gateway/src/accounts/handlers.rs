@@ -1,11 +1,7 @@
 use axum::{Json, extract::State};
 use serde::{Deserialize, Serialize};
 
-use crate::{
-    app_error::AppError,
-    app_state::AppState,
-    pb::auth::{AuthResponse, ValidateTokenResponse},
-};
+use crate::{app_error::AppError, app_state::AppState, pb::auth::AuthResponse};
 
 #[derive(Serialize, Deserialize)]
 pub struct AuthResponseSerialized {
@@ -35,25 +31,6 @@ pub struct RegisterBody {
     pub password: String,
     pub username: String,
 }
-#[derive(Deserialize)]
-pub struct ValidateTokenBody {
-    pub token: String,
-}
-#[derive(Serialize)]
-pub struct ValidateTokenResponseSerialized {
-    username: String,
-    user_id: i32,
-    is_valid: bool,
-}
-impl From<ValidateTokenResponse> for ValidateTokenResponseSerialized {
-    fn from(value: ValidateTokenResponse) -> Self {
-        Self {
-            user_id: value.user_id,
-            username: value.username,
-            is_valid: value.is_valid,
-        }
-    }
-}
 
 pub async fn login(
     State(state): State<AppState>,
@@ -80,20 +57,6 @@ pub async fn register(
             email: payload.email,
             password: payload.password,
             username: payload.username,
-        })
-        .await?;
-
-    Ok(Json(result.into()))
-}
-
-pub async fn validate_token(
-    State(state): State<AppState>,
-    Json(payload): Json<ValidateTokenBody>,
-) -> Result<Json<ValidateTokenResponseSerialized>, AppError> {
-    let result = state
-        .accounts
-        .validate_token(ValidateTokenBody {
-            token: payload.token,
         })
         .await?;
 
