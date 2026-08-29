@@ -45,7 +45,7 @@ class AccountsService(AuthServiceServicer):
                 user_id=int(user.id),
                 username=user.username
             )
-    async def Logout(self, request: LogoutRequest, context: aio.ServiceContext) -> LogoutResponse:
+    async def Logout(self, request: LogoutRequest, context: aio.ServicerContext) -> LogoutResponse:
         payload = decode_jwt_token(request.refresh_token) 
         if not payload or payload.get("type") != "refresh":
             context.set_code(StatusCode.UNAUTHENTICATED)
