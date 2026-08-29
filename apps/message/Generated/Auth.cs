@@ -28,29 +28,31 @@ namespace Auth {
             "bmFtZRgBIAEoCVIIdXNlcm5hbWUSFAoFZW1haWwYAiABKAlSBWVtYWlsEhoK",
             "CHBhc3N3b3JkGAMgASgJUghwYXNzd29yZCJACgxMb2dpblJlcXVlc3QSFAoF",
             "ZW1haWwYASABKAlSBWVtYWlsEhoKCHBhc3N3b3JkGAIgASgJUghwYXNzd29y",
-            "ZCJZCgxBdXRoUmVzcG9uc2USFAoFdG9rZW4YASABKAlSBXRva2VuEhcKB3Vz",
-            "ZXJfaWQYAiABKAVSBnVzZXJJZBIaCgh1c2VybmFtZRgDIAEoCVIIdXNlcm5h",
-            "bWUiNAoNTG9nb3V0UmVxdWVzdBIjCg1yZWZyZXNoX3Rva2VuGAEgASgJUgxy",
-            "ZWZyZXNoVG9rZW4iKgoOTG9nb3V0UmVzcG9uc2USGAoHc3VjY2VzcxgBIAEo",
-            "CFIHc3VjY2VzcyI6ChNSZWZyZXNoVG9rZW5SZXF1ZXN0EiMKDXJlZnJlc2hf",
-            "dG9rZW4YASABKAlSDHJlZnJlc2hUb2tlbiJeChRSZWZyZXNoVG9rZW5SZXNw",
-            "b25zZRIhCgxhY2Nlc3NfdG9rZW4YASABKAlSC2FjY2Vzc1Rva2VuEiMKDXJl",
-            "ZnJlc2hfdG9rZW4YAiABKAlSDHJlZnJlc2hUb2tlbiIYChZHZXRQdWJsaWNK",
-            "V1RLZXlSZXF1ZXN0IisKF0dldFB1YmxpY0pXVEtleVJlc3BvbnNlEhAKA2tl",
-            "eRgBIAEoCVIDa2V5MsECCgtBdXRoU2VydmljZRI1CghSZWdpc3RlchIVLmF1",
-            "dGguUmVnaXN0ZXJSZXF1ZXN0GhIuYXV0aC5BdXRoUmVzcG9uc2USLwoFTG9n",
-            "aW4SEi5hdXRoLkxvZ2luUmVxdWVzdBoSLmF1dGguQXV0aFJlc3BvbnNlEjMK",
-            "BkxvZ291dBITLmF1dGguTG9nb3V0UmVxdWVzdBoULmF1dGguTG9nb3V0UmVz",
-            "cG9uc2USRQoMUmVmcmVzaFRva2VuEhkuYXV0aC5SZWZyZXNoVG9rZW5SZXF1",
-            "ZXN0GhouYXV0aC5SZWZyZXNoVG9rZW5SZXNwb25zZRJOCg9HZXRQdWJsaWNK",
-            "V1RLZXkSHC5hdXRoLkdldFB1YmxpY0pXVEtleVJlcXVlc3QaHS5hdXRoLkdl",
-            "dFB1YmxpY0pXVEtleVJlc3BvbnNlYgZwcm90bzM="));
+            "ZCKqAQoMQXV0aFJlc3BvbnNlEhQKBXRva2VuGAEgASgJUgV0b2tlbhIjCg1y",
+            "ZWZyZXNoX3Rva2VuGAIgASgJUgxyZWZyZXNoVG9rZW4SKgoRcmVmcmVzaF90",
+            "b2tlbl90dGwYAyABKARSD3JlZnJlc2hUb2tlblR0bBIXCgd1c2VyX2lkGAQg",
+            "ASgFUgZ1c2VySWQSGgoIdXNlcm5hbWUYBSABKAlSCHVzZXJuYW1lIjQKDUxv",
+            "Z291dFJlcXVlc3QSIwoNcmVmcmVzaF90b2tlbhgBIAEoCVIMcmVmcmVzaFRv",
+            "a2VuIioKDkxvZ291dFJlc3BvbnNlEhgKB3N1Y2Nlc3MYASABKAhSB3N1Y2Nl",
+            "c3MiOgoTUmVmcmVzaFRva2VuUmVxdWVzdBIjCg1yZWZyZXNoX3Rva2VuGAEg",
+            "ASgJUgxyZWZyZXNoVG9rZW4iXgoUUmVmcmVzaFRva2VuUmVzcG9uc2USIQoM",
+            "YWNjZXNzX3Rva2VuGAEgASgJUgthY2Nlc3NUb2tlbhIjCg1yZWZyZXNoX3Rv",
+            "a2VuGAIgASgJUgxyZWZyZXNoVG9rZW4iGAoWR2V0UHVibGljSldUS2V5UmVx",
+            "dWVzdCIrChdHZXRQdWJsaWNKV1RLZXlSZXNwb25zZRIQCgNrZXkYASABKAlS",
+            "A2tleTLBAgoLQXV0aFNlcnZpY2USNQoIUmVnaXN0ZXISFS5hdXRoLlJlZ2lz",
+            "dGVyUmVxdWVzdBoSLmF1dGguQXV0aFJlc3BvbnNlEi8KBUxvZ2luEhIuYXV0",
+            "aC5Mb2dpblJlcXVlc3QaEi5hdXRoLkF1dGhSZXNwb25zZRIzCgZMb2dvdXQS",
+            "Ey5hdXRoLkxvZ291dFJlcXVlc3QaFC5hdXRoLkxvZ291dFJlc3BvbnNlEkUK",
+            "DFJlZnJlc2hUb2tlbhIZLmF1dGguUmVmcmVzaFRva2VuUmVxdWVzdBoaLmF1",
+            "dGguUmVmcmVzaFRva2VuUmVzcG9uc2USTgoPR2V0UHVibGljSldUS2V5Ehwu",
+            "YXV0aC5HZXRQdWJsaWNKV1RLZXlSZXF1ZXN0Gh0uYXV0aC5HZXRQdWJsaWNK",
+            "V1RLZXlSZXNwb25zZWIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Auth.RegisterRequest), global::Auth.RegisterRequest.Parser, new[]{ "Username", "Email", "Password" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Auth.LoginRequest), global::Auth.LoginRequest.Parser, new[]{ "Email", "Password" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Auth.AuthResponse), global::Auth.AuthResponse.Parser, new[]{ "Token", "UserId", "Username" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Auth.AuthResponse), global::Auth.AuthResponse.Parser, new[]{ "Token", "RefreshToken", "RefreshTokenTtl", "UserId", "Username" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Auth.LogoutRequest), global::Auth.LogoutRequest.Parser, new[]{ "RefreshToken" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Auth.LogoutResponse), global::Auth.LogoutResponse.Parser, new[]{ "Success" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Auth.RefreshTokenRequest), global::Auth.RefreshTokenRequest.Parser, new[]{ "RefreshToken" }, null, null, null, null),
@@ -606,6 +608,8 @@ namespace Auth {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public AuthResponse(AuthResponse other) : this() {
       token_ = other.token_;
+      refreshToken_ = other.refreshToken_;
+      refreshTokenTtl_ = other.refreshTokenTtl_;
       userId_ = other.userId_;
       username_ = other.username_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
@@ -629,8 +633,32 @@ namespace Auth {
       }
     }
 
+    /// <summary>Field number for the "refresh_token" field.</summary>
+    public const int RefreshTokenFieldNumber = 2;
+    private string refreshToken_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string RefreshToken {
+      get { return refreshToken_; }
+      set {
+        refreshToken_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "refresh_token_ttl" field.</summary>
+    public const int RefreshTokenTtlFieldNumber = 3;
+    private ulong refreshTokenTtl_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public ulong RefreshTokenTtl {
+      get { return refreshTokenTtl_; }
+      set {
+        refreshTokenTtl_ = value;
+      }
+    }
+
     /// <summary>Field number for the "user_id" field.</summary>
-    public const int UserIdFieldNumber = 2;
+    public const int UserIdFieldNumber = 4;
     private int userId_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -642,7 +670,7 @@ namespace Auth {
     }
 
     /// <summary>Field number for the "username" field.</summary>
-    public const int UsernameFieldNumber = 3;
+    public const int UsernameFieldNumber = 5;
     private string username_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -669,6 +697,8 @@ namespace Auth {
         return true;
       }
       if (Token != other.Token) return false;
+      if (RefreshToken != other.RefreshToken) return false;
+      if (RefreshTokenTtl != other.RefreshTokenTtl) return false;
       if (UserId != other.UserId) return false;
       if (Username != other.Username) return false;
       return Equals(_unknownFields, other._unknownFields);
@@ -679,6 +709,8 @@ namespace Auth {
     public override int GetHashCode() {
       int hash = 1;
       if (Token.Length != 0) hash ^= Token.GetHashCode();
+      if (RefreshToken.Length != 0) hash ^= RefreshToken.GetHashCode();
+      if (RefreshTokenTtl != 0UL) hash ^= RefreshTokenTtl.GetHashCode();
       if (UserId != 0) hash ^= UserId.GetHashCode();
       if (Username.Length != 0) hash ^= Username.GetHashCode();
       if (_unknownFields != null) {
@@ -703,12 +735,20 @@ namespace Auth {
         output.WriteRawTag(10);
         output.WriteString(Token);
       }
+      if (RefreshToken.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(RefreshToken);
+      }
+      if (RefreshTokenTtl != 0UL) {
+        output.WriteRawTag(24);
+        output.WriteUInt64(RefreshTokenTtl);
+      }
       if (UserId != 0) {
-        output.WriteRawTag(16);
+        output.WriteRawTag(32);
         output.WriteInt32(UserId);
       }
       if (Username.Length != 0) {
-        output.WriteRawTag(26);
+        output.WriteRawTag(42);
         output.WriteString(Username);
       }
       if (_unknownFields != null) {
@@ -725,12 +765,20 @@ namespace Auth {
         output.WriteRawTag(10);
         output.WriteString(Token);
       }
+      if (RefreshToken.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(RefreshToken);
+      }
+      if (RefreshTokenTtl != 0UL) {
+        output.WriteRawTag(24);
+        output.WriteUInt64(RefreshTokenTtl);
+      }
       if (UserId != 0) {
-        output.WriteRawTag(16);
+        output.WriteRawTag(32);
         output.WriteInt32(UserId);
       }
       if (Username.Length != 0) {
-        output.WriteRawTag(26);
+        output.WriteRawTag(42);
         output.WriteString(Username);
       }
       if (_unknownFields != null) {
@@ -745,6 +793,12 @@ namespace Auth {
       int size = 0;
       if (Token.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(Token);
+      }
+      if (RefreshToken.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(RefreshToken);
+      }
+      if (RefreshTokenTtl != 0UL) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(RefreshTokenTtl);
       }
       if (UserId != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(UserId);
@@ -766,6 +820,12 @@ namespace Auth {
       }
       if (other.Token.Length != 0) {
         Token = other.Token;
+      }
+      if (other.RefreshToken.Length != 0) {
+        RefreshToken = other.RefreshToken;
+      }
+      if (other.RefreshTokenTtl != 0UL) {
+        RefreshTokenTtl = other.RefreshTokenTtl;
       }
       if (other.UserId != 0) {
         UserId = other.UserId;
@@ -796,11 +856,19 @@ namespace Auth {
             Token = input.ReadString();
             break;
           }
-          case 16: {
+          case 18: {
+            RefreshToken = input.ReadString();
+            break;
+          }
+          case 24: {
+            RefreshTokenTtl = input.ReadUInt64();
+            break;
+          }
+          case 32: {
             UserId = input.ReadInt32();
             break;
           }
-          case 26: {
+          case 42: {
             Username = input.ReadString();
             break;
           }
@@ -827,11 +895,19 @@ namespace Auth {
             Token = input.ReadString();
             break;
           }
-          case 16: {
+          case 18: {
+            RefreshToken = input.ReadString();
+            break;
+          }
+          case 24: {
+            RefreshTokenTtl = input.ReadUInt64();
+            break;
+          }
+          case 32: {
             UserId = input.ReadInt32();
             break;
           }
-          case 26: {
+          case 42: {
             Username = input.ReadString();
             break;
           }

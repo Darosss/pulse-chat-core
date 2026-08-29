@@ -23,14 +23,18 @@ class LoginRequest(_message.Message):
     def __init__(self, email: _Optional[str] = ..., password: _Optional[str] = ...) -> None: ...
 
 class AuthResponse(_message.Message):
-    __slots__ = ("token", "user_id", "username")
+    __slots__ = ("token", "refresh_token", "refresh_token_ttl", "user_id", "username")
     TOKEN_FIELD_NUMBER: _ClassVar[int]
+    REFRESH_TOKEN_FIELD_NUMBER: _ClassVar[int]
+    REFRESH_TOKEN_TTL_FIELD_NUMBER: _ClassVar[int]
     USER_ID_FIELD_NUMBER: _ClassVar[int]
     USERNAME_FIELD_NUMBER: _ClassVar[int]
     token: str
+    refresh_token: str
+    refresh_token_ttl: int
     user_id: int
     username: str
-    def __init__(self, token: _Optional[str] = ..., user_id: _Optional[int] = ..., username: _Optional[str] = ...) -> None: ...
+    def __init__(self, token: _Optional[str] = ..., refresh_token: _Optional[str] = ..., refresh_token_ttl: _Optional[int] = ..., user_id: _Optional[int] = ..., username: _Optional[str] = ...) -> None: ...
 
 class LogoutRequest(_message.Message):
     __slots__ = ("refresh_token",)

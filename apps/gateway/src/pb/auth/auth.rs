@@ -20,9 +20,13 @@ pub struct LoginRequest {
 pub struct AuthResponse {
     #[prost(string, tag="1")]
     pub token: ::prost::alloc::string::String,
-    #[prost(int32, tag="2")]
+    #[prost(string, tag="2")]
+    pub refresh_token: ::prost::alloc::string::String,
+    #[prost(uint64, tag="3")]
+    pub refresh_token_ttl: u64,
+    #[prost(int32, tag="4")]
     pub user_id: i32,
-    #[prost(string, tag="3")]
+    #[prost(string, tag="5")]
     pub username: ::prost::alloc::string::String,
 }
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]

@@ -12,6 +12,9 @@ REFRESH_TOKEN_EXPIRE_MINUTES: int =  int(os.getenv("ACCOUNTS_JWT_REFRESH_TOKEN_E
 JWT_ALGORITHM: str = "RS256"
 
 
+def get_refresh_token_expire_minutes() -> int:
+    return REFRESH_TOKEN_EXPIRE_MINUTES
+
 def hash_password(password: str) -> str:
     return bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
 

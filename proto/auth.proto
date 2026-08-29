@@ -23,8 +23,10 @@ message LoginRequest {
 
 message AuthResponse {
   string token = 1;
-  int32 user_id = 2;
-  string username = 3;
+  string refresh_token = 2;
+  uint64 refresh_token_ttl = 3;
+  int32 user_id = 4;
+  string username = 5;
 }
 
 message LogoutRequest {

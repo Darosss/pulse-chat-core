@@ -5,7 +5,7 @@ from pb.auth_pb2_grpc import AuthServiceServicer
 from sqlalchemy import select
 from db import AsyncSessionLocal, UserModel
 from grpc import StatusCode, aio
-from utils import hash_password, create_jwt_token, verify_password, decode_jwt_token, create_refresh_token
+from utils import hash_password, create_jwt_token, verify_password, decode_jwt_token, create_refresh_token, get_refresh_token_expire_minutes
 from redis_manager import get_redis, get_blacklist_access_token_key, get_refresh_token_key
 from jwt_keys import get_public_key
 
@@ -27,8 +27,13 @@ class AccountsService(AuthServiceServicer):
             session.add(new_user)
             await session.commit()
             token = create_jwt_token(new_user.id, new_user.username)
+            refresh_token = await create_refresh_token(new_user.id, get_redis())
             return AuthResponse(
-                token=token, user_id=new_user.id, username=new_user.username
+                token=token, 
+                refresh_token=refresh_token,
+                refresh_token_ttl=get_refresh_token_expire_minutes() * 60,
+                user_id=new_user.id, 
+                username=new_user.username,
             )
     async def Login(self, request: LoginRequest, context: aio.ServicerContext) -> AuthResponse:
         async with AsyncSessionLocal() as session:
@@ -42,6 +47,8 @@ class AccountsService(AuthServiceServicer):
             refresh_token = await create_refresh_token(user.id, get_redis())
             return AuthResponse(
                 token=token,
+                refresh_token=refresh_token,
+                refresh_token_ttl=get_refresh_token_expire_minutes() * 60,
                 user_id=int(user.id),
                 username=user.username
             )
@@ -77,14 +84,11 @@ class AccountsService(AuthServiceServicer):
         if not stored_token or stored_token != request.refresh_token: 
             context.set_code(StatusCode.UNAUTHENTICATED)
             return RefreshTokenResponse()
-
         await r.delete(get_refresh_token_key(user_id, jti))
         
         new_access_token = create_access_token(user_id)
-        new_refresh_token, new_jti = await create_refresh_token(user_id)
+        new_refresh_token, new_jti = await create_refresh_token(user_id, r)
         
-        await r.set(get_refresh_token_key(user_id, new_jti), new_refresh_token, ex=7*24*3600)
-
         return RefreshTokenResponse(
             access_token=new_access_token,
             refresh_token=new_refresh_token

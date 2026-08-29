@@ -1,6 +1,11 @@
 use axum_auth::AuthBearer;
 
 use axum::{Json, extract::State};
+use axum_extra::extract::CookieJar;
+use cookie::{
+    Cookie, CookieBuilder, SameSite,
+    time::{Duration, SignedDuration},
+};
 use redis::AsyncCommands;
 use serde::{Deserialize, Serialize};
 
@@ -18,7 +23,6 @@ pub struct AuthResponseSerialized {
     pub user_id: i32,
     pub username: String,
 }
-
 impl From<AuthResponse> for AuthResponseSerialized {
     fn from(value: AuthResponse) -> Self {
         Self {
@@ -60,10 +64,22 @@ pub struct RegisterBody {
     pub username: String,
 }
 
+fn build_refresh_token_cookie(
+    refresh_token: String,
+    max_age: SignedDuration,
+) -> CookieBuilder<'static> {
+    Cookie::build(("refresh_token", refresh_token))
+        .path("/auth")
+        .http_only(true)
+        .same_site(SameSite::Strict)
+        .max_age(max_age)
+}
+
 pub async fn login(
     State(state): State<AppState>,
+    jar: CookieJar,
     Json(payload): Json<LoginBody>,
-) -> Result<Json<AuthResponseSerialized>, AppError> {
+) -> Result<(CookieJar, Json<AuthResponseSerialized>), AppError> {
     let result = state
         .accounts
         .login(LoginBody {
@@ -72,20 +88,19 @@ pub async fn login(
         })
         .await?;
 
-    Ok(Json(result.into()))
+    let cookie_ttl = Duration::seconds(result.refresh_token_ttl as i64);
+
+    let ref_token = result.refresh_token.clone();
+    let cookie = build_refresh_token_cookie(ref_token, cookie_ttl);
+    let updated_jar = jar.add(cookie);
+    Ok((updated_jar, Json(result.into())))
 }
 
 pub async fn logout(
     State(state): State<AppState>,
     AuthBearer(token): AuthBearer,
-    jar: axum_extra::extract::cookie::CookieJar,
-) -> Result<
-    (
-        axum_extra::extract::CookieJar,
-        Json<LogoutResponseSerialized>,
-    ),
-    AppError,
-> {
+    jar: CookieJar,
+) -> Result<(CookieJar, Json<LogoutResponseSerialized>), AppError> {
     if let Some(cookie) = jar.get("refresh_token") {
         let refresh_token = cookie.value().to_string();
         let accounts = state.accounts.clone();
@@ -126,8 +141,9 @@ pub async fn logout(
 }
 pub async fn register(
     State(state): State<AppState>,
+    jar: CookieJar,
     Json(payload): Json<RegisterBody>,
-) -> Result<Json<AuthResponseSerialized>, AppError> {
+) -> Result<(CookieJar, Json<AuthResponseSerialized>), AppError> {
     let result = state
         .accounts
         .register(RegisterBody {
@@ -136,6 +152,10 @@ pub async fn register(
             username: payload.username,
         })
         .await?;
+    let cookie_ttl = Duration::seconds(result.refresh_token_ttl as i64);
 
-    Ok(Json(result.into()))
+    let ref_token = result.refresh_token.clone();
+    let cookie = build_refresh_token_cookie(ref_token, cookie_ttl);
+    let updated_jar = jar.add(cookie);
+    Ok((updated_jar, Json(result.into())))
 }
