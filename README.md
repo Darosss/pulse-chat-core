@@ -70,7 +70,11 @@ Redis: localhost:6379
 - [x] **Auth Pipeline:** JWT generation, token validation, and path/query extraction
 - [ ] **Presence (Go):** Online/offline status tracking:
   - [x] **for now it's all in gateway**
+- [x] Auth Pipeline: Stateless RS256 JWT validation, public key caching at Gateway edge
 - [x] **Gateway/auth Caching:** Redis JWT validation caching at gateway layer
+- [x] **Edge Revocation & Logout**: Redis access token blacklisting, HttpOnly cookie cleanup, gRPC session deletion
+- [x] **real time revocation**: redis Pub/Sub closing active WebSockets on logout
+-
 
 #### Messaging
 
