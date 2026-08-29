@@ -5,6 +5,7 @@ package auth;
 service AuthService {
   rpc Register (RegisterRequest) returns (AuthResponse);
   rpc Login (LoginRequest) returns (AuthResponse);
+  rpc Logout (LogoutRequest) returns (LogoutResponse);
   rpc RefreshToken(RefreshTokenRequest) returns (RefreshTokenResponse);
   rpc GetPublicJWTKey(GetPublicJWTKeyRequest) returns (GetPublicJWTKeyResponse);
 }
@@ -24,6 +25,13 @@ message AuthResponse {
   string token = 1;
   int32 user_id = 2;
   string username = 3;
+}
+
+message LogoutRequest {
+  string refresh_token = 1;
+}
+message LogoutResponse {
+  bool success = 1;
 }
 
 message RefreshTokenRequest {

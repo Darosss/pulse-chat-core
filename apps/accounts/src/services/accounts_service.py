@@ -1,6 +1,6 @@
 
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
-from pb.auth_pb2 import AuthResponse, RegisterRequest, LoginRequest, RefreshTokenRequest, RefreshTokenResponse, GetPublicJWTKeyRequest, GetPublicJWTKeyResponse
+from pb.auth_pb2 import AuthResponse, RegisterRequest, LoginRequest, LogoutResponse, LogoutRequest, RefreshTokenRequest, RefreshTokenResponse, GetPublicJWTKeyRequest, GetPublicJWTKeyResponse
 from pb.auth_pb2_grpc import AuthServiceServicer
 from sqlalchemy import select
 from db import AsyncSessionLocal, UserModel
@@ -45,6 +45,22 @@ class AccountsService(AuthServiceServicer):
                 user_id=int(user.id),
                 username=user.username
             )
+    async def Logout(self, request: LogoutRequest, context: aio.ServiceContext) -> LogoutResponse:
+        payload = decode_jwt_token(request.refresh_token) 
+        if not payload or payload.get("type") != "refresh":
+            context.set_code(StatusCode.UNAUTHENTICATED)
+            return LogoutResponse(success=False)
+
+        user_id = payload.get("user_id")
+        jti = payload.get("jti")
+        
+        r = get_redis()
+        stored_token = await r.get(get_refresh_token_key(user_id, jti))
+        if not stored_token or stored_token != request.refresh_token: 
+            context.set_code(StatusCode.UNAUTHENTICATED)
+            return LogoutResponse(success=False)
+        await r.delete(get_refresh_token_key(user_id, jti))
+        return LogoutResponse(success=True)
 
     async def RefreshToken(self, request: RefreshTokenRequest, context: aio.ServicerContext) -> RefreshTokenResponse:
         payload = decode_jwt_token(request.refresh_token) 

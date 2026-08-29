@@ -6,6 +6,9 @@ edition = "2024"
 [dependencies]
 axum = { version = "0.8.9", features = ["ws"] }
 axum-auth = "0.8.1"
+axum-extra = { version = "0.12.6", features = ["cookie"] }
+chrono = "0.4.45"
+cookie = "0.18.2"
 dotenvy = "0.15.7"
 envy = "0.4.2"
 futures-util = "0.3.34"

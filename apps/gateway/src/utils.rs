@@ -8,8 +8,8 @@ use crate::{
 
 pub async fn get_token_data(state: &AppState, token: &str) -> Result<TokenClaims, AppError> {
     if token.trim() == "" {
-        return Err(AppError::MessageService(Status::unauthenticated(
-            "You are not allowed to view messages of that channel",
+        return Err(AppError::Gateway(Status::unauthenticated(
+            "You are unauthenticated",
         )));
     }
 

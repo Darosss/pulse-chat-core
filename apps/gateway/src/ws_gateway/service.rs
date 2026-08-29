@@ -1,4 +1,4 @@
-use axum::extract::ws::{Message, WebSocket};
+use axum::extract::ws::{Message, Utf8Bytes, WebSocket};
 use futures_util::{SinkExt, StreamExt};
 use redis::{AsyncCommands, aio::MultiplexedConnection};
 use serde_json::{Value, json};
@@ -12,7 +12,7 @@ use crate::{
     pb::message::StreamRequest,
     redis_utils::{
         presence::{PresenceStatus, get_presence_key, set_user_status},
-        pubsub::get_or_join_room_channel,
+        pubsub::{get_or_join_room_channel, get_ws_redis_stream},
     },
     utils::add_user_id_to_request,
 };
@@ -131,17 +131,48 @@ impl WsService {
         let mut active_rooms: ActiveRooms = HashMap::new();
         let (client_tx, mut client_rx) = mpsc::channel::<String>(100);
         let _ = set_user_status(&mut redis, &user_id, PresenceStatus::Online, Option::None).await;
+
+        let mut ws_pubsub = match get_ws_redis_stream(redis_client.clone(), &user_id).await {
+            Ok(ps) => ps,
+            Err(_) => return,
+        };
+
+        let mut ws_redis_stream = ws_pubsub.on_message();
+
         loop {
             tokio::select! {
-            maybe_outgoing = client_rx.recv() => {
-                match maybe_outgoing {
-                    Some(msg) => {
-                        if ws_sender.send(Message::Text(msg.into())).await.is_err() {
-                            break;
+                redis_msg = ws_redis_stream.next() => {
+                    if let Some(msg) = redis_msg {
+                        let payload: String = msg.get_payload().unwrap_or_default();
+                        if let Ok(val) = serde_json::from_str::<serde_json::Value>(&payload) {
+                            let event = match &val["event"] {
+                                serde_json::Value::String(e) => e as &str,
+                                _=>  return,
+                            };
+                            match event {
+                                "LOGOUT" => {
+                                    let _ = ws_sender.send(axum::extract::ws::Message::Close(Some(
+                                        axum::extract::ws::CloseFrame {
+                                            code: axum::extract::ws::close_code::NORMAL,
+                                            reason: Utf8Bytes::from_static("User logged out"),
+                                        }
+                                    ))).await;
+                                break;
+                                }
+                                _ => {}
+                            }
                         }
                     }
-                    None => break,
                 }
+                maybe_outgoing = client_rx.recv() => {
+                    match maybe_outgoing {
+                        Some(msg) => {
+                            if ws_sender.send(Message::Text(msg.into())).await.is_err() {
+                                break;
+                            }
+                        }
+                        None => break,
+                    }
                 },
                 maybe_ws_msg = ws_receiver.next() => {
                     match maybe_ws_msg {
@@ -154,16 +185,16 @@ impl WsService {
                                 match event {
                                     "PING" => {
                                         if self.on_ping(&mut redis, &client_tx, &presence_key).await.is_err() {
-                                           break;
+                                            break;
                                         }
                                     }
                                     "JOIN_ROOM" => {
                                             self.on_join_room(redis_client.clone(), &mut redis, rooms.clone(), val, &mut active_rooms, &user_id, &mut message_service.clone(), client_tx.clone()).await
-                                        },
-
+                                    }
                                     "LEAVE_ROOM" => {
                                         self.on_leave_room(val, &mut active_rooms).await
                                     }
+
                                     _ => {}
                                 }
 
@@ -175,7 +206,7 @@ impl WsService {
                         Some(Ok(Message::Close(_))) | None => break,
                         _ => {}
                     }
-            }
+                }
             };
         }
     }

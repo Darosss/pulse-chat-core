@@ -1,12 +1,13 @@
 use std::{collections::HashMap, sync::Arc};
 
+use crate::redis_utils::auth::get_blacklist_key;
 use crate::{
     accounts::AuthService, app_error::AppError, messages::MessageService,
     ws_gateway::service::WsService,
 };
 use jsonwebtoken::DecodingKey;
-use redis::Client;
 use redis::aio::MultiplexedConnection;
+use redis::{AsyncCommands, Client};
 use tokio::sync::{Mutex, RwLock, broadcast};
 use tonic::Status;
 
@@ -52,5 +53,20 @@ impl AppState {
             }
             Err(e) => Err(e),
         }
+    }
+
+    pub async fn blacklist_access_token(&self, jti: &str, exp_ttl: i64) -> Result<bool, AppError> {
+        let ttl = if exp_ttl > 0 { exp_ttl } else { 1 } as u64;
+        let mut redis_client = self.redis.clone();
+        if redis_client
+            .set_ex::<_, _, ()>(get_blacklist_key(&jti), 1, ttl)
+            .await
+            .is_err()
+        {
+            return Err(AppError::Gateway(Status::internal(
+                "Redis storage error. Couldn't blacklist existing refresh_token",
+            )));
+        }
+        Ok(true)
     }
 }

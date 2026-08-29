@@ -11,6 +11,7 @@ use tonic::{
 
 #[derive(Debug)]
 pub enum AppError {
+    Gateway(Status),
     MessageService(Status),
     AccountsService(Status),
 }
@@ -24,7 +25,9 @@ pub struct ErrorResponse {
 impl IntoResponse for AppError {
     fn into_response(self) -> Response {
         match self {
-            AppError::MessageService(status) | AppError::AccountsService(status) => {
+            AppError::MessageService(status)
+            | AppError::AccountsService(status)
+            | AppError::Gateway(status) => {
                 let status_code = match status.code() {
                     Unavailable => StatusCode::SERVICE_UNAVAILABLE,
                     AlreadyExists => StatusCode::CONFLICT,

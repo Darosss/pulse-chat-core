@@ -32,6 +32,18 @@ class AuthResponse(_message.Message):
     username: str
     def __init__(self, token: _Optional[str] = ..., user_id: _Optional[int] = ..., username: _Optional[str] = ...) -> None: ...
 
+class LogoutRequest(_message.Message):
+    __slots__ = ("refresh_token",)
+    REFRESH_TOKEN_FIELD_NUMBER: _ClassVar[int]
+    refresh_token: str
+    def __init__(self, refresh_token: _Optional[str] = ...) -> None: ...
+
+class LogoutResponse(_message.Message):
+    __slots__ = ("success",)
+    SUCCESS_FIELD_NUMBER: _ClassVar[int]
+    success: bool
+    def __init__(self, success: _Optional[bool] = ...) -> None: ...
+
 class RefreshTokenRequest(_message.Message):
     __slots__ = ("refresh_token",)
     REFRESH_TOKEN_FIELD_NUMBER: _ClassVar[int]

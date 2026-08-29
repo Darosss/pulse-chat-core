@@ -1,7 +1,8 @@
-use crate::app_state::RoomChannels;
+use crate::{app_error::AppError, app_state::RoomChannels};
 use futures_util::StreamExt;
-use redis::Client;
+use redis::{Client, aio::PubSub};
 use tokio::sync::broadcast;
+use tonic::Status;
 
 const BROADCAST_CHANNEL_CAPACITY: usize = 100;
 pub async fn get_or_join_room_channel(
@@ -39,4 +40,22 @@ pub async fn get_or_join_room_channel(
     });
 
     rx
+}
+
+pub fn get_gateway_ws_key(user_id: &i32) -> String {
+    format!("gateway:ws:{user_id}")
+}
+
+pub async fn get_ws_redis_stream(
+    redis_client: redis::Client,
+    user_id: &i32,
+) -> Result<PubSub, AppError> {
+    if let Ok(mut pubsub) = redis_client.get_async_pubsub().await {
+        if pubsub.subscribe(get_gateway_ws_key(user_id)).await.is_ok() {
+            return Ok(pubsub);
+        }
+    }
+    Err(AppError::Gateway(Status::internal(
+        "Couldn't connect to redis - ws channel",
+    )))
 }

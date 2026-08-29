@@ -5,6 +5,7 @@ import bcrypt
 from jwt_keys import get_private_key, get_public_key
 import uuid
 import redis
+from redis_manager import get_refresh_token_key
 
 TOKEN_EXPIRATION_MINUTES: int = int(os.getenv("ACCOUNTS_JWT_TOKEN_EXPIRATION_MINUTES", 15))
 REFRESH_TOKEN_EXPIRE_MINUTES: int =  int(os.getenv("ACCOUNTS_JWT_REFRESH_TOKEN_EXPIRATION_MINUTES", 60*7))
@@ -57,7 +58,7 @@ async def create_refresh_token(user_id: int, redis_client: redis.Redis) -> str:
     
     token = jwt.encode(payload, private_key, algorithm=JWT_ALGORITHM)
 
-    redis_key = f"refresh_token:{user_id}:{jti}"
+    redis_key = get_refresh_token_key(user_id, jti)
     await redis_client.set(redis_key, "active", ex=ttl_seconds)
 
     return token

@@ -26,6 +26,16 @@ pub struct AuthResponse {
     pub username: ::prost::alloc::string::String,
 }
 #[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct LogoutRequest {
+    #[prost(string, tag="1")]
+    pub refresh_token: ::prost::alloc::string::String,
+}
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct LogoutResponse {
+    #[prost(bool, tag="1")]
+    pub success: bool,
+}
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct RefreshTokenRequest {
     #[prost(string, tag="1")]
     pub refresh_token: ::prost::alloc::string::String,

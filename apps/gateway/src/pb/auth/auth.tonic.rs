@@ -128,6 +128,24 @@ pub mod auth_service_client {
             req.extensions_mut().insert(GrpcMethod::new("auth.AuthService", "Login"));
             self.inner.unary(req, path, codec).await
         }
+        pub async fn logout(
+            &mut self,
+            request: impl tonic::IntoRequest<super::LogoutRequest>,
+        ) -> std::result::Result<tonic::Response<super::LogoutResponse>, tonic::Status> {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::unknown(
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic_prost::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static("/auth.AuthService/Logout");
+            let mut req = request.into_request();
+            req.extensions_mut().insert(GrpcMethod::new("auth.AuthService", "Logout"));
+            self.inner.unary(req, path, codec).await
+        }
         pub async fn refresh_token(
             &mut self,
             request: impl tonic::IntoRequest<super::RefreshTokenRequest>,
@@ -199,6 +217,10 @@ pub mod auth_service_server {
             &self,
             request: tonic::Request<super::LoginRequest>,
         ) -> std::result::Result<tonic::Response<super::AuthResponse>, tonic::Status>;
+        async fn logout(
+            &self,
+            request: tonic::Request<super::LogoutRequest>,
+        ) -> std::result::Result<tonic::Response<super::LogoutResponse>, tonic::Status>;
         async fn refresh_token(
             &self,
             request: tonic::Request<super::RefreshTokenRequest>,
@@ -363,6 +385,51 @@ pub mod auth_service_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let method = LoginSvc(inner);
+                        let codec = tonic_prost::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/auth.AuthService/Logout" => {
+                    #[allow(non_camel_case_types)]
+                    struct LogoutSvc<T: AuthService>(pub Arc<T>);
+                    impl<
+                        T: AuthService,
+                    > tonic::server::UnaryService<super::LogoutRequest>
+                    for LogoutSvc<T> {
+                        type Response = super::LogoutResponse;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::LogoutRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as AuthService>::logout(&inner, request).await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = LogoutSvc(inner);
                         let codec = tonic_prost::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(

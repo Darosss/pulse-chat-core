@@ -1,10 +1,10 @@
 use tonic::transport::Channel;
 
 use crate::{
-    accounts::handlers::{LoginBody, RegisterBody},
+    accounts::handlers::{LoginBody, LogoutBody, RegisterBody},
     app_error::AppError,
     pb::auth::{
-        AuthResponse, LoginRequest, RegisterRequest,
+        AuthResponse, LoginRequest, LogoutRequest, LogoutResponse, RegisterRequest,
         auth::{GetPublicJwtKeyRequest, GetPublicJwtKeyResponse},
         auth_service_client::AuthServiceClient,
     },
@@ -24,24 +24,33 @@ impl AuthService {
 
     pub async fn login(self, payload: LoginBody) -> Result<AuthResponse, AppError> {
         let mut client = self.client.clone();
-        let login_response = client
+        let response = client
             .login(LoginRequest {
                 email: payload.email,
                 password: payload.password,
             })
             .await?;
-        Ok(login_response.into_inner())
+        Ok(response.into_inner())
+    }
+    pub async fn logout(self, payload: LogoutBody) -> Result<LogoutResponse, AppError> {
+        let mut client = self.client.clone();
+        let response = client
+            .logout(LogoutRequest {
+                refresh_token: payload.refresh_token,
+            })
+            .await?;
+        Ok(response.into_inner())
     }
     pub async fn register(self, payload: RegisterBody) -> Result<AuthResponse, AppError> {
         let mut client = self.client.clone();
-        let login_response = client
+        let response = client
             .register(RegisterRequest {
                 email: payload.email,
                 password: payload.password,
                 username: payload.username,
             })
             .await?;
-        Ok(login_response.into_inner())
+        Ok(response.into_inner())
     }
 
     pub async fn get_public_jwt_key(self) -> Result<GetPublicJwtKeyResponse, AppError> {
