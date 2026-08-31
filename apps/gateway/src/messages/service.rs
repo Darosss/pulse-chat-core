@@ -4,7 +4,8 @@ use crate::{
     app_error::AppError,
     messages::handlers::CreateMessageBody,
     pb::message::{
-        HistoryRequest, HistoryResponse, MessageItem, message::CreateMessageRequest,
+        HistoryRequest, HistoryResponse, MessageItem,
+        message::{CreateDirectMessageRequest, CreateMessageRequest, DirectHistoryRequest},
         message_service_client::MessageServiceClient,
     },
     utils::add_user_id_to_request,
@@ -41,6 +42,25 @@ impl MessageService {
         let result = client.create_message(request).await?;
         Ok(result.into_inner())
     }
+    pub async fn create_direct_message(
+        self,
+        user_id: i32,
+        recipient_id: i32,
+        payload: CreateMessageBody,
+    ) -> Result<MessageItem, AppError> {
+        let mut client = self.client.clone();
+
+        let request = add_user_id_to_request(
+            Request::new(CreateDirectMessageRequest {
+                content: payload.content,
+                recipient_id,
+            }),
+            &user_id,
+        );
+
+        let result = client.create_direct_message(request).await?;
+        Ok(result.into_inner())
+    }
     pub async fn get_history(
         self,
         request: HistoryRequest,
@@ -50,6 +70,17 @@ impl MessageService {
         let request = add_user_id_to_request(Request::new(request), &user_id);
 
         let response = client.get_channel_history(request).await?;
+        Ok(response.into_inner())
+    }
+    pub async fn get_direct_history(
+        self,
+        request: DirectHistoryRequest,
+        user_id: i32,
+    ) -> Result<HistoryResponse, AppError> {
+        let mut client = self.client.clone();
+        let request = add_user_id_to_request(Request::new(request), &user_id);
+
+        let response = client.get_direct_message_history(request).await?;
         Ok(response.into_inner())
     }
 }

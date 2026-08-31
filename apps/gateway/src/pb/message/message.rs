@@ -7,10 +7,26 @@ pub struct CreateMessageRequest {
     #[prost(string, tag="2")]
     pub content: ::prost::alloc::string::String,
 }
+#[derive(Clone, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct CreateDirectMessageRequest {
+    #[prost(int32, tag="1")]
+    pub recipient_id: i32,
+    #[prost(string, tag="2")]
+    pub content: ::prost::alloc::string::String,
+}
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct HistoryRequest {
     #[prost(int32, tag="1")]
     pub channel_id: i32,
+    #[prost(uint32, tag="2")]
+    pub limit: u32,
+    #[prost(uint32, tag="3")]
+    pub page: u32,
+}
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct DirectHistoryRequest {
+    #[prost(int32, tag="1")]
+    pub recipient_id: i32,
     #[prost(uint32, tag="2")]
     pub limit: u32,
     #[prost(uint32, tag="3")]

@@ -3,11 +3,13 @@ use axum::{
     routing::{get, post},
 };
 
-use super::handlers::{create_message, get_messages};
+use super::handlers::{create_direct_message, create_message, get_direct_messages, get_messages};
 use crate::app_state::AppState;
 
 pub fn router() -> Router<AppState> {
     Router::new()
-        .route("/messages/{channelId}", get(get_messages))
-        .route("/messages/{channelId}", post(create_message))
+        .route("/messages/{channel_id}", get(get_messages))
+        .route("/messages/{channel_id}", post(create_message))
+        .route("/messages/dm/{recipient_id}", get(get_direct_messages))
+        .route("/messages/dm/{recipient_id}", post(create_direct_message))
 }

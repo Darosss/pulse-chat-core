@@ -50,11 +50,15 @@ namespace Message {
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Message.HistoryResponse> __Marshaller_message_HistoryResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Message.HistoryResponse.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Message.DirectHistoryRequest> __Marshaller_message_DirectHistoryRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Message.DirectHistoryRequest.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Message.StreamRequest> __Marshaller_message_StreamRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Message.StreamRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Message.MessageItem> __Marshaller_message_MessageItem = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Message.MessageItem.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Message.CreateMessageRequest> __Marshaller_message_CreateMessageRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Message.CreateMessageRequest.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Message.CreateDirectMessageRequest> __Marshaller_message_CreateDirectMessageRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Message.CreateDirectMessageRequest.Parser));
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::Message.HistoryRequest, global::Message.HistoryResponse> __Method_GetChannelHistory = new grpc::Method<global::Message.HistoryRequest, global::Message.HistoryResponse>(
@@ -62,6 +66,14 @@ namespace Message {
         __ServiceName,
         "GetChannelHistory",
         __Marshaller_message_HistoryRequest,
+        __Marshaller_message_HistoryResponse);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::Message.DirectHistoryRequest, global::Message.HistoryResponse> __Method_GetDirectMessageHistory = new grpc::Method<global::Message.DirectHistoryRequest, global::Message.HistoryResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "GetDirectMessageHistory",
+        __Marshaller_message_DirectHistoryRequest,
         __Marshaller_message_HistoryResponse);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
@@ -78,6 +90,14 @@ namespace Message {
         __ServiceName,
         "CreateMessage",
         __Marshaller_message_CreateMessageRequest,
+        __Marshaller_message_MessageItem);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::Message.CreateDirectMessageRequest, global::Message.MessageItem> __Method_CreateDirectMessage = new grpc::Method<global::Message.CreateDirectMessageRequest, global::Message.MessageItem>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "CreateDirectMessage",
+        __Marshaller_message_CreateDirectMessageRequest,
         __Marshaller_message_MessageItem);
 
     /// <summary>Service descriptor</summary>
@@ -97,6 +117,12 @@ namespace Message {
       }
 
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task<global::Message.HistoryResponse> GetDirectMessageHistory(global::Message.DirectHistoryRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::System.Threading.Tasks.Task StreamLiveMessages(global::Message.StreamRequest request, grpc::IServerStreamWriter<global::Message.MessageItem> responseStream, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
@@ -104,6 +130,12 @@ namespace Message {
 
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::System.Threading.Tasks.Task<global::Message.MessageItem> CreateMessage(global::Message.CreateMessageRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task<global::Message.MessageItem> CreateDirectMessage(global::Message.CreateDirectMessageRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -158,6 +190,26 @@ namespace Message {
         return CallInvoker.AsyncUnaryCall(__Method_GetChannelHistory, null, options, request);
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Message.HistoryResponse GetDirectMessageHistory(global::Message.DirectHistoryRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return GetDirectMessageHistory(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Message.HistoryResponse GetDirectMessageHistory(global::Message.DirectHistoryRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_GetDirectMessageHistory, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Message.HistoryResponse> GetDirectMessageHistoryAsync(global::Message.DirectHistoryRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return GetDirectMessageHistoryAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Message.HistoryResponse> GetDirectMessageHistoryAsync(global::Message.DirectHistoryRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_GetDirectMessageHistory, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual grpc::AsyncServerStreamingCall<global::Message.MessageItem> StreamLiveMessages(global::Message.StreamRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
         return StreamLiveMessages(request, new grpc::CallOptions(headers, deadline, cancellationToken));
@@ -187,6 +239,26 @@ namespace Message {
       {
         return CallInvoker.AsyncUnaryCall(__Method_CreateMessage, null, options, request);
       }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Message.MessageItem CreateDirectMessage(global::Message.CreateDirectMessageRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return CreateDirectMessage(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Message.MessageItem CreateDirectMessage(global::Message.CreateDirectMessageRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_CreateDirectMessage, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Message.MessageItem> CreateDirectMessageAsync(global::Message.CreateDirectMessageRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return CreateDirectMessageAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Message.MessageItem> CreateDirectMessageAsync(global::Message.CreateDirectMessageRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_CreateDirectMessage, null, options, request);
+      }
       /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       protected override MessageServiceClient NewInstance(ClientBaseConfiguration configuration)
@@ -202,8 +274,10 @@ namespace Message {
     {
       return grpc::ServerServiceDefinition.CreateBuilder()
           .AddMethod(__Method_GetChannelHistory, serviceImpl.GetChannelHistory)
+          .AddMethod(__Method_GetDirectMessageHistory, serviceImpl.GetDirectMessageHistory)
           .AddMethod(__Method_StreamLiveMessages, serviceImpl.StreamLiveMessages)
-          .AddMethod(__Method_CreateMessage, serviceImpl.CreateMessage).Build();
+          .AddMethod(__Method_CreateMessage, serviceImpl.CreateMessage)
+          .AddMethod(__Method_CreateDirectMessage, serviceImpl.CreateDirectMessage).Build();
     }
 
     /// <summary>Register service method with a service binder with or without implementation. Useful when customizing the service binding logic.
@@ -214,8 +288,10 @@ namespace Message {
     public static void BindService(grpc::ServiceBinderBase serviceBinder, MessageServiceBase serviceImpl)
     {
       serviceBinder.AddMethod(__Method_GetChannelHistory, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Message.HistoryRequest, global::Message.HistoryResponse>(serviceImpl.GetChannelHistory));
+      serviceBinder.AddMethod(__Method_GetDirectMessageHistory, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Message.DirectHistoryRequest, global::Message.HistoryResponse>(serviceImpl.GetDirectMessageHistory));
       serviceBinder.AddMethod(__Method_StreamLiveMessages, serviceImpl == null ? null : new grpc::ServerStreamingServerMethod<global::Message.StreamRequest, global::Message.MessageItem>(serviceImpl.StreamLiveMessages));
       serviceBinder.AddMethod(__Method_CreateMessage, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Message.CreateMessageRequest, global::Message.MessageItem>(serviceImpl.CreateMessage));
+      serviceBinder.AddMethod(__Method_CreateDirectMessage, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Message.CreateDirectMessageRequest, global::Message.MessageItem>(serviceImpl.CreateDirectMessage));
     }
 
   }

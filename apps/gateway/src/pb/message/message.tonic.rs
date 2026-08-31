@@ -114,6 +114,32 @@ pub mod message_service_client {
                 .insert(GrpcMethod::new("message.MessageService", "GetChannelHistory"));
             self.inner.unary(req, path, codec).await
         }
+        pub async fn get_direct_message_history(
+            &mut self,
+            request: impl tonic::IntoRequest<super::DirectHistoryRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::HistoryResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::unknown(
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic_prost::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/message.MessageService/GetDirectMessageHistory",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new("message.MessageService", "GetDirectMessageHistory"),
+                );
+            self.inner.unary(req, path, codec).await
+        }
         pub async fn stream_live_messages(
             &mut self,
             request: impl tonic::IntoRequest<super::StreamRequest>,
@@ -159,6 +185,29 @@ pub mod message_service_client {
                 .insert(GrpcMethod::new("message.MessageService", "CreateMessage"));
             self.inner.unary(req, path, codec).await
         }
+        pub async fn create_direct_message(
+            &mut self,
+            request: impl tonic::IntoRequest<super::CreateDirectMessageRequest>,
+        ) -> std::result::Result<tonic::Response<super::MessageItem>, tonic::Status> {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::unknown(
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic_prost::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/message.MessageService/CreateDirectMessage",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new("message.MessageService", "CreateDirectMessage"),
+                );
+            self.inner.unary(req, path, codec).await
+        }
     }
 }
 /// Generated server implementations.
@@ -178,6 +227,10 @@ pub mod message_service_server {
             &self,
             request: tonic::Request<super::HistoryRequest>,
         ) -> std::result::Result<tonic::Response<super::HistoryResponse>, tonic::Status>;
+        async fn get_direct_message_history(
+            &self,
+            request: tonic::Request<super::DirectHistoryRequest>,
+        ) -> std::result::Result<tonic::Response<super::HistoryResponse>, tonic::Status>;
         /// Server streaming response type for the StreamLiveMessages method.
         type StreamLiveMessagesStream: tonic::codegen::tokio_stream::Stream<
                 Item = std::result::Result<super::MessageItem, tonic::Status>,
@@ -194,6 +247,10 @@ pub mod message_service_server {
         async fn create_message(
             &self,
             request: tonic::Request<super::CreateMessageRequest>,
+        ) -> std::result::Result<tonic::Response<super::MessageItem>, tonic::Status>;
+        async fn create_direct_message(
+            &self,
+            request: tonic::Request<super::CreateDirectMessageRequest>,
         ) -> std::result::Result<tonic::Response<super::MessageItem>, tonic::Status>;
     }
     #[derive(Debug)]
@@ -318,6 +375,55 @@ pub mod message_service_server {
                     };
                     Box::pin(fut)
                 }
+                "/message.MessageService/GetDirectMessageHistory" => {
+                    #[allow(non_camel_case_types)]
+                    struct GetDirectMessageHistorySvc<T: MessageService>(pub Arc<T>);
+                    impl<
+                        T: MessageService,
+                    > tonic::server::UnaryService<super::DirectHistoryRequest>
+                    for GetDirectMessageHistorySvc<T> {
+                        type Response = super::HistoryResponse;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::DirectHistoryRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as MessageService>::get_direct_message_history(
+                                        &inner,
+                                        request,
+                                    )
+                                    .await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = GetDirectMessageHistorySvc(inner);
+                        let codec = tonic_prost::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
                 "/message.MessageService/StreamLiveMessages" => {
                     #[allow(non_camel_case_types)]
                     struct StreamLiveMessagesSvc<T: MessageService>(pub Arc<T>);
@@ -395,6 +501,55 @@ pub mod message_service_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let method = CreateMessageSvc(inner);
+                        let codec = tonic_prost::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/message.MessageService/CreateDirectMessage" => {
+                    #[allow(non_camel_case_types)]
+                    struct CreateDirectMessageSvc<T: MessageService>(pub Arc<T>);
+                    impl<
+                        T: MessageService,
+                    > tonic::server::UnaryService<super::CreateDirectMessageRequest>
+                    for CreateDirectMessageSvc<T> {
+                        type Response = super::MessageItem;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::CreateDirectMessageRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as MessageService>::create_direct_message(
+                                        &inner,
+                                        request,
+                                    )
+                                    .await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = CreateDirectMessageSvc(inner);
                         let codec = tonic_prost::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(

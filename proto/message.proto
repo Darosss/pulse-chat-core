@@ -4,17 +4,28 @@ package message;
 
 service MessageService {
   rpc GetChannelHistory (HistoryRequest) returns (HistoryResponse);
+  rpc GetDirectMessageHistory (DirectHistoryRequest) returns (HistoryResponse);
   rpc StreamLiveMessages (StreamRequest) returns (stream MessageItem);
   rpc CreateMessage(CreateMessageRequest) returns (MessageItem);
+  rpc CreateDirectMessage(CreateDirectMessageRequest) returns (MessageItem);
 }
 
 message CreateMessageRequest {
   int32 channel_id = 1;
   string content = 2;
 }
+message CreateDirectMessageRequest {
+  int32 recipient_id = 1;
+  string content = 2;
+}
 
 message HistoryRequest {
   int32 channel_id = 1;
+  uint32 limit = 2;
+  uint32 page = 3;
+}
+message DirectHistoryRequest {
+  int32 recipient_id = 1; 
   uint32 limit = 2;
   uint32 page = 3;
 }

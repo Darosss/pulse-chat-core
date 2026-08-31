@@ -19,6 +19,11 @@ class MessageServiceStub:
                 request_serializer=message__pb2.HistoryRequest.SerializeToString,
                 response_deserializer=message__pb2.HistoryResponse.FromString,
                 _registered_method=True)
+        self.GetDirectMessageHistory = channel.unary_unary(
+                '/message.MessageService/GetDirectMessageHistory',
+                request_serializer=message__pb2.DirectHistoryRequest.SerializeToString,
+                response_deserializer=message__pb2.HistoryResponse.FromString,
+                _registered_method=True)
         self.StreamLiveMessages = channel.unary_stream(
                 '/message.MessageService/StreamLiveMessages',
                 request_serializer=message__pb2.StreamRequest.SerializeToString,
@@ -29,12 +34,23 @@ class MessageServiceStub:
                 request_serializer=message__pb2.CreateMessageRequest.SerializeToString,
                 response_deserializer=message__pb2.MessageItem.FromString,
                 _registered_method=True)
+        self.CreateDirectMessage = channel.unary_unary(
+                '/message.MessageService/CreateDirectMessage',
+                request_serializer=message__pb2.CreateDirectMessageRequest.SerializeToString,
+                response_deserializer=message__pb2.MessageItem.FromString,
+                _registered_method=True)
 
 
 class MessageServiceServicer:
     """Missing associated documentation comment in .proto file."""
 
     def GetChannelHistory(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetDirectMessageHistory(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -52,12 +68,23 @@ class MessageServiceServicer:
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def CreateDirectMessage(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_MessageServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'GetChannelHistory': grpc.unary_unary_rpc_method_handler(
                     servicer.GetChannelHistory,
                     request_deserializer=message__pb2.HistoryRequest.FromString,
+                    response_serializer=message__pb2.HistoryResponse.SerializeToString,
+            ),
+            'GetDirectMessageHistory': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetDirectMessageHistory,
+                    request_deserializer=message__pb2.DirectHistoryRequest.FromString,
                     response_serializer=message__pb2.HistoryResponse.SerializeToString,
             ),
             'StreamLiveMessages': grpc.unary_stream_rpc_method_handler(
@@ -68,6 +95,11 @@ def add_MessageServiceServicer_to_server(servicer, server):
             'CreateMessage': grpc.unary_unary_rpc_method_handler(
                     servicer.CreateMessage,
                     request_deserializer=message__pb2.CreateMessageRequest.FromString,
+                    response_serializer=message__pb2.MessageItem.SerializeToString,
+            ),
+            'CreateDirectMessage': grpc.unary_unary_rpc_method_handler(
+                    servicer.CreateDirectMessage,
+                    request_deserializer=message__pb2.CreateDirectMessageRequest.FromString,
                     response_serializer=message__pb2.MessageItem.SerializeToString,
             ),
     }
@@ -97,6 +129,33 @@ class MessageService:
             target,
             '/message.MessageService/GetChannelHistory',
             message__pb2.HistoryRequest.SerializeToString,
+            message__pb2.HistoryResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def GetDirectMessageHistory(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/message.MessageService/GetDirectMessageHistory',
+            message__pb2.DirectHistoryRequest.SerializeToString,
             message__pb2.HistoryResponse.FromString,
             options,
             channel_credentials,
@@ -151,6 +210,33 @@ class MessageService:
             target,
             '/message.MessageService/CreateMessage',
             message__pb2.CreateMessageRequest.SerializeToString,
+            message__pb2.MessageItem.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def CreateDirectMessage(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/message.MessageService/CreateDirectMessage',
+            message__pb2.CreateDirectMessageRequest.SerializeToString,
             message__pb2.MessageItem.FromString,
             options,
             channel_credentials,
