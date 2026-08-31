@@ -63,6 +63,10 @@ namespace Auth {
     static readonly grpc::Marshaller<global::Auth.GetPublicJWTKeyRequest> __Marshaller_auth_GetPublicJWTKeyRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Auth.GetPublicJWTKeyRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Auth.GetPublicJWTKeyResponse> __Marshaller_auth_GetPublicJWTKeyResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Auth.GetPublicJWTKeyResponse.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Auth.UserExistsRequest> __Marshaller_auth_UserExistsRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Auth.UserExistsRequest.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Auth.UserExistsResponse> __Marshaller_auth_UserExistsResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Auth.UserExistsResponse.Parser));
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::Auth.RegisterRequest, global::Auth.AuthResponse> __Method_Register = new grpc::Method<global::Auth.RegisterRequest, global::Auth.AuthResponse>(
@@ -104,6 +108,14 @@ namespace Auth {
         __Marshaller_auth_GetPublicJWTKeyRequest,
         __Marshaller_auth_GetPublicJWTKeyResponse);
 
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::Auth.UserExistsRequest, global::Auth.UserExistsResponse> __Method_UserExists = new grpc::Method<global::Auth.UserExistsRequest, global::Auth.UserExistsResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "UserExists",
+        __Marshaller_auth_UserExistsRequest,
+        __Marshaller_auth_UserExistsResponse);
+
     /// <summary>Service descriptor</summary>
     public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
     {
@@ -140,6 +152,12 @@ namespace Auth {
 
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::System.Threading.Tasks.Task<global::Auth.GetPublicJWTKeyResponse> GetPublicJWTKey(global::Auth.GetPublicJWTKeyRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task<global::Auth.UserExistsResponse> UserExists(global::Auth.UserExistsRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -273,6 +291,26 @@ namespace Auth {
       {
         return CallInvoker.AsyncUnaryCall(__Method_GetPublicJWTKey, null, options, request);
       }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Auth.UserExistsResponse UserExists(global::Auth.UserExistsRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return UserExists(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Auth.UserExistsResponse UserExists(global::Auth.UserExistsRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_UserExists, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Auth.UserExistsResponse> UserExistsAsync(global::Auth.UserExistsRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return UserExistsAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Auth.UserExistsResponse> UserExistsAsync(global::Auth.UserExistsRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_UserExists, null, options, request);
+      }
       /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       protected override AuthServiceClient NewInstance(ClientBaseConfiguration configuration)
@@ -291,7 +329,8 @@ namespace Auth {
           .AddMethod(__Method_Login, serviceImpl.Login)
           .AddMethod(__Method_Logout, serviceImpl.Logout)
           .AddMethod(__Method_RefreshToken, serviceImpl.RefreshToken)
-          .AddMethod(__Method_GetPublicJWTKey, serviceImpl.GetPublicJWTKey).Build();
+          .AddMethod(__Method_GetPublicJWTKey, serviceImpl.GetPublicJWTKey)
+          .AddMethod(__Method_UserExists, serviceImpl.UserExists).Build();
     }
 
     /// <summary>Register service method with a service binder with or without implementation. Useful when customizing the service binding logic.
@@ -306,6 +345,7 @@ namespace Auth {
       serviceBinder.AddMethod(__Method_Logout, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Auth.LogoutRequest, global::Auth.LogoutResponse>(serviceImpl.Logout));
       serviceBinder.AddMethod(__Method_RefreshToken, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Auth.RefreshTokenRequest, global::Auth.RefreshTokenResponse>(serviceImpl.RefreshToken));
       serviceBinder.AddMethod(__Method_GetPublicJWTKey, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Auth.GetPublicJWTKeyRequest, global::Auth.GetPublicJWTKeyResponse>(serviceImpl.GetPublicJWTKey));
+      serviceBinder.AddMethod(__Method_UserExists, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Auth.UserExistsRequest, global::Auth.UserExistsResponse>(serviceImpl.UserExists));
     }
 
   }

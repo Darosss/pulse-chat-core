@@ -39,6 +39,11 @@ class AuthServiceStub:
                 request_serializer=auth__pb2.GetPublicJWTKeyRequest.SerializeToString,
                 response_deserializer=auth__pb2.GetPublicJWTKeyResponse.FromString,
                 _registered_method=True)
+        self.UserExists = channel.unary_unary(
+                '/auth.AuthService/UserExists',
+                request_serializer=auth__pb2.UserExistsRequest.SerializeToString,
+                response_deserializer=auth__pb2.UserExistsResponse.FromString,
+                _registered_method=True)
 
 
 class AuthServiceServicer:
@@ -74,6 +79,12 @@ class AuthServiceServicer:
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def UserExists(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_AuthServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -101,6 +112,11 @@ def add_AuthServiceServicer_to_server(servicer, server):
                     servicer.GetPublicJWTKey,
                     request_deserializer=auth__pb2.GetPublicJWTKeyRequest.FromString,
                     response_serializer=auth__pb2.GetPublicJWTKeyResponse.SerializeToString,
+            ),
+            'UserExists': grpc.unary_unary_rpc_method_handler(
+                    servicer.UserExists,
+                    request_deserializer=auth__pb2.UserExistsRequest.FromString,
+                    response_serializer=auth__pb2.UserExistsResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -238,6 +254,33 @@ class AuthService:
             '/auth.AuthService/GetPublicJWTKey',
             auth__pb2.GetPublicJWTKeyRequest.SerializeToString,
             auth__pb2.GetPublicJWTKeyResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def UserExists(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/auth.AuthService/UserExists',
+            auth__pb2.UserExistsRequest.SerializeToString,
+            auth__pb2.UserExistsResponse.FromString,
             options,
             channel_credentials,
             insecure,

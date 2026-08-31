@@ -24,7 +24,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\nauth.proto\x12\x04\x61uth\"_\n\x0fRegisterRequest\x12\x1a\n\x08username\x18\x01 \x01(\tR\x08username\x12\x14\n\x05\x65mail\x18\x02 \x01(\tR\x05\x65mail\x12\x1a\n\x08password\x18\x03 \x01(\tR\x08password\"@\n\x0cLoginRequest\x12\x14\n\x05\x65mail\x18\x01 \x01(\tR\x05\x65mail\x12\x1a\n\x08password\x18\x02 \x01(\tR\x08password\"\xaa\x01\n\x0c\x41uthResponse\x12\x14\n\x05token\x18\x01 \x01(\tR\x05token\x12#\n\rrefresh_token\x18\x02 \x01(\tR\x0crefreshToken\x12*\n\x11refresh_token_ttl\x18\x03 \x01(\x04R\x0frefreshTokenTtl\x12\x17\n\x07user_id\x18\x04 \x01(\x05R\x06userId\x12\x1a\n\x08username\x18\x05 \x01(\tR\x08username\"4\n\rLogoutRequest\x12#\n\rrefresh_token\x18\x01 \x01(\tR\x0crefreshToken\"*\n\x0eLogoutResponse\x12\x18\n\x07success\x18\x01 \x01(\x08R\x07success\":\n\x13RefreshTokenRequest\x12#\n\rrefresh_token\x18\x01 \x01(\tR\x0crefreshToken\"^\n\x14RefreshTokenResponse\x12!\n\x0c\x61\x63\x63\x65ss_token\x18\x01 \x01(\tR\x0b\x61\x63\x63\x65ssToken\x12#\n\rrefresh_token\x18\x02 \x01(\tR\x0crefreshToken\"\x18\n\x16GetPublicJWTKeyRequest\"+\n\x17GetPublicJWTKeyResponse\x12\x10\n\x03key\x18\x01 \x01(\tR\x03key2\xc1\x02\n\x0b\x41uthService\x12\x35\n\x08Register\x12\x15.auth.RegisterRequest\x1a\x12.auth.AuthResponse\x12/\n\x05Login\x12\x12.auth.LoginRequest\x1a\x12.auth.AuthResponse\x12\x33\n\x06Logout\x12\x13.auth.LogoutRequest\x1a\x14.auth.LogoutResponse\x12\x45\n\x0cRefreshToken\x12\x19.auth.RefreshTokenRequest\x1a\x1a.auth.RefreshTokenResponse\x12N\n\x0fGetPublicJWTKey\x12\x1c.auth.GetPublicJWTKeyRequest\x1a\x1d.auth.GetPublicJWTKeyResponseb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\nauth.proto\x12\x04\x61uth\"_\n\x0fRegisterRequest\x12\x1a\n\x08username\x18\x01 \x01(\tR\x08username\x12\x14\n\x05\x65mail\x18\x02 \x01(\tR\x05\x65mail\x12\x1a\n\x08password\x18\x03 \x01(\tR\x08password\"@\n\x0cLoginRequest\x12\x14\n\x05\x65mail\x18\x01 \x01(\tR\x05\x65mail\x12\x1a\n\x08password\x18\x02 \x01(\tR\x08password\"\xaa\x01\n\x0c\x41uthResponse\x12\x14\n\x05token\x18\x01 \x01(\tR\x05token\x12#\n\rrefresh_token\x18\x02 \x01(\tR\x0crefreshToken\x12*\n\x11refresh_token_ttl\x18\x03 \x01(\x04R\x0frefreshTokenTtl\x12\x17\n\x07user_id\x18\x04 \x01(\x05R\x06userId\x12\x1a\n\x08username\x18\x05 \x01(\tR\x08username\"4\n\rLogoutRequest\x12#\n\rrefresh_token\x18\x01 \x01(\tR\x0crefreshToken\"*\n\x0eLogoutResponse\x12\x18\n\x07success\x18\x01 \x01(\x08R\x07success\":\n\x13RefreshTokenRequest\x12#\n\rrefresh_token\x18\x01 \x01(\tR\x0crefreshToken\"^\n\x14RefreshTokenResponse\x12!\n\x0c\x61\x63\x63\x65ss_token\x18\x01 \x01(\tR\x0b\x61\x63\x63\x65ssToken\x12#\n\rrefresh_token\x18\x02 \x01(\tR\x0crefreshToken\"\x18\n\x16GetPublicJWTKeyRequest\"+\n\x17GetPublicJWTKeyResponse\x12\x10\n\x03key\x18\x01 \x01(\tR\x03key\",\n\x11UserExistsRequest\x12\x17\n\x07user_id\x18\x01 \x01(\x05R\x06userId\"*\n\x12UserExistsResponse\x12\x14\n\x05\x66ound\x18\x01 \x01(\x08R\x05\x66ound2\x82\x03\n\x0b\x41uthService\x12\x35\n\x08Register\x12\x15.auth.RegisterRequest\x1a\x12.auth.AuthResponse\x12/\n\x05Login\x12\x12.auth.LoginRequest\x1a\x12.auth.AuthResponse\x12\x33\n\x06Logout\x12\x13.auth.LogoutRequest\x1a\x14.auth.LogoutResponse\x12\x45\n\x0cRefreshToken\x12\x19.auth.RefreshTokenRequest\x1a\x1a.auth.RefreshTokenResponse\x12N\n\x0fGetPublicJWTKey\x12\x1c.auth.GetPublicJWTKeyRequest\x1a\x1d.auth.GetPublicJWTKeyResponse\x12?\n\nUserExists\x12\x17.auth.UserExistsRequest\x1a\x18.auth.UserExistsResponseb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -49,6 +49,10 @@ if not _descriptor._USE_C_DESCRIPTORS:
   _globals['_GETPUBLICJWTKEYREQUEST']._serialized_end=634
   _globals['_GETPUBLICJWTKEYRESPONSE']._serialized_start=636
   _globals['_GETPUBLICJWTKEYRESPONSE']._serialized_end=679
-  _globals['_AUTHSERVICE']._serialized_start=682
-  _globals['_AUTHSERVICE']._serialized_end=1003
+  _globals['_USEREXISTSREQUEST']._serialized_start=681
+  _globals['_USEREXISTSREQUEST']._serialized_end=725
+  _globals['_USEREXISTSRESPONSE']._serialized_start=727
+  _globals['_USEREXISTSRESPONSE']._serialized_end=769
+  _globals['_AUTHSERVICE']._serialized_start=772
+  _globals['_AUTHSERVICE']._serialized_end=1158
 # @@protoc_insertion_point(module_scope)

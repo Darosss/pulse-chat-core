@@ -71,3 +71,15 @@ class GetPublicJWTKeyResponse(_message.Message):
     KEY_FIELD_NUMBER: _ClassVar[int]
     key: str
     def __init__(self, key: _Optional[str] = ...) -> None: ...
+
+class UserExistsRequest(_message.Message):
+    __slots__ = ("user_id",)
+    USER_ID_FIELD_NUMBER: _ClassVar[int]
+    user_id: int
+    def __init__(self, user_id: _Optional[int] = ...) -> None: ...
+
+class UserExistsResponse(_message.Message):
+    __slots__ = ("found",)
+    FOUND_FIELD_NUMBER: _ClassVar[int]
+    found: bool
+    def __init__(self, found: _Optional[bool] = ...) -> None: ...

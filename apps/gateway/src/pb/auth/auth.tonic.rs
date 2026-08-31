@@ -194,6 +194,30 @@ pub mod auth_service_client {
                 .insert(GrpcMethod::new("auth.AuthService", "GetPublicJWTKey"));
             self.inner.unary(req, path, codec).await
         }
+        pub async fn user_exists(
+            &mut self,
+            request: impl tonic::IntoRequest<super::UserExistsRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::UserExistsResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::unknown(
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic_prost::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/auth.AuthService/UserExists",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("auth.AuthService", "UserExists"));
+            self.inner.unary(req, path, codec).await
+        }
     }
 }
 /// Generated server implementations.
@@ -233,6 +257,13 @@ pub mod auth_service_server {
             request: tonic::Request<super::GetPublicJwtKeyRequest>,
         ) -> std::result::Result<
             tonic::Response<super::GetPublicJwtKeyResponse>,
+            tonic::Status,
+        >;
+        async fn user_exists(
+            &self,
+            request: tonic::Request<super::UserExistsRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::UserExistsResponse>,
             tonic::Status,
         >;
     }
@@ -521,6 +552,51 @@ pub mod auth_service_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let method = GetPublicJWTKeySvc(inner);
+                        let codec = tonic_prost::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/auth.AuthService/UserExists" => {
+                    #[allow(non_camel_case_types)]
+                    struct UserExistsSvc<T: AuthService>(pub Arc<T>);
+                    impl<
+                        T: AuthService,
+                    > tonic::server::UnaryService<super::UserExistsRequest>
+                    for UserExistsSvc<T> {
+                        type Response = super::UserExistsResponse;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::UserExistsRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as AuthService>::user_exists(&inner, request).await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = UserExistsSvc(inner);
                         let codec = tonic_prost::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(

@@ -1,6 +1,6 @@
 
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
-from pb.auth_pb2 import AuthResponse, RegisterRequest, LoginRequest, LogoutResponse, LogoutRequest, RefreshTokenRequest, RefreshTokenResponse, GetPublicJWTKeyRequest, GetPublicJWTKeyResponse
+from pb.auth_pb2 import AuthResponse, RegisterRequest, LoginRequest, LogoutResponse, LogoutRequest, RefreshTokenRequest, RefreshTokenResponse, GetPublicJWTKeyRequest, GetPublicJWTKeyResponse, UserExistsRequest, UserExistsResponse
 from pb.auth_pb2_grpc import AuthServiceServicer
 from sqlalchemy import select
 from db import AsyncSessionLocal, UserModel
@@ -93,6 +93,15 @@ class AccountsService(AuthServiceServicer):
             access_token=new_access_token,
             refresh_token=new_refresh_token
         )
+    async def UserExists(self, request: UserExistsRequest, context: aio.ServicerContext) -> UserExistsResponse:
+        async with AsyncSessionLocal() as session:
+            stmt = select(UserModel).where(UserModel.id == request.user_id)
+            result = await session.execute(stmt)
+            user = result.scalar_one_or_none()
+
+            return UserExistsResponse(
+                found = True if user is not None else False
+            )
 
     async def GetPublicJWTKey(self, request: GetPublicJWTKeyRequest, context: aio.ServicerContext) -> GetPublicJWTKeyResponse:
         

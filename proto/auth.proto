@@ -8,6 +8,7 @@ service AuthService {
   rpc Logout (LogoutRequest) returns (LogoutResponse);
   rpc RefreshToken(RefreshTokenRequest) returns (RefreshTokenResponse);
   rpc GetPublicJWTKey(GetPublicJWTKeyRequest) returns (GetPublicJWTKeyResponse);
+  rpc UserExists(UserExistsRequest) returns (UserExistsResponse);
 }
 
 message RegisterRequest {
@@ -49,4 +50,12 @@ message GetPublicJWTKeyRequest {}
 
 message GetPublicJWTKeyResponse {
   string key = 1;
+}
+
+message UserExistsRequest {
+  int32 user_id = 1;
+}
+
+message UserExistsResponse {
+  bool found = 1;
 }

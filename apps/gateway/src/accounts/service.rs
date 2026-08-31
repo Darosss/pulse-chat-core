@@ -5,7 +5,9 @@ use crate::{
     app_error::AppError,
     pb::auth::{
         AuthResponse, LoginRequest, LogoutRequest, LogoutResponse, RegisterRequest,
-        auth::{GetPublicJwtKeyRequest, GetPublicJwtKeyResponse},
+        auth::{
+            GetPublicJwtKeyRequest, GetPublicJwtKeyResponse, UserExistsRequest, UserExistsResponse,
+        },
         auth_service_client::AuthServiceClient,
     },
 };
@@ -56,6 +58,14 @@ impl AuthService {
     pub async fn get_public_jwt_key(self) -> Result<GetPublicJwtKeyResponse, AppError> {
         let mut client = self.client.clone();
         let response = client.get_public_jwt_key(GetPublicJwtKeyRequest {}).await?;
+        Ok(response.into_inner())
+    }
+
+    pub async fn user_exists(self, user_id: &i32) -> Result<UserExistsResponse, AppError> {
+        let mut client = self.client.clone();
+        let response = client
+            .user_exists(UserExistsRequest { user_id: *user_id })
+            .await?;
         Ok(response.into_inner())
     }
 }

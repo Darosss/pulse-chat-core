@@ -59,5 +59,15 @@ pub struct GetPublicJwtKeyResponse {
     #[prost(string, tag="1")]
     pub key: ::prost::alloc::string::String,
 }
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct UserExistsRequest {
+    #[prost(int32, tag="1")]
+    pub user_id: i32,
+}
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct UserExistsResponse {
+    #[prost(bool, tag="1")]
+    pub found: bool,
+}
 include!("auth.tonic.rs");
 // @@protoc_insertion_point(module)
