@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-DotEnv.Load(new(envFilePaths: ["../../.env"]));
+DotEnv.Load();
 const string appUrlEnvKey = "MESSAGE_SERVICE_URL";
 string? appUrl = Environment.GetEnvironmentVariable(appUrlEnvKey);
 
