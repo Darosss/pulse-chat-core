@@ -1,5 +1,6 @@
 using Grpc.Core;
 using Grpc.Core.Interceptors;
+
 namespace message.Errors;
 
 public class ErrorHandlingInterceptor : Interceptor
@@ -7,7 +8,8 @@ public class ErrorHandlingInterceptor : Interceptor
     public override async Task<TResponse> UnaryServerHandler<TRequest, TResponse>(
         TRequest request,
         ServerCallContext context,
-        UnaryServerMethod<TRequest, TResponse> continuation)
+        UnaryServerMethod<TRequest, TResponse> continuation
+    )
     {
         try
         {
@@ -15,7 +17,7 @@ public class ErrorHandlingInterceptor : Interceptor
         }
         catch (RpcException)
         {
-            throw; 
+            throw;
         }
         catch (KeyNotFoundException ex)
         {
@@ -23,7 +25,9 @@ public class ErrorHandlingInterceptor : Interceptor
         }
         catch (Exception ex)
         {
-            throw new RpcException(new Status(StatusCode.Internal, "An unexpected error occurred: " + ex.Message));
+            throw new RpcException(
+                new Status(StatusCode.Internal, "An unexpected error occurred: " + ex.Message)
+            );
         }
     }
 }
