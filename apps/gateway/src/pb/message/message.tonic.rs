@@ -140,6 +140,30 @@ pub mod message_service_client {
                 );
             self.inner.unary(req, path, codec).await
         }
+        pub async fn get_private_room_id(
+            &mut self,
+            request: impl tonic::IntoRequest<super::GetPrivateRoomIdRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::GetPrivateRoomIdResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::unknown(
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic_prost::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/message.MessageService/GetPrivateRoomId",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(GrpcMethod::new("message.MessageService", "GetPrivateRoomId"));
+            self.inner.unary(req, path, codec).await
+        }
         pub async fn stream_live_messages(
             &mut self,
             request: impl tonic::IntoRequest<super::StreamRequest>,
@@ -231,6 +255,13 @@ pub mod message_service_server {
             &self,
             request: tonic::Request<super::DirectHistoryRequest>,
         ) -> std::result::Result<tonic::Response<super::HistoryResponse>, tonic::Status>;
+        async fn get_private_room_id(
+            &self,
+            request: tonic::Request<super::GetPrivateRoomIdRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::GetPrivateRoomIdResponse>,
+            tonic::Status,
+        >;
         /// Server streaming response type for the StreamLiveMessages method.
         type StreamLiveMessagesStream: tonic::codegen::tokio_stream::Stream<
                 Item = std::result::Result<super::MessageItem, tonic::Status>,
@@ -409,6 +440,52 @@ pub mod message_service_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let method = GetDirectMessageHistorySvc(inner);
+                        let codec = tonic_prost::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
+                "/message.MessageService/GetPrivateRoomId" => {
+                    #[allow(non_camel_case_types)]
+                    struct GetPrivateRoomIdSvc<T: MessageService>(pub Arc<T>);
+                    impl<
+                        T: MessageService,
+                    > tonic::server::UnaryService<super::GetPrivateRoomIdRequest>
+                    for GetPrivateRoomIdSvc<T> {
+                        type Response = super::GetPrivateRoomIdResponse;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::GetPrivateRoomIdRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                <T as MessageService>::get_private_room_id(&inner, request)
+                                    .await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let method = GetPrivateRoomIdSvc(inner);
                         let codec = tonic_prost::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(

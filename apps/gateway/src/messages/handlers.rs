@@ -9,7 +9,10 @@ use tonic::Status;
 use crate::{
     app_error::AppError,
     app_state::AppState,
-    pb::message::{HistoryRequest, MessageItem, message::DirectHistoryRequest},
+    pb::message::{
+        HistoryRequest, MessageItem,
+        message::{DirectHistoryRequest, GetPrivateRoomIdRequest, GetPrivateRoomIdResponse},
+    },
     utils::get_token_data,
 };
 #[derive(Deserialize)]
@@ -33,6 +36,18 @@ impl From<MessageItem> for MessageItemResponse {
             user_id: value.user_id,
             content: value.content,
             timestamp: value.timestamp,
+        }
+    }
+}
+#[derive(Serialize, Deserialize)]
+pub struct GetPrivateRoomIdSerialized {
+    pub channel_id: i32,
+}
+
+impl From<GetPrivateRoomIdResponse> for GetPrivateRoomIdSerialized {
+    fn from(value: GetPrivateRoomIdResponse) -> Self {
+        Self {
+            channel_id: value.channel_id,
         }
     }
 }
@@ -111,6 +126,32 @@ pub async fn get_messages(
         .collect();
 
     Ok(Json(messages))
+}
+
+pub async fn get_private_room_id(
+    State(state): State<AppState>,
+    Path(recipient_id): Path<i32>,
+    AuthBearer(token): AuthBearer,
+) -> Result<Json<GetPrivateRoomIdSerialized>, AppError> {
+    let user_data = get_token_data(&state, &token).await?;
+    if user_data.user_id == recipient_id {
+        return Err(AppError::MessageService(Status::invalid_argument(
+            "Cannot get a direct message with yourself",
+        )));
+    };
+    let user_exists = state.accounts.user_exists(&recipient_id).await?;
+    if !user_exists.found {
+        return Err(AppError::MessageService(Status::not_found(
+            "User with that id does not exist",
+        )));
+    };
+    let result = state
+        .messages
+        .clone()
+        .get_private_room_id(GetPrivateRoomIdRequest { recipient_id }, user_data.user_id)
+        .await?;
+
+    Ok(Json(result.into()))
 }
 pub async fn get_direct_messages(
     State(state): State<AppState>,

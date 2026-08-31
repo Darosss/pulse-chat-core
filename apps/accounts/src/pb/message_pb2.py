@@ -24,7 +24,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\rmessage.proto\x12\x07message\"O\n\x14\x43reateMessageRequest\x12\x1d\n\nchannel_id\x18\x01 \x01(\x05R\tchannelId\x12\x18\n\x07\x63ontent\x18\x02 \x01(\tR\x07\x63ontent\"Y\n\x1a\x43reateDirectMessageRequest\x12!\n\x0crecipient_id\x18\x01 \x01(\x05R\x0brecipientId\x12\x18\n\x07\x63ontent\x18\x02 \x01(\tR\x07\x63ontent\"Y\n\x0eHistoryRequest\x12\x1d\n\nchannel_id\x18\x01 \x01(\x05R\tchannelId\x12\x14\n\x05limit\x18\x02 \x01(\rR\x05limit\x12\x12\n\x04page\x18\x03 \x01(\rR\x04page\"c\n\x14\x44irectHistoryRequest\x12!\n\x0crecipient_id\x18\x01 \x01(\x05R\x0brecipientId\x12\x14\n\x05limit\x18\x02 \x01(\rR\x05limit\x12\x12\n\x04page\x18\x03 \x01(\rR\x04page\"\x8d\x01\n\x0bMessageItem\x12\x0e\n\x02id\x18\x01 \x01(\x05R\x02id\x12\x17\n\x07user_id\x18\x02 \x01(\x05R\x06userId\x12\x1d\n\nchannel_id\x18\x03 \x01(\x05R\tchannelId\x12\x18\n\x07\x63ontent\x18\x04 \x01(\tR\x07\x63ontent\x12\x1c\n\ttimestamp\x18\x05 \x01(\x03R\ttimestamp\"C\n\x0fHistoryResponse\x12\x30\n\x08messages\x18\x01 \x03(\x0b\x32\x14.message.MessageItemR\x08messages\".\n\rStreamRequest\x12\x1d\n\nchannel_id\x18\x01 \x01(\x05R\tchannelId2\x8a\x03\n\x0eMessageService\x12\x46\n\x11GetChannelHistory\x12\x17.message.HistoryRequest\x1a\x18.message.HistoryResponse\x12R\n\x17GetDirectMessageHistory\x12\x1d.message.DirectHistoryRequest\x1a\x18.message.HistoryResponse\x12\x44\n\x12StreamLiveMessages\x12\x16.message.StreamRequest\x1a\x14.message.MessageItem0\x01\x12\x44\n\rCreateMessage\x12\x1d.message.CreateMessageRequest\x1a\x14.message.MessageItem\x12P\n\x13\x43reateDirectMessage\x12#.message.CreateDirectMessageRequest\x1a\x14.message.MessageItemb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\rmessage.proto\x12\x07message\"O\n\x14\x43reateMessageRequest\x12\x1d\n\nchannel_id\x18\x01 \x01(\x05R\tchannelId\x12\x18\n\x07\x63ontent\x18\x02 \x01(\tR\x07\x63ontent\"Y\n\x1a\x43reateDirectMessageRequest\x12!\n\x0crecipient_id\x18\x01 \x01(\x05R\x0brecipientId\x12\x18\n\x07\x63ontent\x18\x02 \x01(\tR\x07\x63ontent\"Y\n\x0eHistoryRequest\x12\x1d\n\nchannel_id\x18\x01 \x01(\x05R\tchannelId\x12\x14\n\x05limit\x18\x02 \x01(\rR\x05limit\x12\x12\n\x04page\x18\x03 \x01(\rR\x04page\"c\n\x14\x44irectHistoryRequest\x12!\n\x0crecipient_id\x18\x01 \x01(\x05R\x0brecipientId\x12\x14\n\x05limit\x18\x02 \x01(\rR\x05limit\x12\x12\n\x04page\x18\x03 \x01(\rR\x04page\"\x8d\x01\n\x0bMessageItem\x12\x0e\n\x02id\x18\x01 \x01(\x05R\x02id\x12\x17\n\x07user_id\x18\x02 \x01(\x05R\x06userId\x12\x1d\n\nchannel_id\x18\x03 \x01(\x05R\tchannelId\x12\x18\n\x07\x63ontent\x18\x04 \x01(\tR\x07\x63ontent\x12\x1c\n\ttimestamp\x18\x05 \x01(\x03R\ttimestamp\"C\n\x0fHistoryResponse\x12\x30\n\x08messages\x18\x01 \x03(\x0b\x32\x14.message.MessageItemR\x08messages\"<\n\x17GetPrivateRoomIdRequest\x12!\n\x0crecipient_id\x18\x01 \x01(\x05R\x0brecipientId\"9\n\x18GetPrivateRoomIdResponse\x12\x1d\n\nchannel_id\x18\x01 \x01(\x05R\tchannelId\".\n\rStreamRequest\x12\x1d\n\nchannel_id\x18\x01 \x01(\x05R\tchannelId2\xe3\x03\n\x0eMessageService\x12\x46\n\x11GetChannelHistory\x12\x17.message.HistoryRequest\x1a\x18.message.HistoryResponse\x12R\n\x17GetDirectMessageHistory\x12\x1d.message.DirectHistoryRequest\x1a\x18.message.HistoryResponse\x12W\n\x10GetPrivateRoomId\x12 .message.GetPrivateRoomIdRequest\x1a!.message.GetPrivateRoomIdResponse\x12\x44\n\x12StreamLiveMessages\x12\x16.message.StreamRequest\x1a\x14.message.MessageItem0\x01\x12\x44\n\rCreateMessage\x12\x1d.message.CreateMessageRequest\x1a\x14.message.MessageItem\x12P\n\x13\x43reateDirectMessage\x12#.message.CreateDirectMessageRequest\x1a\x14.message.MessageItemb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -43,8 +43,12 @@ if not _descriptor._USE_C_DESCRIPTORS:
   _globals['_MESSAGEITEM']._serialized_end=532
   _globals['_HISTORYRESPONSE']._serialized_start=534
   _globals['_HISTORYRESPONSE']._serialized_end=601
-  _globals['_STREAMREQUEST']._serialized_start=603
-  _globals['_STREAMREQUEST']._serialized_end=649
-  _globals['_MESSAGESERVICE']._serialized_start=652
-  _globals['_MESSAGESERVICE']._serialized_end=1046
+  _globals['_GETPRIVATEROOMIDREQUEST']._serialized_start=603
+  _globals['_GETPRIVATEROOMIDREQUEST']._serialized_end=663
+  _globals['_GETPRIVATEROOMIDRESPONSE']._serialized_start=665
+  _globals['_GETPRIVATEROOMIDRESPONSE']._serialized_end=722
+  _globals['_STREAMREQUEST']._serialized_start=724
+  _globals['_STREAMREQUEST']._serialized_end=770
+  _globals['_MESSAGESERVICE']._serialized_start=773
+  _globals['_MESSAGESERVICE']._serialized_end=1256
 # @@protoc_insertion_point(module_scope)

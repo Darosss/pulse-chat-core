@@ -51,6 +51,16 @@ pub struct HistoryResponse {
     pub messages: ::prost::alloc::vec::Vec<MessageItem>,
 }
 #[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct GetPrivateRoomIdRequest {
+    #[prost(int32, tag="1")]
+    pub recipient_id: i32,
+}
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
+pub struct GetPrivateRoomIdResponse {
+    #[prost(int32, tag="1")]
+    pub channel_id: i32,
+}
+#[derive(Clone, Copy, PartialEq, Eq, Hash, ::prost::Message)]
 pub struct StreamRequest {
     #[prost(int32, tag="1")]
     pub channel_id: i32,

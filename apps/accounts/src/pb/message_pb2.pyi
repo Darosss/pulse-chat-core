@@ -62,6 +62,18 @@ class HistoryResponse(_message.Message):
     messages: _containers.RepeatedCompositeFieldContainer[MessageItem]
     def __init__(self, messages: _Optional[_Iterable[_Union[MessageItem, _Mapping]]] = ...) -> None: ...
 
+class GetPrivateRoomIdRequest(_message.Message):
+    __slots__ = ("recipient_id",)
+    RECIPIENT_ID_FIELD_NUMBER: _ClassVar[int]
+    recipient_id: int
+    def __init__(self, recipient_id: _Optional[int] = ...) -> None: ...
+
+class GetPrivateRoomIdResponse(_message.Message):
+    __slots__ = ("channel_id",)
+    CHANNEL_ID_FIELD_NUMBER: _ClassVar[int]
+    channel_id: int
+    def __init__(self, channel_id: _Optional[int] = ...) -> None: ...
+
 class StreamRequest(_message.Message):
     __slots__ = ("channel_id",)
     CHANNEL_ID_FIELD_NUMBER: _ClassVar[int]

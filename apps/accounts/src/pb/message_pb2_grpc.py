@@ -24,6 +24,11 @@ class MessageServiceStub:
                 request_serializer=message__pb2.DirectHistoryRequest.SerializeToString,
                 response_deserializer=message__pb2.HistoryResponse.FromString,
                 _registered_method=True)
+        self.GetPrivateRoomId = channel.unary_unary(
+                '/message.MessageService/GetPrivateRoomId',
+                request_serializer=message__pb2.GetPrivateRoomIdRequest.SerializeToString,
+                response_deserializer=message__pb2.GetPrivateRoomIdResponse.FromString,
+                _registered_method=True)
         self.StreamLiveMessages = channel.unary_stream(
                 '/message.MessageService/StreamLiveMessages',
                 request_serializer=message__pb2.StreamRequest.SerializeToString,
@@ -51,6 +56,12 @@ class MessageServiceServicer:
         raise NotImplementedError('Method not implemented!')
 
     def GetDirectMessageHistory(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetPrivateRoomId(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -86,6 +97,11 @@ def add_MessageServiceServicer_to_server(servicer, server):
                     servicer.GetDirectMessageHistory,
                     request_deserializer=message__pb2.DirectHistoryRequest.FromString,
                     response_serializer=message__pb2.HistoryResponse.SerializeToString,
+            ),
+            'GetPrivateRoomId': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetPrivateRoomId,
+                    request_deserializer=message__pb2.GetPrivateRoomIdRequest.FromString,
+                    response_serializer=message__pb2.GetPrivateRoomIdResponse.SerializeToString,
             ),
             'StreamLiveMessages': grpc.unary_stream_rpc_method_handler(
                     servicer.StreamLiveMessages,
@@ -157,6 +173,33 @@ class MessageService:
             '/message.MessageService/GetDirectMessageHistory',
             message__pb2.DirectHistoryRequest.SerializeToString,
             message__pb2.HistoryResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def GetPrivateRoomId(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/message.MessageService/GetPrivateRoomId',
+            message__pb2.GetPrivateRoomIdRequest.SerializeToString,
+            message__pb2.GetPrivateRoomIdResponse.FromString,
             options,
             channel_credentials,
             insecure,

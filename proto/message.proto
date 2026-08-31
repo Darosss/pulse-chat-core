@@ -5,9 +5,11 @@ package message;
 service MessageService {
   rpc GetChannelHistory (HistoryRequest) returns (HistoryResponse);
   rpc GetDirectMessageHistory (DirectHistoryRequest) returns (HistoryResponse);
+  rpc GetPrivateRoomId(GetPrivateRoomIdRequest) returns (GetPrivateRoomIdResponse);
   rpc StreamLiveMessages (StreamRequest) returns (stream MessageItem);
   rpc CreateMessage(CreateMessageRequest) returns (MessageItem);
   rpc CreateDirectMessage(CreateDirectMessageRequest) returns (MessageItem);
+  
 }
 
 message CreateMessageRequest {
@@ -40,6 +42,13 @@ message MessageItem {
 
 message HistoryResponse {
   repeated MessageItem messages = 1;
+}
+
+message GetPrivateRoomIdRequest {
+  int32 recipient_id = 1;
+}
+message GetPrivateRoomIdResponse {
+  int32 channel_id = 1;
 }
 
 message StreamRequest {

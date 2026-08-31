@@ -52,6 +52,10 @@ namespace Message {
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Message.DirectHistoryRequest> __Marshaller_message_DirectHistoryRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Message.DirectHistoryRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Message.GetPrivateRoomIdRequest> __Marshaller_message_GetPrivateRoomIdRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Message.GetPrivateRoomIdRequest.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::Message.GetPrivateRoomIdResponse> __Marshaller_message_GetPrivateRoomIdResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Message.GetPrivateRoomIdResponse.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Message.StreamRequest> __Marshaller_message_StreamRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Message.StreamRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Message.MessageItem> __Marshaller_message_MessageItem = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Message.MessageItem.Parser));
@@ -75,6 +79,14 @@ namespace Message {
         "GetDirectMessageHistory",
         __Marshaller_message_DirectHistoryRequest,
         __Marshaller_message_HistoryResponse);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::Message.GetPrivateRoomIdRequest, global::Message.GetPrivateRoomIdResponse> __Method_GetPrivateRoomId = new grpc::Method<global::Message.GetPrivateRoomIdRequest, global::Message.GetPrivateRoomIdResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "GetPrivateRoomId",
+        __Marshaller_message_GetPrivateRoomIdRequest,
+        __Marshaller_message_GetPrivateRoomIdResponse);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::Message.StreamRequest, global::Message.MessageItem> __Method_StreamLiveMessages = new grpc::Method<global::Message.StreamRequest, global::Message.MessageItem>(
@@ -118,6 +130,12 @@ namespace Message {
 
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::System.Threading.Tasks.Task<global::Message.HistoryResponse> GetDirectMessageHistory(global::Message.DirectHistoryRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task<global::Message.GetPrivateRoomIdResponse> GetPrivateRoomId(global::Message.GetPrivateRoomIdRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -210,6 +228,26 @@ namespace Message {
         return CallInvoker.AsyncUnaryCall(__Method_GetDirectMessageHistory, null, options, request);
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Message.GetPrivateRoomIdResponse GetPrivateRoomId(global::Message.GetPrivateRoomIdRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return GetPrivateRoomId(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::Message.GetPrivateRoomIdResponse GetPrivateRoomId(global::Message.GetPrivateRoomIdRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_GetPrivateRoomId, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Message.GetPrivateRoomIdResponse> GetPrivateRoomIdAsync(global::Message.GetPrivateRoomIdRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return GetPrivateRoomIdAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::Message.GetPrivateRoomIdResponse> GetPrivateRoomIdAsync(global::Message.GetPrivateRoomIdRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_GetPrivateRoomId, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual grpc::AsyncServerStreamingCall<global::Message.MessageItem> StreamLiveMessages(global::Message.StreamRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
         return StreamLiveMessages(request, new grpc::CallOptions(headers, deadline, cancellationToken));
@@ -275,6 +313,7 @@ namespace Message {
       return grpc::ServerServiceDefinition.CreateBuilder()
           .AddMethod(__Method_GetChannelHistory, serviceImpl.GetChannelHistory)
           .AddMethod(__Method_GetDirectMessageHistory, serviceImpl.GetDirectMessageHistory)
+          .AddMethod(__Method_GetPrivateRoomId, serviceImpl.GetPrivateRoomId)
           .AddMethod(__Method_StreamLiveMessages, serviceImpl.StreamLiveMessages)
           .AddMethod(__Method_CreateMessage, serviceImpl.CreateMessage)
           .AddMethod(__Method_CreateDirectMessage, serviceImpl.CreateDirectMessage).Build();
@@ -289,6 +328,7 @@ namespace Message {
     {
       serviceBinder.AddMethod(__Method_GetChannelHistory, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Message.HistoryRequest, global::Message.HistoryResponse>(serviceImpl.GetChannelHistory));
       serviceBinder.AddMethod(__Method_GetDirectMessageHistory, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Message.DirectHistoryRequest, global::Message.HistoryResponse>(serviceImpl.GetDirectMessageHistory));
+      serviceBinder.AddMethod(__Method_GetPrivateRoomId, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Message.GetPrivateRoomIdRequest, global::Message.GetPrivateRoomIdResponse>(serviceImpl.GetPrivateRoomId));
       serviceBinder.AddMethod(__Method_StreamLiveMessages, serviceImpl == null ? null : new grpc::ServerStreamingServerMethod<global::Message.StreamRequest, global::Message.MessageItem>(serviceImpl.StreamLiveMessages));
       serviceBinder.AddMethod(__Method_CreateMessage, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Message.CreateMessageRequest, global::Message.MessageItem>(serviceImpl.CreateMessage));
       serviceBinder.AddMethod(__Method_CreateDirectMessage, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::Message.CreateDirectMessageRequest, global::Message.MessageItem>(serviceImpl.CreateDirectMessage));

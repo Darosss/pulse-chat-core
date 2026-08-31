@@ -80,6 +80,17 @@ public class MessageServiceInternal(
         return historyResponse;
     }
 
+    public override async Task<GetPrivateRoomIdResponse> GetPrivateRoomId(
+        GetPrivateRoomIdRequest request,
+        ServerCallContext context
+    )
+    {
+        var userId = RetrieveUserIdFromHeaders(context.RequestHeaders);
+        var channelId = await this.GetOrCreateDirectRoomAsync(userId, request.RecipientId);
+
+        return new() { ChannelId = channelId };
+    }
+
     public override async Task<HistoryResponse> GetDirectMessageHistory(
         DirectHistoryRequest request,
         ServerCallContext context

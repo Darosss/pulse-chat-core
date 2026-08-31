@@ -5,7 +5,10 @@ use crate::{
     messages::handlers::CreateMessageBody,
     pb::message::{
         HistoryRequest, HistoryResponse, MessageItem,
-        message::{CreateDirectMessageRequest, CreateMessageRequest, DirectHistoryRequest},
+        message::{
+            CreateDirectMessageRequest, CreateMessageRequest, DirectHistoryRequest,
+            GetPrivateRoomIdRequest, GetPrivateRoomIdResponse,
+        },
         message_service_client::MessageServiceClient,
     },
     utils::add_user_id_to_request,
@@ -81,6 +84,17 @@ impl MessageService {
         let request = add_user_id_to_request(Request::new(request), &user_id);
 
         let response = client.get_direct_message_history(request).await?;
+        Ok(response.into_inner())
+    }
+    pub async fn get_private_room_id(
+        self,
+        request: GetPrivateRoomIdRequest,
+        user_id: i32,
+    ) -> Result<GetPrivateRoomIdResponse, AppError> {
+        let mut client = self.client.clone();
+        let request = add_user_id_to_request(Request::new(request), &user_id);
+
+        let response = client.get_private_room_id(request).await?;
         Ok(response.into_inner())
     }
 }
