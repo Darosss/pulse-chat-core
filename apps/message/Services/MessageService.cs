@@ -2,6 +2,7 @@ using Grpc.Core;
 using Message;
 using message.Data;
 using message.Models.Dto;
+using message.Utils;
 using Microsoft.EntityFrameworkCore;
 
 namespace message.Services;
@@ -18,29 +19,12 @@ public class MessageServiceInternal(
     private readonly ILogger<MessageServiceInternal> _logger = logger;
     private readonly RoomService _roomService = roomService;
 
-    private static int RetrieveUserIdFromHeaders(Metadata requestHeaders)
-    {
-        var userId = requestHeaders.GetValue("x-user-id");
-
-        if (string.IsNullOrEmpty(userId) || !int.TryParse(userId, out int userIdAsNumber))
-        {
-            throw new RpcException(
-                new Status(
-                    StatusCode.Unauthenticated,
-                    "Missing proper x-user-id header in Gateway request"
-                )
-            );
-        }
-
-        return userIdAsNumber;
-    }
-
     public override async Task<HistoryResponse> GetChannelHistory(
         HistoryRequest request,
         ServerCallContext context
     )
     {
-        var userId = RetrieveUserIdFromHeaders(context.RequestHeaders);
+        var userId = GrpcHeaderUtils.GetUserId(context.RequestHeaders);
         if (!await this._roomService.IsUserIdAMemberOfRoom(userId, request.ChannelId))
         {
             throw new RpcException(
@@ -79,7 +63,7 @@ public class MessageServiceInternal(
         ServerCallContext context
     )
     {
-        var userId = RetrieveUserIdFromHeaders(context.RequestHeaders);
+        var userId = GrpcHeaderUtils.GetUserId(context.RequestHeaders);
         var channelId = await this._roomService.GetOrCreateDirectRoomAsync(
             userId,
             request.RecipientId
@@ -93,7 +77,7 @@ public class MessageServiceInternal(
         ServerCallContext context
     )
     {
-        var userId = RetrieveUserIdFromHeaders(context.RequestHeaders);
+        var userId = GrpcHeaderUtils.GetUserId(context.RequestHeaders);
 
         var historyResponse = new HistoryResponse() { };
         var channelId = await this._roomService.GetOrCreateDirectRoomAsync(
@@ -145,7 +129,7 @@ public class MessageServiceInternal(
         ServerCallContext context
     )
     {
-        var userId = RetrieveUserIdFromHeaders(context.RequestHeaders);
+        var userId = GrpcHeaderUtils.GetUserId(context.RequestHeaders);
         if (!await this._roomService.IsUserIdAMemberOfRoom(userId, request.ChannelId))
         {
             throw new RpcException(
@@ -175,7 +159,7 @@ public class MessageServiceInternal(
         ServerCallContext context
     )
     {
-        var userId = RetrieveUserIdFromHeaders(context.RequestHeaders);
+        var userId = GrpcHeaderUtils.GetUserId(context.RequestHeaders);
         var channelId = await this._roomService.GetOrCreateDirectRoomAsync(
             userId,
             request.RecipientId
@@ -204,7 +188,7 @@ public class MessageServiceInternal(
         ServerCallContext context
     )
     {
-        var userId = RetrieveUserIdFromHeaders(context.RequestHeaders);
+        var userId = GrpcHeaderUtils.GetUserId(context.RequestHeaders);
         if (!await this._roomService.IsUserIdAMemberOfRoom(userId, request.ChannelId))
         {
             throw new RpcException(
