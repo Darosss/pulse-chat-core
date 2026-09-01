@@ -1,7 +1,6 @@
 using Grpc.Core;
 using Message;
 using message.Data;
-using message.Models;
 using message.Models.Dto;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,12 +9,14 @@ namespace message.Services;
 public class MessageServiceInternal(
     ChannelBroadcaster broadcaster,
     MessageDbContext dbContext,
+    RoomService roomService,
     ILogger<MessageServiceInternal> logger
 ) : MessageService.MessageServiceBase
 {
     private readonly ChannelBroadcaster _broadcaster = broadcaster;
     private readonly MessageDbContext messageDb = dbContext;
     private readonly ILogger<MessageServiceInternal> _logger = logger;
+    private readonly RoomService _roomService = roomService;
 
     private static int RetrieveUserIdFromHeaders(Metadata requestHeaders)
     {
@@ -34,20 +35,13 @@ public class MessageServiceInternal(
         return userIdAsNumber;
     }
 
-    private async Task<bool> IsUserIdAMemberOfRoom(int userId, int channelId)
-    {
-        return await this.messageDb.RoomMembers.AnyAsync(m =>
-            m.RoomId == channelId && m.UserId == userId
-        );
-    }
-
     public override async Task<HistoryResponse> GetChannelHistory(
         HistoryRequest request,
         ServerCallContext context
     )
     {
         var userId = RetrieveUserIdFromHeaders(context.RequestHeaders);
-        if (!await this.IsUserIdAMemberOfRoom(userId, request.ChannelId))
+        if (!await this._roomService.IsUserIdAMemberOfRoom(userId, request.ChannelId))
         {
             throw new RpcException(
                 new Status(StatusCode.PermissionDenied, "You do not have access to this room")
@@ -86,7 +80,10 @@ public class MessageServiceInternal(
     )
     {
         var userId = RetrieveUserIdFromHeaders(context.RequestHeaders);
-        var channelId = await this.GetOrCreateDirectRoomAsync(userId, request.RecipientId);
+        var channelId = await this._roomService.GetOrCreateDirectRoomAsync(
+            userId,
+            request.RecipientId
+        );
 
         return new() { ChannelId = channelId };
     }
@@ -99,7 +96,10 @@ public class MessageServiceInternal(
         var userId = RetrieveUserIdFromHeaders(context.RequestHeaders);
 
         var historyResponse = new HistoryResponse() { };
-        var channelId = await this.GetOrCreateDirectRoomAsync(userId, request.RecipientId);
+        var channelId = await this._roomService.GetOrCreateDirectRoomAsync(
+            userId,
+            request.RecipientId
+        );
         int pageSize = (int)request.Limit;
         int skipCount = ((int)request.Page - 1) * pageSize;
 
@@ -146,7 +146,7 @@ public class MessageServiceInternal(
     )
     {
         var userId = RetrieveUserIdFromHeaders(context.RequestHeaders);
-        if (!await this.IsUserIdAMemberOfRoom(userId, request.ChannelId))
+        if (!await this._roomService.IsUserIdAMemberOfRoom(userId, request.ChannelId))
         {
             throw new RpcException(
                 new Status(StatusCode.PermissionDenied, "You do not have access to this room")
@@ -176,7 +176,10 @@ public class MessageServiceInternal(
     )
     {
         var userId = RetrieveUserIdFromHeaders(context.RequestHeaders);
-        var channelId = await this.GetOrCreateDirectRoomAsync(userId, request.RecipientId);
+        var channelId = await this._roomService.GetOrCreateDirectRoomAsync(
+            userId,
+            request.RecipientId
+        );
         var newMessage = await this.SaveMessageToDatabase(
             new() { ChannelId = channelId, Content = request.Content },
             userId
@@ -202,7 +205,7 @@ public class MessageServiceInternal(
     )
     {
         var userId = RetrieveUserIdFromHeaders(context.RequestHeaders);
-        if (!await this.IsUserIdAMemberOfRoom(userId, request.ChannelId))
+        if (!await this._roomService.IsUserIdAMemberOfRoom(userId, request.ChannelId))
         {
             throw new RpcException(
                 new Status(StatusCode.PermissionDenied, "You do not have access to this room")
@@ -234,39 +237,5 @@ public class MessageServiceInternal(
                 request.ChannelId
             );
         }
-    }
-
-    public async Task<int> GetOrCreateDirectRoomAsync(int user1Id, int user2Id)
-    {
-        if (user1Id == user2Id)
-        {
-            throw new RpcException(
-                new Status(StatusCode.InvalidArgument, "Cannot get a room with yourself")
-            );
-        }
-        var existingRoomId = await this
-            .messageDb.Rooms.Where(r => r.Type == RoomType.Direct)
-            .Where(r =>
-                r.Members.Any(m => m.UserId == user1Id) && r.Members.Any(m => m.UserId == user2Id)
-            )
-            .Select(r => r.Id)
-            .FirstOrDefaultAsync();
-
-        if (existingRoomId != default)
-        {
-            return existingRoomId;
-        }
-
-        var newRoom = new Room
-        {
-            Type = RoomType.Direct,
-            Members = [new() { UserId = user1Id }, new() { UserId = user2Id }],
-        };
-
-        this.messageDb.Rooms.Add(newRoom);
-
-        await this.messageDb.SaveChangesAsync();
-
-        return newRoom.Id;
     }
 }
