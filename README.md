@@ -80,7 +80,7 @@ Redis: localhost:6379
 
 - [x] **Chat Pipeline:** base chatroom hhstory, message creation, and stream handlers
 - [x] **Room Security:** access check verification before socket upgrade
-- [ ] **Private Chats:** 1-on-1 direct messages
+- [x] **Private Chats:** 1-on-1 direct messages
 - [ ] **Chat Extras:** typing indicators, message edits
 - [ ] **Multi-Server Sync:** redis ws scaling
 
