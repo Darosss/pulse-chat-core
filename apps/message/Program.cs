@@ -30,6 +30,7 @@ builder.Services.AddGrpc(options =>
     options.Interceptors.Add<ErrorHandlingInterceptor>();
 });
 
+builder.Services.AddScoped<RoomService>();
 builder.Services.AddSingleton<ChannelBroadcaster>();
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
