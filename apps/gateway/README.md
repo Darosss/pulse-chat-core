@@ -1,4 +1,4 @@
-# Accounts Service
+# Gateway Service
 
 ---
 
