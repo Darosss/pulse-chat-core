@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package guild;
+
+service GuildService {
+  rpc CreateGuild (CreateGuildRequest) returns (GuildResponse);
+
+}
+
+message CreateGuildRequest {
+  string name = 1;
+}
+
+message GuildResponse {
+  string id = 1;
+  string name = 2;
+  int32 owner_id = 3;
+  string created_at = 4;
+}
