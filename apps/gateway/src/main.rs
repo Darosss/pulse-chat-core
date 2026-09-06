@@ -14,10 +14,11 @@ use tokio::sync::{Mutex, RwLock};
 use tonic::transport::Endpoint;
 
 use crate::{
-    accounts::AuthService, app_env_management::load_config, messages::MessageService,
-    ws_gateway::service::WsService,
+    accounts::AuthService, app_env_management::load_config, guilds::GuildsService,
+    messages::MessageService, ws_gateway::service::WsService,
 };
 mod accounts;
+mod guilds;
 mod messages;
 
 #[tokio::main]
@@ -31,6 +32,10 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .expect("Make sure accounts_service_url is provided")
         .connect_lazy();
     let accounts_service = AuthService::new(accounts_service_channel);
+    let guilds_service_channel = Endpoint::from_str(&config.guilds_service_url)
+        .expect("Make sure guilds_service_url is provided")
+        .connect_lazy();
+    let guilds_service = GuildsService::new(guilds_service_channel);
 
     let client = redis::Client::open(config.redis_url)?;
 
@@ -40,6 +45,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         public_decode_key: Arc::new(RwLock::new(Option::None)),
         messages: messages_service,
         accounts: accounts_service,
+        guilds: guilds_service,
         redis: redis_connection,
         ws_state: WsService::new(),
         rooms: Arc::new(Mutex::new(HashMap::new())),
@@ -52,6 +58,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .merge(ws_gateway::router())
         .merge(accounts::router())
         .merge(messages::router())
+        .merge(guilds::router())
         .with_state(state);
 
     let listener = tokio::net::TcpListener::bind(format!("0.0.0.0:{}", config.port))

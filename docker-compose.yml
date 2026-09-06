@@ -63,6 +63,19 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+  guilds-service:
+    build:
+      context: ./apps/guilds
+      dockerfile: Dockerfile
+    container_name: guilds_rust
+    environment:
+      - GUILDS_SERVICE_URL=0.0.0.0:50053
+      - DATABASE_URL=postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/guilds_db
+    ports:
+      - "50053:50053"
+    depends_on:
+      postgres:
+        condition: service_healthy
 
   gateway:
     build:
@@ -73,6 +86,7 @@ services:
       - REDIS_URL=redis://redis:6379/0
       - ACCOUNTS_SERVICE_URL=http://accounts-service:50051
       - MESSAGE_SERVICE_URL=http://message-service:50052
+      - GUILDS_SERVICE_URL=http://guilds-service:50053
       - PORT=3000
     ports:
       - "3000:3000"

@@ -26,6 +26,7 @@ Redis: localhost:6379
 - each service can be started individually during development:
   - gateway(**rust**): [apps/gateway/README](apps/gateway/README.md)
   - message(**c**#): [apps/message/README](apps/message/README.md)
+  - guilds(**rust**): [apps/guilds/README](apps/guilds/README.md)
   - pressence(**go**): `soon` - for now it depends on gateway
   - accounts/auth(**python**): check [apps/accounts/README](apps/accounts/README.md)
 - proto folder contains all .proto files
@@ -35,30 +36,30 @@ Redis: localhost:6379
 ## Estimated Architecture in mind
 
 ```text
-                                   [ Client / Web Browser / Mobile ]
-                                                 │
-                                          (WebSockets / HTTP REST)
-                                                 ▼
-                     ┌────────────────────────────────────────────────────────────────┐
-                     │                   RUST GATEWAY (Axum + Tokio)                  │
-                     └──────┬──────────────┬──────────────┬──────────────┬────────────┘
-                            │              │              │              │
-                     (gRPC Unary)   (gRPC Unary)   (gRPC Stream)  (gRPC Unary)
-                            │              │              │              │
-                            ▼              ▼              ▼              ▼
-                     ┌─────────────┐┌─────────────┐┌─────────────┐┌───────────────────┐
-                     │  C#         ││    Go       ││    Python   ││  FASTIFY (NODE)   │
-                     │  Messages   ││    Presence ││    Auth &   ││  Bots, Webhooks   │
-                     │  & Guilds   ││    Engine   ││    Shop     ││  & Integrations   │
-                     └──────┬──────┘└─────────────┘└─────────────┘└─────────┬─────────┘
-                            │                                               │
-                     (gRPC Stream)                                   (gRPC Unary)
-                            ▼                                               ▼
-                     ┌──────────────┐                             ┌───────────────────┐
-                     │    C++       │                             │ External Services │
-                     │    Audio     │                             │ (GitHub, Twitch,  │
-                     │    Transcoder│                             │ Stripe, Webhooks) │
-                     └──────────────┘                             └───────────────────┘
+                                  [ Client / Web Browser / Mobile ]
+                                                │
+                                      (WebSockets / HTTP REST)
+                                                ▼
+          ┌───────────────────────────────────────────────────────────────────────────────┐
+          │                        RUST GATEWAY (Axum + Tokio)                            │
+          └──────┬───────────────────────────── ┬──────────────┬──────────────┬───────────┘
+                 │               │              │              │              │
+          (gRPC Unary)    (gRPC Unary)   (gRPC Unary)   (gRPC Stream)  (gRPC Unary)
+                 │               │              │              │              │
+                 ▼               ▼              ▼              ▼              ▼
+          ┌─────────────┐┌─────────────┐┌─────────────┐┌─────────────┐┌───────────────────┐
+          │  C#         ││  Rust       ││    Go       ││    Python   ││  FASTIFY (NODE)   │
+          │  Messages   ││  Guilds     ││    Presence ││    Auth &   ││  Bots, Webhooks   │
+          │             ││             ││    Engine   ││    Shop     ││  & Integrations   │
+          └──────┬──────┘└─────────────┘└─────────────┘└─────────────┘└─────────┬─────────┘
+                 │                                                              │
+          (gRPC Stream)                                                   (gRPC Unary)
+                 ▼                                                              ▼
+          ┌──────────────┐                                            ┌───────────────────┐
+          │  C++         │                                            │ External Services │
+          │  Audio       │                                            │ (GitHub, Twitch,  │
+          │  Transcoder  │                                            │ Stripe, Webhooks) │
+          └──────────────┘                                            └───────────────────┘
 ```
 
 ### Estimated Roadmap
@@ -86,7 +87,7 @@ Redis: localhost:6379
 
 ### Servers & Guilds
 
-- [ ] **Guilds:** server creation
+- [x] **Guilds:** server creation
 - [ ] **Text Channels:** multiple rooms per server
 - [ ] **Notifications:** fastify webhook alerts
 

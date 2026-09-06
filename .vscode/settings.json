@@ -1,5 +1,8 @@
 {
-  "rust-analyzer.linkedProjects": ["./apps/gateway/Cargo.toml"],
+  "rust-analyzer.linkedProjects": [
+    "./apps/gateway/Cargo.toml",
+    "./apps/guilds/Cargo.toml"
+  ],
   "[csharp]": {
     "editor.defaultFormatter": "csharpier.csharpier-vscode"
   }
