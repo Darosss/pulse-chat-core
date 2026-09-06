@@ -16,6 +16,7 @@ _create `.env` file or export hese vars in your shell environment_
 PORT=3000
 MESSAGE_SERVICE_URL=http://localhost:3001
 ACCOUNTS_SERVICE_URL=http://localhost:3002
+GUILDS_SERVICE_URL=http://localhost:3003
 REDIS_URL=redis://localhost:6379
 ```
 

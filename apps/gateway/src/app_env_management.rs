@@ -5,6 +5,7 @@ pub struct Config {
     pub port: i32,
     pub message_service_url: String,
     pub accounts_service_url: String,
+    pub guilds_service_url: String,
     pub redis_url: String,
 }
 

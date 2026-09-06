@@ -1,5 +1,6 @@
 use std::{collections::HashMap, sync::Arc};
 
+use crate::guilds::GuildsService;
 use crate::redis_utils::auth::get_blacklist_key;
 use crate::{
     accounts::AuthService, app_error::AppError, messages::MessageService,
@@ -18,6 +19,7 @@ pub struct AppState {
     pub public_decode_key: Arc<RwLock<Option<DecodingKey>>>,
     pub messages: MessageService,
     pub accounts: AuthService,
+    pub guilds: GuildsService,
     pub ws_state: WsService,
     pub redis: MultiplexedConnection,
     pub redis_client: Client,
