@@ -43,7 +43,7 @@ class AccountsService(AuthServiceServicer):
 
             if not user or not verify_password(request.password, user.password_hash) :
                 await context.abort(StatusCode.UNAUTHENTICATED, "Invalid email or password")
-            token: str = create_jwt_token(user.id, user.username)
+            token = create_jwt_token(user.id, user.username)
             refresh_token = await create_refresh_token(user.id, get_redis())
             return AuthResponse(
                 token=token,
@@ -77,18 +77,28 @@ class AccountsService(AuthServiceServicer):
 
         user_id = payload.get("user_id")
         jti = payload.get("jti")
-        
-        r = get_redis()
-        stored_token = await r.get(get_refresh_token_key(user_id, jti))
-        
-        if not stored_token or stored_token != request.refresh_token: 
+        if not isinstance(user_id, int) or not jti:
             context.set_code(StatusCode.UNAUTHENTICATED)
             return RefreshTokenResponse()
+
+        r = get_redis()
+        stored_token = await r.get(get_refresh_token_key(user_id, jti))
+        if stored_token != "active":
+            context.set_code(StatusCode.UNAUTHENTICATED)
+            return RefreshTokenResponse()
+        async with AsyncSessionLocal() as session:
+            result = await session.execute(
+                select(UserModel).where(UserModel.id == user_id)
+            )
+            user = result.scalar_one_or_none()
+        if user is None:
+            context.set_code(StatusCode.UNAUTHENTICATED)
+            return RefreshTokenResponse()
+        
+        new_access_token = create_jwt_token(user.id, user.username)
+        new_refresh_token = await create_refresh_token(user_id, r)
         await r.delete(get_refresh_token_key(user_id, jti))
-        
-        new_access_token = create_access_token(user_id)
-        new_refresh_token, new_jti = await create_refresh_token(user_id, r)
-        
+
         return RefreshTokenResponse(
             access_token=new_access_token,
             refresh_token=new_refresh_token
