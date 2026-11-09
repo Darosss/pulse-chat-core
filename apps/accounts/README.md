@@ -48,5 +48,5 @@ python post-generate-proto.py
 ### 4. Runing the Service
 
 ```
-python src/python.py
+python src/server.py
 ```
